@@ -14,11 +14,13 @@
 .modal-content {
     position: relative;
     width: 500px;
-    height: 500px;
+    max-height: 500px; /* 최대 높이를 지정합니다 */
     background: white;
     padding: 24px 16px;
     border-radius: 4px;
-   
+ 
+ 
+  
 }
 .modal_title {
     display: inline-block;

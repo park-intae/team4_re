@@ -17,6 +17,9 @@ public class FollowerServiceImpl implements FollowerService {
 	@Autowired
 	private FollowerMapper followerMapper;
 
+	@Autowired
+	private NotificationService notificationService;
+	
 	@Override
 	public void follow(FollowerVO follower) {
 		followerMapper.insert(follower);
@@ -55,6 +58,9 @@ public class FollowerServiceImpl implements FollowerService {
 			newFollow.setFollowerId(followerId);
 			newFollow.setFollowingId(followingId);
 			followerMapper.insert(newFollow);
+			
+			 notificationService.sendFollowNotification(followerId, followingId);
+			//팔로우 알림 전송
 			return true; // 팔로우 상태 반환
 		}
 	}
