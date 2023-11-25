@@ -21,6 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.extern.log4j.Log4j;
 
@@ -56,10 +58,10 @@ public class BookController {
 			for (String genre : genreToList) {
 				// 불필요한 객체 생성 최적화
 				// genre = genre.trim();
-				log.info("----->---->" + genre);
+//				log.info("----->---->" + genre);
 				List<String> categoriesToList = genreConvertedMap.get(genre);
 
-				log.info("----------------->" + categoriesToList);
+//				log.info("----------------->" + categoriesToList);
 
 				// 이미 있는 리스트를 재활용하여 새로운 리스트를 생성하지 않도록 최적화
 				if (categoriesToList == null) {
@@ -102,10 +104,31 @@ public class BookController {
 
 	@GetMapping("/list")
 	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
-		List<BookVO> result = service.getBookList(search);
 
 		log.info("list Page");
 		log.info(search);
+		
+        String flaskApiUrl = "http://49.50.166.252:5000/api/list";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        log.info("Start!!!!");
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
+                .queryParam("keyword", search.getKeywords() != null ? String.join(",", search.getKeywords()) : "")
+                .queryParam("topic",
+                        search.getTopics() != null ? String.join(",", search.getTopics()) : "")
+                .queryParam("genre", search.getBookType() != null ? String.join(",", search.getBookType()) : "")
+                .queryParam("category",
+                        search.getSelectedCategories() != null ? String.join(",", search.getSelectedCategories()) : "");
+
+        log.info(builder);
+
+        log.info("End!!!!");
+
+        String response = restTemplate.getForObject(builder.toUriString(), String.class);
+
+        log.info("Flask API : " + response);
 		
 		List<BookVO> dataResult = service.getListPaging(cri);
 
