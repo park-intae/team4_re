@@ -29,6 +29,7 @@
 			<div class="input-group-append"></div>
 		</div>
 	</form>
+	<a href="best/list">베스트셀러 페이지</a>
 </div>
 </div>
 
