@@ -63,10 +63,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getListPaging" resultType="BookVO">
 		SELECT b.book_id, b.title, b.author, b.publisher, b.genre, b.category,
-		b.Topic, bi.image_url FROM book b
-		INNER JOIN book_image bi
-		ON b.book_id
-		= bi.book_id
+		b.Topic, bi.image_url, bk.keywords
+		FROM book b
+		LEFT JOIN book_image bi
+		ON b.book_id = bi.book_id
+		LEFT JOIN book_keyword bk
+		ON b.book_id = bk.book_id
+	
 		<where>
 			<!-- Dynamic conditions for bookType -->
 			<if test="bookType != null and bookType.length > 0">
@@ -106,9 +109,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				)
 			</if>
 		</where>
-		limit
-		#{skip},#{amount}
-		
+		LIMIT #{skip}, #{amount}
+
 	</select>
 
 	<!-- 게시물 총 개숫 -->

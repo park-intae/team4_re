@@ -319,17 +319,6 @@ a:hover {
 </c:if>
 
 <script>
-function likeBook(bookId) {
-    // 좋아하는 도서 ID를 서버로 전송
-    // 예: AJAX를 사용하여 서버에 전송하거나 페이지를 새로고침하여 서버로 데이터를 전송
-    alert('좋아요를 눌렀습니다. 도서 ID: ' + bookId);
-}
-
-function addToFavorites(bookId) {
-    // 즐겨찾기 도서 ID를 서버로 전송
-    // 예: AJAX를 사용하여 서버에 전송하거나 페이지를 새로고침하여 서버로 데이터를 전송
-    alert('즐겨찾기에 추가했습니다. 도서 ID: ' + bookId);
-}
 $(".pageInfo a").on("click", function(e){
 	 
     e.preventDefault();
