@@ -2,6 +2,7 @@ package org.bookbook.service;
 
 import java.util.List;
 
+import org.bookbook.domain.BestVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
@@ -17,6 +18,10 @@ public interface BookSearchService {
 
 	public List<BookVO> getListPaging(Criteria cri);
 	
+	public List<BookVO> getBookListById(List<Long> bookIds);
+	
+	public List<BestVO> getBestBookList();
+		
 	 /* °Ô½ÃÆÇ ÃÑ °¹¼ö */
     public int getTotal();
 }
