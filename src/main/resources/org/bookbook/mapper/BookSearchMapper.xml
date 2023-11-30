@@ -117,5 +117,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getTotal" resultType="int">
 		select count(*) from book
 	</select>
+	
+	<select id="selectBooksByIds" resultType="BookVO">
+	    SELECT * FROM book b
+	    JOIN book_image bi ON bi.book_id = b.book_id
+	    WHERE b.book_id IN
+	    <foreach collection="list" item="id" open="(" separator="," close=")">
+	        #{id}
+	    </foreach>
+	</select>
+	
+	<select id="selectBestBook" resultType="BestVO">
+	SELECT * FROM best
+	limit 10
+	</select>
 
 </mapper>

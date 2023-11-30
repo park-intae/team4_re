@@ -9,7 +9,7 @@
 	<!-- 이 안에 본문 내용 넣어주시고 class 명도 꼭 같이 넣어주세요 -->
 	<img class="logo" src="/resources/images/logo1.png">
 	<!-- 검색창 -->
-	<form action="/list" method="GET">
+	<form action="/book/list" method="GET">
 		<!-- action 값을 상세페이지로 변경 -->
 		<div class="mx-auto mt-5 search-bar input-group mb-3 search-bar">
 			<div class="dropdown text">
@@ -22,7 +22,7 @@
 					<li><a class="dropdown-item" href="#">대분류3</a></li>
 				</ul>
 			</div>
-			<input id="searching" name="q" type="text" class="form-control text"
+			<input id="searching" name="keywords" type="text" class="form-control text"
 				placeholder="추천 키워드를 입력하세요" aria-label="Recipient's username"
 				aria-describedby="button-addon2"> <img id="searchIco"
 				src="/resources/images/search.png">

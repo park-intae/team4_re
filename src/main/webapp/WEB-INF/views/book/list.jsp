@@ -152,7 +152,7 @@
 			<input type="hidden" id="selectedGenre" name="bookType" value=""
 				multiple>
 
-			<script>
+		<script>
 			function prepareAndSubmitForm() {
 				// 장르 정보 가져오기
 				var selectedGenre = document.getElementById('selectedGenre').value;
@@ -317,6 +317,50 @@ a:hover {
 
 
 </c:if>
+
+<c:if test="${not empty bookByCBF}">
+<ul>
+	<div class="card-container">
+		<c:forEach var="bookAI" items="${bookByCBF}">
+			<div class="card">
+				<img src="${bookAI.imageUrl}" alt="${bookAI.title}"
+					class="card-img-top">
+				<div class="card-body">
+					<h5 class="card-title">${bookAI.title}</h5>
+					<p class="card-text">저자: ${bookAI.author}</p>
+					<p class="card-text">출판사: ${bookAI.publisher}</p>
+					<p class="card-text">장르: ${bookAI.genre}</p>
+					<p class="card-text">카테고리: ${bookAI.category}</p>
+					<p class="card-text"></p>
+					<button class="btn btn-primary"
+						onclick="likeBook('${bookAI.bookid}')"><i class="bi-heart"></i>좋아요</button>
+					<button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+</ul>
+
+</c:if>
+<c:if test="${empty bookByCBF}">
+<ul>
+	<div class="card-container">
+		<c:forEach var="best" items="${best}">
+			<div class="card">
+				<img src="${best.images}" alt="${best.title}"
+					class="card-img-top">
+				<div class="card-body">
+					<h5 class="card-title">${best.title}</h5>
+					<p class="card-text">저자: ${best.author}</p>
+					<p class="card-text">출판사: ${best.publisher}</p>
+					<p class="card-text"></p>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+</ul>
+</c:if>
+
 
 <script>
 $(".pageInfo a").on("click", function(e){
