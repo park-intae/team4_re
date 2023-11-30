@@ -1,34 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
 <nav>
-			<div class="menu-btn">
-				<i class="fa-solid fa-chevron-right icon1"></i>
-			</div>
-			<div class="mx-auto mt-5 input-group mb-3 search-bar">
-				<input id="searching" name="keywords" type="text" class="form-control text" placeholder="추천 키워드를 입력하세요"
-					aria-label="Recipient's username" aria-describedby="button-addon2"> <img id="searchIco"
-					src="/resources/images/search.png">
-				<div class="input-group-append"></div>
-			</div>
-			<div class="nav-cat">
-				<div>
-					<form:form id="searchForm" modelAttribute="search" method="get" class="d-flex">
-						<div class="input-group">
-							<form:input path="keywords" cssClass="form-control rounded-0" />
+	<div class="menu-btn">
+		<i class="fa-solid fa-chevron-right icon1"></i>
+	</div>
+<form action="book/list" method="GET">
+	<div class="mx-auto mt-5 input-group mb-3 search-bar">
+		<input id="searching" name="keywords" type="text"
+			class="form-control text" placeholder="추천 키워드를 입력하세요"
+			aria-label="Recipient's username" aria-describedby="button-addon2">
+		<img id="searchIco" src="/resources/images/search.png">
+		<div class="input-group-append"></div>
+	</div>
+	</form>
+	<div class="nav-cat">
+		<div>
+			<form id="searchForm" method="get" class="d-flex">
+				<div class="input-group">
+					<input path="keywords" cssClass="form-control rounded-0" />
 
-							<!-- 추가: 검색 버튼 클릭 시 JavaScript 함수 호출 -->
-							<button type="button" class="btn btn-success rounded-0" onclick="prepareAndSubmitForm()">
-								<i class="fa-solid fa-magnifying-glass"></i> 검색
-							</button>
+					<!-- 추가: 검색 버튼 클릭 시 JavaScript 함수 호출 -->
+					<button type="button" class="btn btn-success rounded-0"
+						onclick="prepareAndSubmitForm()">
+						<i class="fa-solid fa-magnifying-glass"></i> 검색
+					</button>
 
 
-							<!-- <script src="../../resources/SearchBook.js"></script> -->
+					<!-- <script src="../../resources/SearchBook.js"></script> -->
 
-							<div id="browse-category">
+					<div id="browse-category">
 
-								<script>
+						<script>
 
 									var searchState = {
 										keywords: "", // 필요한 속성들을 추가하세요
@@ -140,16 +143,18 @@
 									}
 								</script>
 
-							</div>
-							<!-- 추가: hidden input 추가 -->
-							<input type="hidden" id="selectedCategory" name="selectedCategories" value="" multiple>
+					</div>
+					<!-- 추가: hidden input 추가 -->
+					<input type="hidden" id="selectedCategory"
+						name="selectedCategories" value="" multiple> <input
+						type="hidden" id="selectedTopic" name="selectedTopics" value=""
+						multiple>
 
-							<input type="hidden" id="selectedTopic" name="selectedTopics" value="" multiple>
+					<!-- 추가: 선택된 장르를 저장할 hidden input 추가 -->
+					<input type="hidden" id="selectedGenre" name="bookType" value=""
+						multiple>
 
-							<!-- 추가: 선택된 장르를 저장할 hidden input 추가 -->
-							<input type="hidden" id="selectedGenre" name="bookType" value="" multiple>
-
-							<script>
+					<script>
 								function prepareAndSubmitForm() {
 									// 장르 정보 가져오기
 									var selectedGenre = document.getElementById('selectedGenre').value;
@@ -180,8 +185,8 @@
 								}
 							</script>
 
-						</div>
-					</form:form>
 				</div>
-			</div>
-		</nav>
+			</form>
+		</div>
+	</div>
+</nav>

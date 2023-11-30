@@ -21,7 +21,7 @@
 						<li><a class="dropdown-item" href="#">대분류3</a></li>
 					</ul>
 				</div>
-				<input id="searching" name="keyword" type="text" class="form-control text" placeholder="추천 키워드를 입력하세요"
+				<input id="searching" name="keywords" type="text" class="form-control text" placeholder="추천 키워드를 입력하세요"
 					aria-label="Recipient's username" aria-describedby="button-addon2"> <img id="searchIco"
 					src="/resources/images/search.png">
 				<div class="input-group-append"></div>

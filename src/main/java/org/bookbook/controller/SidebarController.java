@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@RequestMapping("/book")
+@RequestMapping("/")
 @Controller
-public class BookController {
+public class SidebarController {
 	@Autowired
 	BookSearchService service;
 
@@ -100,7 +100,7 @@ public class BookController {
 		return genreMap;
 	}
 
-	@GetMapping("/list")
+	@GetMapping("/")
 	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
 		List<BookVO> result = service.getBookList(search);
 
