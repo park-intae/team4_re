@@ -19,6 +19,8 @@ public interface BookSearchMapper {
 	public List<GenreVO> getGenre(GenreVO genre);
 
 	public List<BookVO> getListPaging(Criteria cri);
+	
+    public List<BookVO> selectBooksByIds(List<Long> bookIds);
 
 	/* °Ô½ÃÆÇ ÃÑ °¹¼ö */
 	public int getTotal();

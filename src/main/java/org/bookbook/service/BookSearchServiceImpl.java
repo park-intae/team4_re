@@ -19,6 +19,13 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 	@Autowired
 	BookSearchMapper bookSearchMapper;
+	
+	@Override
+	public List<BookVO> getBookListById(List<Long> bookIds) {
+		System.out.println("ServiceImpl BookIds ---->"+bookIds);
+		
+		return bookSearchMapper.selectBooksByIds(bookIds);
+	}
 
 	@Override
 	public List<BookVO> getBookList(BookSearchVO bookSearch) {

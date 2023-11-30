@@ -17,6 +17,8 @@ public interface BookSearchService {
 
 	public List<BookVO> getListPaging(Criteria cri);
 	
+	public List<BookVO> getBookListById(List<Long> bookIds);
+	
 	 /* °Ô½ÃÆÇ ÃÑ °¹¼ö */
     public int getTotal();
 }
