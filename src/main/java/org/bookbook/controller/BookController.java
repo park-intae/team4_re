@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@RequestMapping("/book")
+@RequestMapping("/")
 @Controller
 public class BookController {
 	@Autowired
@@ -100,8 +100,8 @@ public class BookController {
 		return genreMap;
 	}
 
-	@GetMapping("/list")
-	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
+	@GetMapping("/book")
+	public String list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
 		List<BookVO> result = service.getBookList(search);
 
 		log.info("list Page");
@@ -120,7 +120,7 @@ public class BookController {
 		model.addAttribute("pageMaker", pagemake); // 키 : 밸류
 		
 		
-
+		return "main";
 		// log.info(model);
 
 	}
