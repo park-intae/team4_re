@@ -2,6 +2,7 @@ package org.bookbook.service;
 
 import java.util.List;
 
+import org.bookbook.domain.BestVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
@@ -21,8 +22,13 @@ public class BookSearchServiceImpl implements BookSearchService {
 	BookSearchMapper bookSearchMapper;
 	
 	@Override
+	public List<BestVO> getBestBookList() {
+		
+		return bookSearchMapper.selectBestBook();
+	}
+
+	@Override
 	public List<BookVO> getBookListById(List<Long> bookIds) {
-		System.out.println("ServiceImpl BookIds ---->"+bookIds);
 		
 		return bookSearchMapper.selectBooksByIds(bookIds);
 	}

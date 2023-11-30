@@ -152,7 +152,7 @@
 			<input type="hidden" id="selectedGenre" name="bookType" value=""
 				multiple>
 
-			<script>
+		<script>
 			function prepareAndSubmitForm() {
 				// 장르 정보 가져오기
 				var selectedGenre = document.getElementById('selectedGenre').value;
@@ -318,6 +318,7 @@ a:hover {
 
 </c:if>
 
+<c:if test="${not empty bookByCBF}">
 <ul>
 	<div class="card-container">
 		<c:forEach var="bookAI" items="${bookByCBF}">
@@ -339,6 +340,26 @@ a:hover {
 		</c:forEach>
 	</div>
 </ul>
+
+</c:if>
+<c:if test="${empty bookByCBF}">
+<ul>
+	<div class="card-container">
+		<c:forEach var="best" items="${best}">
+			<div class="card">
+				<img src="${best.images}" alt="${best.title}"
+					class="card-img-top">
+				<div class="card-body">
+					<h5 class="card-title">${best.title}</h5>
+					<p class="card-text">저자: ${best.author}</p>
+					<p class="card-text">출판사: ${best.publisher}</p>
+					<p class="card-text"></p>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+</ul>
+</c:if>
 
 
 <script>

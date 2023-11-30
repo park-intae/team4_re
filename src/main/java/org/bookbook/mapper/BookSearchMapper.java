@@ -3,6 +3,7 @@ package org.bookbook.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.bookbook.domain.BestVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
@@ -21,6 +22,8 @@ public interface BookSearchMapper {
 	public List<BookVO> getListPaging(Criteria cri);
 	
     public List<BookVO> selectBooksByIds(List<Long> bookIds);
+    
+    public List<BestVO> selectBestBook();
 
 	/* °Ô½ÃÆÇ ÃÑ °¹¼ö */
 	public int getTotal();
