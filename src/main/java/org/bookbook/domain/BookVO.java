@@ -21,6 +21,6 @@ public class BookVO { // vo is null i dont know why
 	private String genre;
 	private String category;
 	private String Topic;
-	private String imageUrl; // ${book.imageUrl} === Book °´Ã¼ÀÇ getimageUrl()
+	private String imageUrl; // ${book.imageUrl} === Book ï¿½ï¿½Ã¼ï¿½ï¿½ getimageUrl()
 	 
 }
