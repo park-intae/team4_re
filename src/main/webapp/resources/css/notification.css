@@ -1,31 +1,58 @@
 #notificationIcon {
-    /* 알림 아이콘 스타일링 */
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
+	/* 알림 아이콘 스타일링 */
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	cursor: pointer;
 }
 
 #notificationList {
-    /* 알림 목록 스타일링 */
-    list-style-type: none;
-    padding: 0;
-    position: fixed;
-    top: 50px;
-    right: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    display: none; /* 기본적으로 숨김 none;  항상표시 block */
-    max-height: 300px;
-    overflow-y: auto;
+	/* 알림 목록 스타일링 */
+	max-height: 100px;
+	overflow-y: auto;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	top: 50px;
+	right: 20px;
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	display: none; /* 기본적으로 숨김 none;  항상표시 block */
+}
+
+.notification-item {
+	/* 알림 메시지 스타일 */
+	margin-bottom: 10px; /* 아이템 간 간격 */
+	padding: 5px;
+	background-color: #f0f0f0; /* 배경색 */
+	border: 1px solid #ddd; /* 테두리 */
+	box-sizing: border-box;
+}
+
+.delete-button {
+	/* 삭제 버튼 스타일 */
+	margin-left: 10px;
+	border: none;
+	padding: 5px 10px;
+}
+
+.delete-icon {
+	cursor: pointer;
+	color: red;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	/* 필요에 따라 추가 스타일 속성 추가 */
 }
 
 #notificationList li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+	position: relative;
 }
 
 #notificationList li:last-child {
-    border-bottom: none;
+	border-bottom: none;
 }

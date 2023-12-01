@@ -1,30 +1,24 @@
 package org.bookbook.controller;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.bookbook.domain.GenreVO;
 import org.bookbook.domain.TopicVO;
+import org.bookbook.domain.UserVO;
+import org.bookbook.security.domain.CustomUser;
 import org.bookbook.service.BookSearchService;
 import org.bookbook.util.SidebarUtil;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -53,7 +47,7 @@ public class HomeController {
 
 //	@ModelAttribute("searchBook")
 //	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
-//		System.out.println("값 들어오냐");
+//		System.out.println("媛� �뱾�뼱�삤�깘");
 //		System.out.println("topic:"+topics);
 //		System.out.println("genres:"+genres);
 //		
@@ -74,16 +68,16 @@ public class HomeController {
 //
 //			String genreToString = topic.getGenres();
 //
-//			// 초기 용량 설정을 통한 성능 최적화
+//			// 珥덇린 �슜�웾 �꽕�젙�쓣 �넻�븳 �꽦�뒫 理쒖쟻�솕
 //			List<String> genreToList = new ArrayList<>(Arrays.asList(genreToString.split(", ")));
 //
 //			for (String genre : genreToList) {
-//				// 불필요한 객체 생성 최적화
+//				// 遺덊븘�슂�븳 媛앹껜 �깮�꽦 理쒖쟻�솕
 //				// genre = genre.trim();
 //				List<String> categoriesToList = genreConvertedMap.get(genre);
 //
 //
-//				// 이미 있는 리스트를 재활용하여 새로운 리스트를 생성하지 않도록 최적화
+//				// �씠誘� �엳�뒗 由ъ뒪�듃瑜� �옱�솢�슜�븯�뿬 �깉濡쒖슫 由ъ뒪�듃瑜� �깮�꽦�븯吏� �븡�룄濡� 理쒖쟻�솕
 //				if (categoriesToList == null) {
 //					categoriesToList = new ArrayList<>();
 //				}
@@ -122,14 +116,7 @@ public class HomeController {
 //		return genreMap;
 //	}
 
-	
-	
-	
-	
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -138,40 +125,36 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
 		String formattedDate = dateFormat.format(date);
-
 		model.addAttribute("serverTime", formattedDate);
 
-		 // 스프링 시큐리티 컨텍스트에서 인증 정보를 가져옵니다.
-	     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	        if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
-	            Object principal = auth.getPrincipal();
-	            String username;
-	            if (principal instanceof UserDetails) {
-	                username = ((UserDetails) principal).getUsername();
-	            } else {
-	                username = principal.toString(); // principal이 UserDetails 인스턴스가 아닌 경우
-	            }
-	            model.addAttribute("username", username);
-	        }
+		// �뒪�봽留� �떆�걧由ы떚 而⑦뀓�뒪�듃�뿉�꽌 �씤利� �젙蹂대�� 媛��졇�샃�땲�떎.
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
 
-		
-		 // 세션에서 네이버 사용자 정보를 가져와 모델에 추가
-        String userId = (String) session.getAttribute("userId");
-        String userNickname = (String) session.getAttribute("userNickname");
-        String userName = (String) session.getAttribute("userName");
-        String userEmail = (String) session.getAttribute("userEmail");
-        String userGender = (String) session.getAttribute("userGender");
-        String userBirthday = (String) session.getAttribute("userBirthday");
-	    
-        // 모델에 사용자 정보 추가
-        model.addAttribute("userId", userId);
-        model.addAttribute("userNickname", userNickname);
-        model.addAttribute("userName", userName);
-        model.addAttribute("userEmail", userEmail);
-        model.addAttribute("userGender", userGender);
-        model.addAttribute("userBirthday", userBirthday);
+			if (auth.getPrincipal() instanceof CustomUser) {
+				CustomUser customUser = (CustomUser) auth.getPrincipal();
+				UserVO user = customUser.getUser();
+				 model.addAttribute("username", user.getUsername()); // �궗�슜�옄 �씠由� �삉�뒗 �븘�씠�뵒瑜� 紐⑤뜽�뿉 異붽�
+				session.setAttribute("user", user); // UserVO 媛앹껜 �꽭�뀡�뿉 ���옣
+			}
+		}
 
-	  
+		// �꽭�뀡�뿉�꽌 �꽕�씠踰� �궗�슜�옄 �젙蹂대�� 媛��졇�� 紐⑤뜽�뿉 異붽�
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("userName");
+		String userNickname = (String) session.getAttribute("userNickname");
+		String userEmail = (String) session.getAttribute("userEmail");
+		String userGender = (String) session.getAttribute("userGender");
+		String userBirthday = (String) session.getAttribute("userBirthday");
+
+		// 紐⑤뜽�뿉 �궗�슜�옄 �젙蹂� 異붽�
+		model.addAttribute("userId", userId);
+		model.addAttribute("userName", userName);
+		model.addAttribute("userNickname", userNickname);
+		model.addAttribute("userEmail", userEmail);
+		model.addAttribute("userGender", userGender);
+		model.addAttribute("userBirthday", userBirthday);
+
 		return "main";
 	}
 

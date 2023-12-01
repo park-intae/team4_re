@@ -99,80 +99,74 @@ public class BookController {
 
 	@GetMapping("/list")
 	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri, HttpSession session) {
-		
+
 		SecurityContextImpl securityContext = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
 
 		String username = "";
-		
-		if (securityContext != null && securityContext.getAuthentication() != null) {
-		    Object principal = securityContext.getAuthentication().getPrincipal();
 
-		    if (principal instanceof UserDetails) {
-		    	username = ((UserDetails) principal).getUsername();
-		        log.info("Username: " + username);
-		    }
+		if (securityContext != null && securityContext.getAuthentication() != null) {
+			Object principal = securityContext.getAuthentication().getPrincipal();
+
+			if (principal instanceof UserDetails) {
+				username = ((UserDetails) principal).getUsername();
+				log.info("Username: " + username);
+			}
 		}
 
-        String flaskApiUrl = "http://49.50.166.252:5000/api/list";
+		String flaskApiUrl = "http://49.50.166.252:5000/api/list";
 
-        RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
 
-        String keywordParam = (search.getKeywords() != null) ?
-                String.join(",", search.getKeywords()) :
-                "";
-        
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
-                .queryParam("keyword", keywordParam)
-                .queryParam("username", username)
-                ;
-        String response = restTemplate.getForObject(builder.toUriString(), String.class);
-        
+		String keywordParam = (search.getKeywords() != null) ? String.join(",", search.getKeywords()) : "";
 
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(response);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
+				.queryParam("keyword", keywordParam)
+				.queryParam("username", username);
+		String response = restTemplate.getForObject(builder.toUriString(), String.class);
 
-            JsonNode resultNode = jsonNode.get("result");
-                                                
-            if (resultNode != null && resultNode.isArray()) {
-            	
-                List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false)
-                        .map(JsonNode::asLong)
-                        .collect(Collectors.toList());
-                
-                log.info("bookIds : "+bookIds);
-                
-                if (!bookIds.isEmpty()) {                	
-                	List<BookVO> books = service.getBookListById(bookIds);
-                	
-                	model.addAttribute("bookByCBF", books);
-                }
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			JsonNode jsonNode = objectMapper.readTree(response);
 
-            }
-        } catch (Exception e) {
-            System.out.println("------------>Error");
-        }
+			JsonNode resultNode = jsonNode.get("result");
 
-        
-    	List<BestVO> bestBooks = service.getBestBookList();
-    	
-    	model.addAttribute("best", bestBooks);
-        
-		
+			if (resultNode != null && resultNode.isArray()) {
+
+				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false)
+						.map(JsonNode::asLong)
+						.collect(Collectors.toList());
+
+				log.info("bookIds : " + bookIds);
+
+				if (!bookIds.isEmpty()) {
+					List<BookVO> books = service.getBookListById(bookIds);
+
+					model.addAttribute("bookByCBF", books);
+				}
+
+			}
+		} catch (Exception e) {
+			System.out.println("------------>Error");
+		}
+
+		List<BestVO> bestBooks = service.getBestBookList();
+
+		model.addAttribute("best", bestBooks);
+
 		List<BookVO> dataResult = service.getListPaging(cri);
 
 		model.addAttribute("list", dataResult);
-				
+
 		int total = service.getTotal();
-		 
+
 		PageMakerDTO pagemake = new PageMakerDTO(cri, total);
 
 		model.addAttribute("pageMaker", pagemake); // 키 : 밸류
-		
+
 	}
-	
+
 	@GetMapping("/detail")
 	public void detail() {
-		
+
 	}
 }
