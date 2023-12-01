@@ -30,92 +30,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	BookSearchService service;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
+	// sidebar 적용되는 코드들(필요하면 복사해서 쓰세요~)
+
 	@Autowired
-	SidebarUtil sidebarUtil;	
-	
+	SidebarUtil sidebarUtil;
+
 	@ModelAttribute("searchBook")
 	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
 		JSONObject result = sidebarUtil.searchBookTypes(topics, genres);
 		return result;
 	}
 
-//	@ModelAttribute("searchBook")
-//	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
-//		System.out.println("媛� �뱾�뼱�삤�깘");
-//		System.out.println("topic:"+topics);
-//		System.out.println("genres:"+genres);
-//		
-//		List<TopicVO> topicList = service.getTopicList(topics);
-//
-//		List<GenreVO> genreList = service.getGenreList(genres);
-//
-//		Map<String, List<String>> genreConvertedMap = convertToMap(genreList);
-//
-//		// log.info(genreConvertedMap);
-//
-//		Map<String, Map<String, List<String>>> map = new LinkedHashMap<>();
-//
-//		// log.info(topicList);
-//
-//		for (TopicVO topic : topicList) {
-//			Map<String, List<String>> genreMap = new LinkedHashMap<>();
-//
-//			String genreToString = topic.getGenres();
-//
-//			// 珥덇린 �슜�웾 �꽕�젙�쓣 �넻�븳 �꽦�뒫 理쒖쟻�솕
-//			List<String> genreToList = new ArrayList<>(Arrays.asList(genreToString.split(", ")));
-//
-//			for (String genre : genreToList) {
-//				// 遺덊븘�슂�븳 媛앹껜 �깮�꽦 理쒖쟻�솕
-//				// genre = genre.trim();
-//				List<String> categoriesToList = genreConvertedMap.get(genre);
-//
-//
-//				// �씠誘� �엳�뒗 由ъ뒪�듃瑜� �옱�솢�슜�븯�뿬 �깉濡쒖슫 由ъ뒪�듃瑜� �깮�꽦�븯吏� �븡�룄濡� 理쒖쟻�솕
-//				if (categoriesToList == null) {
-//					categoriesToList = new ArrayList<>();
-//				}
-//
-//				genreMap.put(genre, categoriesToList);
-//			}
-//
-//			map.put(topic.getTopic(), genreMap);
-//		}
-//
-//		JSONObject jsonObject = new JSONObject(map);
-//
-//		return jsonObject;
-//	}
-//
-//	public static Map<String, List<String>> convertToMap(List<GenreVO> genreList) {
-//		Map<String, List<String>> genreMap = new HashMap<>();
-//
-//		for (GenreVO genreVO : genreList) {
-//			String genre = genreVO.getGenre();
-//			String categoriesToString = genreVO.getCategories();
-//
-//			List<String> categoriesList = new ArrayList<>();
-//
-//			if (categoriesToString != null) {
-//				categoriesList = new ArrayList<String>(Arrays.asList(categoriesToString.split(", ")));
-//			}
-//
-//			// log.info("------->>>"+categoriesList);
-//
-//			genreMap.put(genre, categoriesList);
-//		}
-//
-//		// log.info("--------------------->>>>>"+ genreMap);
-//
-//		return genreMap;
-//	}
-
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
@@ -134,7 +68,7 @@ public class HomeController {
 			if (auth.getPrincipal() instanceof CustomUser) {
 				CustomUser customUser = (CustomUser) auth.getPrincipal();
 				UserVO user = customUser.getUser();
-				 model.addAttribute("username", user.getUsername()); // �궗�슜�옄 �씠由� �삉�뒗 �븘�씠�뵒瑜� 紐⑤뜽�뿉 異붽�
+				model.addAttribute("username", user.getUsername()); // �궗�슜�옄 �씠由� �삉�뒗 �븘�씠�뵒瑜� 紐⑤뜽�뿉 異붽�
 				session.setAttribute("user", user); // UserVO 媛앹껜 �꽭�뀡�뿉 ���옣
 			}
 		}
