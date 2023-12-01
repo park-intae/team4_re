@@ -10,17 +10,22 @@ import java.util.Map;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
+import org.bookbook.domain.LikeVO;
 import org.bookbook.domain.TopicVO;
 import org.bookbook.model.Criteria;
 import org.bookbook.model.PageMakerDTO;
 import org.bookbook.service.BookSearchService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.log4j.Log4j;
 
@@ -56,10 +61,10 @@ public class BookController {
 			for (String genre : genreToList) {
 				// 불필요한 객체 생성 최적화
 				// genre = genre.trim();
-				log.info("----->---->" + genre);
+//				log.info("----->---->" + genre);
 				List<String> categoriesToList = genreConvertedMap.get(genre);
 
-				log.info("----------------->" + categoriesToList);
+//				log.info("----------------->" + categoriesToList);
 
 				// 이미 있는 리스트를 재활용하여 새로운 리스트를 생성하지 않도록 최적화
 				if (categoriesToList == null) {
@@ -102,26 +107,49 @@ public class BookController {
 
 	@GetMapping("/list")
 	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
-		List<BookVO> result = service.getBookList(search);
 
-		log.info("list Page");
-		log.info(search);
+//		log.info("list Page");
+//		log.info(search);
 		
 		List<BookVO> dataResult = service.getListPaging(cri);
 
 		model.addAttribute("list", dataResult);
 		
-		log.info("dataResult:"+dataResult);
+//		log.info("dataResult:"+dataResult);
 		
 		int total = service.getTotal();
 		 
 		PageMakerDTO pagemake = new PageMakerDTO(cri, total);
 
 		model.addAttribute("pageMaker", pagemake); // 키 : 밸류
-		
-		
 
 		// log.info(model);
 
 	}
+	
+//	// 좋아요 부분
+//	@PostMapping("/addLike")
+//	@ResponseBody
+//	public ResponseEntity<String> addLike(@RequestParam String userId, @RequestParam int bookId) {
+//	    LikeVO like = new LikeVO(); 
+//	    like.setUserid(userId);
+//	    like.setBookid(bookId);
+//	    service.addLike(like);
+//	    return ResponseEntity.ok("좋아요가 성공적으로 추가되었습니다");
+//	}
+
+    @GetMapping("/likes")
+    public String getLikes(Model model, @RequestParam(required = false) String userId) { // ?userId="test2"
+    	if (userId == null) {
+
+        }
+    	
+    	List<LikeVO> likes = service.getLikes(userId);
+        
+        log.info(likes);
+        model.addAttribute("likes", likes);
+        return "book/likes"; 
+    }
+    
+    
 }

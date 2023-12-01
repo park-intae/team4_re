@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
+import org.bookbook.domain.LikeVO;
 import org.bookbook.domain.TopicVO;
 import org.bookbook.model.Criteria;
 
@@ -22,4 +23,8 @@ public interface BookSearchMapper {
 
 	/* °Ô½ÃÆÇ ÃÑ °¹¼ö */
 	public int getTotal();
+	
+	// ¼öÁ¤ºÎºÐ
+	void addLike(LikeVO like);
+	List<LikeVO> getLikes(String userid);
 }
