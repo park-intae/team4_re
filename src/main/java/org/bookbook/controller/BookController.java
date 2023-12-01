@@ -9,8 +9,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import javax.servlet.http.HttpSession;
+
 import org.bookbook.domain.BestVO;
-import org.bookbook.domain.BookIdVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
@@ -20,12 +21,13 @@ import org.bookbook.model.PageMakerDTO;
 import org.bookbook.service.BookSearchService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -96,8 +98,21 @@ public class BookController {
 	}
 
 	@GetMapping("/list")
-	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
-				
+	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri, HttpSession session) {
+		
+		SecurityContextImpl securityContext = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
+
+		String username = "";
+		
+		if (securityContext != null && securityContext.getAuthentication() != null) {
+		    Object principal = securityContext.getAuthentication().getPrincipal();
+
+		    if (principal instanceof UserDetails) {
+		    	username = ((UserDetails) principal).getUsername();
+		        log.info("Username: " + username);
+		    }
+		}
+
         String flaskApiUrl = "http://49.50.166.252:5000/api/list";
 
         RestTemplate restTemplate = new RestTemplate();
@@ -108,6 +123,7 @@ public class BookController {
         
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
                 .queryParam("keyword", keywordParam)
+                .queryParam("username", username)
                 ;
         String response = restTemplate.getForObject(builder.toUriString(), String.class);
         
@@ -152,6 +168,11 @@ public class BookController {
 		PageMakerDTO pagemake = new PageMakerDTO(cri, total);
 
 		model.addAttribute("pageMaker", pagemake); // 키 : 밸류
+		
+	}
+	
+	@GetMapping("/detail")
+	public void detail() {
 		
 	}
 }
