@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.bookbook.domain.BestVO;
-import org.bookbook.domain.BookIdVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;

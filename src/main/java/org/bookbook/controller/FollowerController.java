@@ -56,7 +56,6 @@ public class FollowerController {
         if (principal == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        
         String currentUserId = principal.getName(); // 현재 로그인한 사용자의 ID
 
         boolean isFollowing = followerService.toggleFollow(currentUserId, userId); // 팔로우 상태 토글
