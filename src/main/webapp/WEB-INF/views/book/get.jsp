@@ -6,23 +6,23 @@
 <%@ include file="../layouts/header.jsp"%>
 <%-- 개별 페이지 --%>
 <div class="center">
-	<h1>${best.title}</h1>
+	<h1>${book.title}</h1>
 </div>
 
 <div>
 	<hr>
 
 	<div class="mt-5">
-		${best.author} <br> ${best.publisher } <br>
-		${best.publication_date}
+		${book.author} <br> ${book.publisher } <br>
+		${book.publication_date}
 	</div>
 
 	<div class="clearfix">
 		<div class="image-panel float-left mr-3">
-			<img src="${best.images}" width="200" height="300" align="left">
+			<img src="${book.images}" width="200" height="300" align="left">
 		</div>
 
-		<div>${best.intro}</div>
+		<div>${book.intro}</div>
 		<br>
 	</div>
 

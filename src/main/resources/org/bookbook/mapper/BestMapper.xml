@@ -8,14 +8,74 @@
 <mapper namespace="org.bookbook.mapper.BestMapper">
 	<select id="getTotalCount" resultType="int">
 		select count(*) from best
-
-
+	</select>
+	<select id="getTotalCount2" resultType="int">
+		SELECT COUNT(*)
+		FROM best
+		where genre like '%소설%' or genre like '%SF%';
+	</select>
+	<select id="getTotalCount3" resultType="int">
+		select count(*) from best
+		where genre like '%만화%' or genre like '%동화%' or genre like '%그림%';
+	</select>
+	<select id="getTotalCount4" resultType="int">
+		select count(*) from best
+		where genre not like '%소설%' and genre not like '%만화%' and genre not
+		like '%SF%' and genre not like '%동화%' and genre not like '%그림%';
+	</select>
+	<select id="getTotalCount5" resultType="int">
+		select count(*) from best
+		where (publication_date like '%10월%' or publication_date like '%11월%')
+		and publication_date like '%2023년%';
+	</select>
+	<select id="getTotalCount6" resultType="int">
+		select count(*) from best
+		where (publication_date like '%9월%' or publication_date like '%10월%'
+		or publication_date like '%11월%') and publication_date like '%2023년%';
 	</select>
 
 	<select id="getList" resultType="BestVO">
-		select * from best
-
+		select column1, title, author,
+		images
+		from best
+		limit #{offset} , #{amount}
 	</select>
+	<select id="getList2" resultType="BestVO">
+		select column1, title, author,
+		images
+		from best
+		where classi=2
+		limit #{offset} , #{amount}
+	</select>
+	<select id="getList3" resultType="BestVO">
+		select column1, title, author,
+		images
+		from best
+		where classi=3
+		limit #{offset} , #{amount}
+	</select>
+	<select id="getList4" resultType="BestVO">
+		select column1, title, author,
+		images, genre
+		from best
+		where classi=4
+		limit #{offset} , #{amount}
+	</select>
+	<select id="getList5" resultType="BestVO">
+		select column1, title, author,
+		images
+		from best
+		where dateNum=1
+		limit #{offset} , #{amount}
+	</select>
+	<select id="getList6" resultType="BestVO">
+		select column1, title, author,
+		images
+		from best
+		where dateNum2=1
+		limit #{offset} , #{amount}
+	</select>
+
 
 	<select id="get" resultType="BestVO">
 		select * from best
@@ -29,6 +89,51 @@
 <![CDATA[
 select column1, title, author, images
 from best
+limit #{offset} , #{amount}
+]]>
+	</select>
+	<select id="getListWithPaging2"
+		resultType="org.bookbook.domain.BestVO">
+<![CDATA[
+select column1, title, author, images
+from best
+where classi=2
+limit #{offset} , #{amount}
+]]>
+	</select>
+	<select id="getListWithPaging3"
+		resultType="org.bookbook.domain.BestVO">
+<![CDATA[
+select column1, title, author, images
+from best
+where classi=3
+limit #{offset} , #{amount}
+]]>
+	</select>
+	<select id="getListWithPaging4"
+		resultType="org.bookbook.domain.BestVO">
+<![CDATA[
+select column1, title, author, images, genre
+from best
+where classi=4
+limit #{offset} , #{amount}
+]]>
+	</select>
+	<select id="getListWithPaging5"
+		resultType="org.bookbook.domain.BestVO">
+<![CDATA[
+select column1, title, author, images
+from best 
+where dateNum=1
+limit #{offset} , #{amount}
+]]>
+	</select>
+	<select id="getListWithPaging6"
+		resultType="org.bookbook.domain.BestVO">
+<![CDATA[
+select column1, title, author, images
+from best
+where dateNum2=1
 limit #{offset} , #{amount}
 ]]>
 	</select>
