@@ -37,11 +37,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
-	@Autowired
-	BookSearchService service;
+//	@Autowired
+//	BookSearchService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
+//	
 //	sidebar 적용되는 코드들(필요하면 복사해서 쓰세요~)
 //
 //	@Autowired
