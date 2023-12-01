@@ -41,16 +41,19 @@ public class HomeController {
 	BookSearchService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	@Autowired
-	SidebarUtil sidebarUtil;	
-	
-	@ModelAttribute("searchBook")
-	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
-		JSONObject result = sidebarUtil.searchBookTypes(topics, genres);
-		return result;
-	}
 
+//	sidebar 적용되는 코드들(필요하면 복사해서 쓰세요~)
+//
+//	@Autowired
+//	SidebarUtil sidebarUtil;	
+//	
+//	@ModelAttribute("searchBook")
+//	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
+//		JSONObject result = sidebarUtil.searchBookTypes(topics, genres);
+//		return result;
+//	}
+//
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */

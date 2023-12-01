@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -41,7 +42,8 @@
 	width: 140px;
 	height: 39px;
 }
-.sign .btn{
+
+.sign .btn {
 	margin-bottom: 5px;
 }
 </style>
@@ -50,35 +52,36 @@
 	<div class=background>
 		<header>
 			<div class="blank"></div>
+			<!-- 이미지 누르면 화면 이동 기능 -->
 			<a href="/"> <img class="logo_sm"
 				src="/resources/images/logo1.png">
 			</a>
-			<!-- 이미지 누르면 화면 이동 기능 -->
+			<!-- 로그인 버튼 -->
 			<ul class="navbar-nav sign">
 				<sec:authorize access="isAuthenticated()">
 					<!-- 로그인 된 상태 -->
-					  <c:if test="${not empty username}">
-					<li class="nav-item">
-						<div class="btn-group">
-							<button type="button" class="btn btn-secondary dropdown-toggle"
-								data-bs-toggle="dropdown" aria-expanded="false">
-								<img class="avatar"
-									src="https://api.dicebear.com/7.x/identicon/svg?seed=대충 아이디" />
-							</button>
+					<c:if test="${not empty username}">
+						<li class="nav-item">
+							<div class="btn-group">
+								<button type="button" class="btn btn-secondary dropdown-toggle"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<img class="avatar"
+										src="https://api.dicebear.com/7.x/identicon/svg?seed=대충 아이디" />
+								</button>
 
-							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-								<li><a class="dropdown-item" href="/security/logout">로그아웃</a></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="/security/profile">프로필</a></li>
-							</ul>
-						</div>
-					</li>
-				</c:if>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+									<li><a class="dropdown-item" href="/security/logout">로그아웃</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" href="/security/profile">프로필</a></li>
+								</ul>
+							</div>
+						</li>
+					</c:if>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<!-- 로그아웃 된 상태 -->
 
-				<li class="nav-item sign">
+					<li class="nav-item sign">
 						<button type="button" class="btn btn-secondary"
 							onclick="location.href='/security/login'">
 							<!-- 코드보기 편하게용 주석 -->
