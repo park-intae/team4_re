@@ -16,9 +16,9 @@
 	</form>
 	<div class="nav-cat">
 		<div>
-			<form id="searchForm" method="get" class="d-flex">
+			<form action="book/list" id="searchForm" method="get" class="d-flex">
 				<div class="input-group">
-					<input path="keywords" cssClass="form-control rounded-0" />
+					<input name="keywords" class="form-control rounded-0" />
 
 					<!-- 추가: 검색 버튼 클릭 시 JavaScript 함수 호출 -->
 					<button type="button" class="btn btn-success rounded-0"

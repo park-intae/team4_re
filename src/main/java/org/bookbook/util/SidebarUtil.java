@@ -1,5 +1,6 @@
-package org.bookbook.controller;
+package org.bookbook.util;
 
+import java.beans.JavaBean;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,9 +15,11 @@ import org.bookbook.domain.TopicVO;
 import org.bookbook.model.Criteria;
 import org.bookbook.model.PageMakerDTO;
 import org.bookbook.service.BookSearchService;
+import org.bookbook.service.BookSearchServiceImpl;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,16 +28,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@RequestMapping("/")
-@Controller
-public class SidebarController {
+@Component
+public class SidebarUtil {
+ 
 	@Autowired
 	BookSearchService service;
-
-	@ModelAttribute("searchBook")
+	
+	//@ModelAttribute("searchBook")
 	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
 		List<TopicVO> topicList = service.getTopicList(topics);
-
 		List<GenreVO> genreList = service.getGenreList(genres);
 
 		Map<String, List<String>> genreConvertedMap = convertToMap(genreList);
@@ -89,37 +91,10 @@ public class SidebarController {
 			if (categoriesToString != null) {
 				categoriesList = new ArrayList<String>(Arrays.asList(categoriesToString.split(", ")));
 			}
-
-			// log.info("------->>>"+categoriesList);
-
 			genreMap.put(genre, categoriesList);
 		}
-
-		// log.info("--------------------->>>>>"+ genreMap);
-
 		return genreMap;
 	}
 
-	@GetMapping("/")
-	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
-		List<BookVO> result = service.getBookList(search);
 
-		log.info("list Page");
-		log.info(search);
-		
-		List<BookVO> dataResult = service.getListPaging(cri);
-
-		model.addAttribute("list", dataResult);
-		
-		log.info("dataResult:"+dataResult);
-		
-		int total = service.getTotal();
-		 
-		PageMakerDTO pagemake = new PageMakerDTO(cri, total);
-
-		model.addAttribute("pageMaker", pagemake); // 키 : 밸류
-		
-		// log.info(model);
-
-	}
 }
