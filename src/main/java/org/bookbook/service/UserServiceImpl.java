@@ -81,7 +81,6 @@ public class UserServiceImpl implements UserService {
 
 	// 현재 로그인한 사용자를 제외한 모든 사용자 목록을 반환하는 메서드
 	@Override
-
 	public List<UserVO> getAllUsersWithFollowStatus(String currentUserId) {
 		List<UserVO> users = userMapper.getAllUsers(); // 모든 사용자 목록을 가져옴
 	    List<UserVO> usersWithFollowStatus = new ArrayList<>(); // 팔로우 상태가 설정된 사용자 목록
@@ -98,9 +97,15 @@ public class UserServiceImpl implements UserService {
 	}
 	
 
-
 	// 팔로우 여부를 확인하는 메서드
 	private boolean isFollowing(String currentUserId, String otherUserId) {
 		return followerMapper.findFollowByUserIds(currentUserId, otherUserId) != null;
+	}
+	
+	
+	public boolean isUserIdAvailable(String userid) {
+	    // ID가 데이터베이스에 존재하는지 확인하는 로직
+	    UserVO user = userMapper.read(userid);
+	    return user == null;
 	}
 }

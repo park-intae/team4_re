@@ -51,18 +51,20 @@ public class NaverController {
 
 	            // 사용자 정보 세션에 저장
 	            session.setAttribute("userId", responseObj.get("id"));
-	            session.setAttribute("userNickname", responseObj.get("nickname"));
 	            session.setAttribute("userName", responseObj.get("name"));
+	            session.setAttribute("userNickname", responseObj.get("nickname"));
 	            session.setAttribute("userEmail", responseObj.get("email"));
 	            session.setAttribute("userGender", responseObj.get("gender"));
 	            session.setAttribute("userBirthday", responseObj.get("birthday"));
 	            session.setAttribute("oauthToken", oauthToken);
+	            
+	         // NaverUserVO 객체 세션에 저장
+	            session.setAttribute("naverUser", naverUser);
 
+	            // Spring Security 컨텍스트에 사용자 인증 정보 설정
 	            Authentication authentication = new UsernamePasswordAuthenticationToken(naverUser.getId(), null, new ArrayList<>());
 	            SecurityContextHolder.getContext().setAuthentication(authentication);
 	            
-	            // NaverUserVO 객체 세션에 저장
-	            session.setAttribute("naverUser", naverUser);
 
 	            return "redirect:/";
 	        } else {

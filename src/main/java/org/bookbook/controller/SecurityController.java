@@ -2,6 +2,8 @@ package org.bookbook.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -10,15 +12,16 @@ import org.bookbook.domain.UserVO;
 import org.bookbook.exception.DateConversionUtil;
 import org.bookbook.service.NotificationServiceimpl;
 import org.bookbook.service.UserService;
-import org.bookbook.sse.SseEmitters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.log4j.Log4j;
 
@@ -45,6 +48,15 @@ public class SecurityController {
 
 	}
 
+	@GetMapping("/checkUserId")
+	@ResponseBody
+	public Map<String, Boolean> checkUserId(@RequestParam String userid) {
+	    boolean isAvailable = service.isUserIdAvailable(userid);
+	    Map<String, Boolean> response = new HashMap<>();
+	    response.put("isAvailable", isAvailable);
+	    return response;
+	}
+	
 	@PostMapping("/signup")
 	public String signup(@Valid @ModelAttribute("user") UserVO user, Errors errors,
 			@RequestParam("birth.year") String year, @RequestParam("birth.month") String month,
@@ -88,9 +100,28 @@ public class SecurityController {
 		return "redirect:/";
 	}
 
+	
+	
 	@GetMapping("/profile")
-	public void profile() {
+	public String profile(HttpSession session, Model model) {
+	    // 세션에서 사용자 정보를 가져옵니다.
+	    UserVO user = (UserVO) session.getAttribute("user");
+
+	    // 가져온 사용자 정보를 모델에 추가합니다.
+	    if (user != null) {
+	        model.addAttribute("user", user);
+	    }
+
+	    return "/security/profile";
 	}
+
+	
+//	@GetMapping("/profile")
+//	public void profile() {
+//		
+//		
+//	}
+
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) throws IOException {
