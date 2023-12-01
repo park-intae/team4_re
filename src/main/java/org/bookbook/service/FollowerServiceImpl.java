@@ -3,7 +3,9 @@ package org.bookbook.service;
 import java.util.List;
 
 import org.bookbook.domain.FollowerVO;
+import org.bookbook.domain.UserVO;
 import org.bookbook.mapper.FollowerMapper;
+import org.bookbook.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +20,11 @@ public class FollowerServiceImpl implements FollowerService {
 	private FollowerMapper followerMapper;
 
 	@Autowired
-	private NotificationService notificationService;
+    private UserMapper userMapper;
 	
+	@Autowired
+	private NotificationService notificationService;
+
 	@Override
 	public void follow(FollowerVO follower) {
 		followerMapper.insert(follower);
@@ -43,6 +48,15 @@ public class FollowerServiceImpl implements FollowerService {
 	@Transactional
 	public boolean toggleFollow(String followerId, String followingId) {
 
+		 //followerId와 followingId가 user 테이블에 존재하는지 확인
+        UserVO follower = userMapper.read(followerId);
+        UserVO following = userMapper.read(followingId);
+
+        if (follower == null || following == null) {
+            log.error("Follower or Following user does not exist.");
+            return false;
+        }
+		
 		// 팔로우 상태 확인
 		FollowerVO existingFollow = followerMapper.findFollowByUserIds(followerId, followingId);
 
@@ -58,9 +72,9 @@ public class FollowerServiceImpl implements FollowerService {
 			newFollow.setFollowerId(followerId);
 			newFollow.setFollowingId(followingId);
 			followerMapper.insert(newFollow);
-			
-			 notificationService.sendFollowNotification(followerId, followingId);
-			//팔로우 알림 전송
+
+			// 팔로우 알림 전송 (옵션)
+			notificationService.sendFollowNotification(followerId, followingId);
 			return true; // 팔로우 상태 반환
 		}
 	}

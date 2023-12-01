@@ -65,11 +65,3 @@
 	<!-- <update id="updateUser"> update tbl_users set password = #{password}, 
 		email = #{email} where username = #{username} </update> -->
 </mapper>
-
-
-
-
-
-
-
-
