@@ -16,7 +16,7 @@
 	</form>
 	<div class="nav-cat">
 		<div>
-			<form action="book/list" id="searchForm" method="get" class="d-flex">
+			<form action="/book/list" id="searchForm" method="get" class="d-flex">
 				<div class="input-group">
 					<input name="keywords" class="form-control rounded-0" />
 
@@ -171,7 +171,7 @@
 									}
 
 									// 검색어 및 카테고리 정보 저장
-									searchState.keywords = document.getElementById('keywords').value;
+									// searchState.keywords = document.getElementById('keywords').value;
 
 									// 선택된 카테고리를 hidden input에 설정
 									// document.getElementById('selectedCategory').value = searchState.selectedCategories.join(',');
