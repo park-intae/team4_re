@@ -35,19 +35,16 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 	@Override
 	public List<BookVO> getBookList(BookSearchVO bookSearch) {
-		log.info(bookSearch);
 		return bookSearchMapper.read(bookSearch);
 	}
 
 	@Override
 	public List<GenreVO> getGenreList(GenreVO genre) {
-		log.info(genre);
 		return bookSearchMapper.getGenre(genre);
 	}
 
 	@Override
 	public List<TopicVO> getTopicList(TopicVO Topic) {
-		log.info(Topic);
 		return bookSearchMapper.getTopic(Topic);
 	}
 

@@ -170,11 +170,6 @@
 										console.error('Element with id "selectedTopic" not found.');
 									}
 
-									// 검색어 및 카테고리 정보 저장
-									searchState.keywords = document.getElementById('keywords').value;
-
-									// 선택된 카테고리를 hidden input에 설정
-									// document.getElementById('selectedCategory').value = searchState.selectedCategories.join(',');
 
 									// 선택된 토픽을 숨겨진 입력란에 설정
 									document.getElementById('selectedTopic').value = selectedTopicElement;
