@@ -20,9 +20,31 @@
 			<div class="form-group">
 				<form:label path="userid">
 					<i class="fa-solid fa-id-badge"></i> ID:</form:label>
-				<form:input path="userid" class="form-control" />
+				<form:input path="userid" class="form-control" id="userid" />
+				<button type="button" onclick="checkUserId()">ID 확인</button>
 				<form:errors path="userid" cssClass="error" />
+				<span id="useridCheckResult"></span>
 			</div>
+			
+	<script>
+	function checkUserId() {
+  		  var userid = document.getElementById('userid').value;
+   		  if(userid) {
+    	    // 서버로 AJAX 요청 보내기
+     	   fetch('/security/checkUserId?userid=' + userid)
+            .then(response => response.json())
+            .then(data => {
+                if(data.isAvailable) {
+                    document.getElementById('useridCheckResult').innerText = '사용 가능한 ID입니다';
+                } else {
+                    document.getElementById('useridCheckResult').innerText = '이미 사용 중인 ID입니다';
+                }
+            });
+    } else {
+        alert('확인할 ID를 입력해주세요');
+    }
+}
+</script>	
 
 			<div class="form-group">
 				<form:label path="username">

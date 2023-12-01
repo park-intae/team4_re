@@ -26,18 +26,13 @@ public class NotificationServiceimpl implements NotificationService {
 	// 알림 추가
 	public void addNotification(Notification notification) {
 		notifications.add(notification);
+		try {
+			notificationMapper.insertNotification(notification);
+		} catch (Exception e) {
+			log.error("알림 메세지 저장중 오류 발생 : ", e);
+		}
 	}
 
-	/*
-	 *
-	 * // public List<Notification> getNotificationsForUser(String userId) {
-	 * List<Notification> userNotifications = new ArrayList<>(); for (Notification
-	 * notification : notifications) { if (notification.getReceiver().equals(userId)
-	 * && !notification.isRead()) { userNotifications.add(notification); } } return
-	 * userNotifications; }
-	 * 
-	 * 
-	 */
 	// 로그인 성공 알림을 전송하는 메소드
 	public void sendLoginSuccessNotification(String username) {
 		Notification notification = new Notification(username + "님이 로그인하셨습니다.", username);
@@ -50,11 +45,22 @@ public class NotificationServiceimpl implements NotificationService {
 
 	}
 
-
 	public void sendFollowNotification(String followerId, String followingId) {
-		String content = followerId + "님이 팔로우를 했습니다" ;
+		String content = followerId + "님이 팔로우를 했습니다";
 		Notification notification = new Notification(content, followingId);
+
+		// 알림 객체 생성 및 저장
+		addNotification(notification);
+
 		sseEmitters.sendNotificationToUser(followingId, notification);
 	}
 
+	@Override
+	public List<Notification> getNotificationsByUserId(String userId) {
+		return notificationMapper.getNotificationsByUserId(userId);
+	}
+	
+	public void deleteNotification(Long notificationId) {
+	    notificationMapper.deleteNotification(notificationId);
+	}
 }
