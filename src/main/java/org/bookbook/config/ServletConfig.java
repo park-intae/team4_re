@@ -17,7 +17,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
-@ComponentScan(basePackages = { "org.bookbook.controller", "org.bookbook.exception", "org.bookbook.sse", "org.bookbook.config" })
+@ComponentScan(basePackages = { "org.bookbook.controller", "org.bookbook.exception", "org.bookbook.sse", "org.bookbook.config", "org.bookbook.util" })
+
 public class ServletConfig implements WebMvcConfigurer {
 
 	@Override

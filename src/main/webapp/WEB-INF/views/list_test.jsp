@@ -184,17 +184,3 @@
 	</div>
 	</form:form>
 </div>
-
-<h1>Book List</h1>
-
-<c:if test="${not empty list}">
-	<ul>
-		<c:forEach var="book" items="${list}">
-			<li>${book}</li>
-			<!-- <li>${book.title}-${book.author} - ${book.genre } - ${book.category }</li> -->
-		</c:forEach>
-	</ul>
-</c:if>
-<c:if test="${empty list}">
-	<p>No books found.</p>
-</c:if>
