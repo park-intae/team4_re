@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/book/{bookId}/review")
+@RequestMapping("/api/bookbook/{column1}/review")
 public class ReviewController {
 	@Autowired
 	private ReviewMapper mapper;
 
-	@GetMapping("/{bookId}")
+	@GetMapping("/{column1}")
 	public ReviewVO read(
-		@PathVariable int ratingId, @PathVariable int bookId) {
-		return mapper.get(bookId); 
+		@PathVariable int ratingId, @PathVariable int column1) {
+		return mapper.get(column1); 
 	}
 	
 	@PostMapping("")
 	public ReviewVO create(@RequestBody ReviewVO vo) {
 		mapper.create(vo);
-		return mapper.get(vo.getBookId());
+		return mapper.get(vo.getColumn1());
 	}
 }

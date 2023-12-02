@@ -5,14 +5,14 @@
 
 <mapper namespace="org.bookbook.mapper.ReviewMapper">
 	<select id="get" resultType="ReviewVO">
-		select * from book_rating
+		select * from best_rating
 		where
-		book_id = #{book_id}
+		column1 = #{column1}
 	</select>
 
 	<insert id="create">
 
-		insert into book_rating (rating_id, user_id, rating_review)
+		insert into best_rating (rating_id, user_id, rating_review)
 		values(#{rating_id}, #{user_id}, #{rating_review})
 	</insert>
 

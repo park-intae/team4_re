@@ -4,5 +4,5 @@ import org.bookbook.domain.ReviewVO;
 
 public interface ReviewMapper {
 	void create(ReviewVO vo);
-	ReviewVO get(int bookId);
+	ReviewVO get(int column1);
 }
