@@ -30,28 +30,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	BookSearchService service;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	
-//	sidebar 적용되는 코드들(필요하면 복사해서 쓰세요~)
+	// sidebar 적용되는 코드들(필요하면 복사해서 쓰세요~)
 
 	@Autowired
-	SidebarUtil sidebarUtil;	
-	
+	SidebarUtil sidebarUtil;
+
 	@ModelAttribute("searchBook")
 	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
 		JSONObject result = sidebarUtil.searchBookTypes(topics, genres);
 		return result;
 	}
 
-	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -69,7 +68,7 @@ public class HomeController {
 			if (auth.getPrincipal() instanceof CustomUser) {
 				CustomUser customUser = (CustomUser) auth.getPrincipal();
 				UserVO user = customUser.getUser();
-				 model.addAttribute("username", user.getUsername()); // 사용자 이름 또는 아이디를 모델에 추가
+				model.addAttribute("username", user.getUsername()); // 사용자 이름 또는 아이디를 모델에 추가
 				session.setAttribute("user", user); // UserVO 객체 세션에 저장
 			}
 		}
