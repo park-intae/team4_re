@@ -18,4 +18,5 @@ public interface UserService {
 
 	public List<UserVO> getAllUsersWithFollowStatus(String currentUserId); 
 	
+	public boolean isUserIdAvailable(String userid); // ID중복확인
 }

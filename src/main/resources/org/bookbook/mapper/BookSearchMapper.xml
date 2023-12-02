@@ -132,6 +132,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT * FROM best
 	limit 10
 	</select>
+	
+	<select id="selectBookById" resultType="BookVO">
+	SELECT * from book b
+	join book_image bi
+	on b.book_id = bi.book_id
+	where b.book_id = #{bookId}
+	</select>
 
 
 	<!-- 좋아요 부분 -->

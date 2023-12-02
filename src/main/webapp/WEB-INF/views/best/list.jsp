@@ -4,13 +4,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<%@ include file="../layouts/header2.jsp"%>
+<%@ include file="../layouts/header.jsp"%>
 <%@include file="../layouts/sidebar.jsp" %>
 <div class="center">
 	<h2>베스트셀러 도서</h2>
 </div>
 <div>
-	<%-- <%@ include file="category_bar.jsp" %> --%>
+	<%@ include file="category_bar.jsp" %>
 
 	<div class="row">
 		<c:forEach var="best" items="${list}">

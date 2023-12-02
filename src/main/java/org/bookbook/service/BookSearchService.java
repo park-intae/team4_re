@@ -21,6 +21,8 @@ public interface BookSearchService {
 	
 	public List<BookVO> getBookListById(List<Long> bookIds);
 	
+	public BookVO getBookById(int bookIds);
+	
 	public List<BestVO> getBestBookList();
 		
 	 /* °Ô½ÃÆÇ ÃÑ °¹¼ö */

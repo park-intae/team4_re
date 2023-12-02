@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@include file="../layouts/header2.jsp"%>
+<%@include file="../layouts/header.jsp"%>
 <%@ page import="org.bookbook.domain.LikeVO"%>
 
 <!DOCTYPE html>

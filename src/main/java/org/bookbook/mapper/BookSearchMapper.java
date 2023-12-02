@@ -24,6 +24,8 @@ public interface BookSearchMapper {
 	
     public List<BookVO> selectBooksByIds(List<Long> bookIds);
     
+    public BookVO selectBookById(int bookId);
+    
     public List<BestVO> selectBestBook();
 
 	/* °Ô½ÃÆÇ ÃÑ °¹¼ö */

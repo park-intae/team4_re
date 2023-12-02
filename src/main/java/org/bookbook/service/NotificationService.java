@@ -22,4 +22,12 @@ public interface NotificationService {
 
   
     public void sendFollowNotification(String followerId, String followingId);
+    
+   
+  //  public List<Notification> getNotificationsForUser(String userId);
+    // 사용자에게 알림 메세지 조회 리스트로 목록 보여주기
+    public List<Notification> getNotificationsByUserId(String userId);
+    
+    
+    public void deleteNotification(Long notificationId);
 }
