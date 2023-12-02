@@ -14,11 +14,7 @@
 	<!-- 이 안에 본문 내용 넣어주시고 class 명도 꼭 같이 넣어주세요 -->
 	<img class="logo" src="/resources/images/logo1.png">
 	<!-- 검색창 -->
-<<<<<<< HEAD
-=======
 
-
->>>>>>> main
 	<form action="book/list" method="GET">
 		<!-- action 값을 상세페이지로 변경 -->
 		<div class="mx-auto mt-5 search-bar input-group mb-3 search-bar">
