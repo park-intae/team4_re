@@ -31,6 +31,7 @@
 	<br>
 
 
+	<hr>
 
 
 
@@ -104,10 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 	<div>
-		<div>
-			<button type="button" class="copy-btn" onclick="copyUrl()">링크
-				복사</button>
-		</div>
+
 
 
 
@@ -137,7 +135,6 @@ function copyUrl(){
 	<!-- 			</a> -->
 	<%-- 		</c:forEach> --%>
 	<!-- 	</div> -->
-	<hr>
 
 	<!-- 추천평 -->
 	<div>
@@ -167,6 +164,10 @@ function copyUrl(){
     
     <div>
         <input type="submit" value="추천평 작성">
+ 			<button type="button" class="copy-btn" onclick="copyUrl()">링크
+				복사</button>
+
+		</div>
     </div>
 </form>
 	</div>
