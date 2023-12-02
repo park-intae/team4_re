@@ -17,7 +17,7 @@
 			<div class="col-sm-6 col-lg-2 mb-3">
 				<div class="card-deck">
 					<div class="card" style="width: 100%">
-						<a href="${cri.getLinkWithColumn1('get',best.column1)}"> <img
+						<a href="/best/get?column1=${best.column1}"> <img
 							class="card-img-top" src="${best.images}" alt="${best.title}">
 						</a>
 						<div class="card-body">
