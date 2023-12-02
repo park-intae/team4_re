@@ -61,19 +61,19 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate);
 
-		// �뒪�봽留� �떆�걧由ы떚 而⑦뀓�뒪�듃�뿉�꽌 �씤利� �젙蹂대�� 媛��졇�샃�땲�떎.
+		// 스프링 시큐리티 컨텍스트에서 인증 정보를 가져옵니다.
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
 
 			if (auth.getPrincipal() instanceof CustomUser) {
 				CustomUser customUser = (CustomUser) auth.getPrincipal();
 				UserVO user = customUser.getUser();
-				model.addAttribute("username", user.getUsername()); // �궗�슜�옄 �씠由� �삉�뒗 �븘�씠�뵒瑜� 紐⑤뜽�뿉 異붽�
-				session.setAttribute("user", user); // UserVO 媛앹껜 �꽭�뀡�뿉 ���옣
+				model.addAttribute("username", user.getUsername()); // 사용자 이름 또는 아이디를 모델에 추가
+				session.setAttribute("user", user); // UserVO 객체 세션에 저장
 			}
 		}
 
-		// �꽭�뀡�뿉�꽌 �꽕�씠踰� �궗�슜�옄 �젙蹂대�� 媛��졇�� 紐⑤뜽�뿉 異붽�
+		// 세션에서 네이버 사용자 정보를 가져와 모델에 추가
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("userName");
 		String userNickname = (String) session.getAttribute("userNickname");
@@ -81,7 +81,7 @@ public class HomeController {
 		String userGender = (String) session.getAttribute("userGender");
 		String userBirthday = (String) session.getAttribute("userBirthday");
 
-		// 紐⑤뜽�뿉 �궗�슜�옄 �젙蹂� 異붽�
+		// 모델에 사용자 정보 추가
 		model.addAttribute("userId", userId);
 		model.addAttribute("userName", userName);
 		model.addAttribute("userNickname", userNickname);
