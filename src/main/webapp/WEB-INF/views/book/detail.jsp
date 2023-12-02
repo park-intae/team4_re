@@ -30,10 +30,6 @@
 		${book.publicationdate}
 	</div>
 
-	<div>
-		<a href="">SNS 공유</a>
-
-	</div>
 
 	<!-- 	<div class="thumb-images my-5 d-flex"> -->
 	<%-- 		<c:forEach var="image" items="${best.images}"> --%>
