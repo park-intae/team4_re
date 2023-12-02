@@ -15,20 +15,24 @@ import org.bookbook.domain.BestVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
+import org.bookbook.domain.LikeVO;
 import org.bookbook.domain.TopicVO;
 import org.bookbook.model.Criteria;
 import org.bookbook.model.PageMakerDTO;
 import org.bookbook.service.BookSearchService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -62,6 +66,7 @@ public class BookController {
 			List<String> genreToList = new ArrayList<>(Arrays.asList(genreToString.split(", ")));
 
 			for (String genre : genreToList) {
+
 				List<String> categoriesToList = genreConvertedMap.get(genre);
 
 				if (categoriesToList == null) {
@@ -225,4 +230,26 @@ public class BookController {
 		
 		model.addAttribute("book", book);
 	}
+
+//	// 좋아요 부분
+//	@PostMapping("/addLike")
+//	@ResponseBody
+//	public ResponseEntity<String> addLike(@RequestParam String userId, @RequestParam int bookId) {
+//	    LikeVO like = new LikeVO(); 
+//	    like.setUserid(userId);
+//	    like.setBookid(bookId);
+//	    service.addLike(like);
+//	    return ResponseEntity.ok("좋아요가 성공적으로 추가되었습니다");
+//	}
+
+	@GetMapping("/likes")
+	public String getLikes(Model model, @RequestParam(required = false) String userId) { // ?userId="test2"
+		if (userId == null) {}
+		List<LikeVO> likes = service.getLikes(userId);
+		log.info(likes);
+	
+		model.addAttribute("likes", likes);
+		return "book/likes";
+	}
+
 }
