@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
+
 <%@ include file="../layouts/header.jsp"%>
 <%-- 개별 페이지 --%>
 <div class="center">
@@ -35,24 +36,22 @@
 
 	<link href="../../../resources/css/star.css" rel="stylesheet" />
 
-<form class="mb-3" name="myform" id="myform" method="post" action="/api/bookbook/rating/add">
-    <fieldset>
-        <span class="text-bold">${ratings.average_rating}</span>
-        <input type="radio" name="rating" value="5" id="rate1">
-        <label for="rate1">★</label>
-        <input type="radio" name="rating" value="4" id="rate2">
-        <label for="rate2">★</label>
-        <input type="radio" name="rating" value="3" id="rate3">
-        <label for="rate3">★</label>
-        <input type="radio" name="rating" value="2" id="rate4">
-        <label for="rate4">★</label>
-        <input type="radio" name="rating" value="1" id="rate5">
-        <label for="rate5">★</label>
-        <input type="submit" value="별점 제출">
-    </fieldset>
-</form>
+	<form class="mb-3" name="myform" id="myform" method="post"
+		action="/api/bookbook/rating/add">
+		<fieldset>
+			<span class="text-bold">${ratings.average_rating}</span> <input
+				type="radio" name="rating" value="5" id="rate1"> <label
+				for="rate1">★</label> <input type="radio" name="rating" value="4"
+				id="rate2"> <label for="rate2">★</label> <input type="radio"
+				name="rating" value="3" id="rate3"> <label for="rate3">★</label>
+			<input type="radio" name="rating" value="2" id="rate4"> <label
+				for="rate4">★</label> <input type="radio" name="rating" value="1"
+				id="rate5"> <label for="rate5">★</label> <input
+				type="submit" value="별점 제출">
+		</fieldset>
+	</form>
 
-<script>
+	<script>
 document.addEventListener("DOMContentLoaded", function() {
 	  document.getElementById("myform").addEventListener("submit", function(event) {
 	    event.preventDefault(); // 기본 제출 동작 방지
@@ -141,11 +140,34 @@ function copyUrl(){
 
 	<!-- 추천평 -->
 	<div>
-		<c:forEach var="rating_review" items=" ${book_rating.rating_review}">
-		</c:forEach>
+<%-- 		<c:forEach var="rating_review" items=" ${book_rating.rating_review}"> --%>
+<%-- 		</c:forEach> --%>
+
+<c:forEach var="rating" items="${ratings}">
+        <p>User ID: ${book_rating.user_id}</p>
+        <p>Rating: ${ratings.average_rating}</p>
+        <p>Review: ${book_rating.rating_review}</p>
+        <!-- 기타 필요한 출력 요소를 추가할 수 있습니다. -->
+    </c:forEach>
 	</div>
 
 	<!-- 추천생성 -->
-	<div></div>
+	<div>
+		<form method="post">
+    <input type="hidden" name="bookId" value="${book_rating.rating_review}">
+    <div>
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+    <div>
+        <label for="content">내용:</label>
+        <textarea id="content" name="content" rows="4" cols="50" required></textarea>
+    </div>
+    
+    <div>
+        <input type="submit" value="추천평 작성">
+    </div>
+</form>
+	</div>
 </div>
 <%@ include file="../layouts/footer.jsp"%>

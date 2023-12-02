@@ -137,4 +137,6 @@ where dateNum2=1
 limit #{offset} , #{amount}
 ]]>
 	</select>
+
+	
 </mapper>	

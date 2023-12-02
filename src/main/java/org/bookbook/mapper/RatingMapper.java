@@ -9,6 +9,6 @@ public interface RatingMapper {
 
 	public int addRating(RatingVO rating);
 
-	public int deleteRating(RatingVO rating);
+//	public int deleteRating(RatingVO rating);
 
 }

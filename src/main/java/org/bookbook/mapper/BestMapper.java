@@ -36,4 +36,6 @@ public interface BestMapper {
 	public List<BestVO> getListWithPaging4(Criteria cri);
 	public List<BestVO> getListWithPaging5(Criteria cri);
 	public List<BestVO> getListWithPaging6(Criteria cri);
+	
+
 }

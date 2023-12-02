@@ -26,9 +26,9 @@ public class RatingController {
 	    return ResponseEntity.ok(message);
 	}
 	
-	@DeleteMapping("/delete")
-	public String deleteRating(RatingVO rating) {
-		mapper.deleteRating(rating);	
-		return "OK";
-	}
+//	@DeleteMapping("/delete")
+//	public String deleteRating(RatingVO rating) {
+//		mapper.deleteRating(rating);	
+//		return "OK";
+//	}
 }

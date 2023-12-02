@@ -257,10 +257,10 @@ a:hover {
 		<div class="card-container">
 			<c:forEach var="book" items="${list}">
 				<div class="card">
-					<a href="${cri.getLinkWithColumn1('get',book.book_id)}"><img src="${book.imageUrl}" alt="${book.title}"
-						class="card-img-top"></a>
+					<img src="${book.imageUrl}" alt="${book.title}"
+						class="card-img-top">
 					<div class="card-body">
-						<h5 class="card-title"><a href="${cri.getLinkWithColumn1('get',book.book_id)}">${book.title}</a></h5>
+						<h5 class="card-title">${book.title}</h5>
 						<p class="card-text">저자: ${book.author}</p>
 						<p class="card-text">출판사: ${book.publisher}</p>
 						<p class="card-text">장르: ${book.genre}</p>
