@@ -51,7 +51,8 @@
 	<!-- 	</div> -->
 
 	<div>
-		<a href="">추천 생성</a>
+		<%@ include file="recommend.jsp" %>
+		
 
 	</div>
 </div>
