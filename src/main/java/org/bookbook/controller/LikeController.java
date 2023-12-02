@@ -25,6 +25,9 @@ public class LikeController {
     @PostMapping("/api/addLike")
     @ResponseBody
     public ResponseEntity<String> addLike(@RequestParam String userId, @RequestParam int bookId) {
+    	log.info("userId:"+userId);
+    	log.info("bookId:"+bookId);
+    	
         LikeVO like = new LikeVO();
         like.setUserId(userId);
         like.setBookId(bookId);

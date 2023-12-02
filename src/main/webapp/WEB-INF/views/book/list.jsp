@@ -3,22 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@include file="../layouts/header2.jsp"%>
-
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+ 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <!-- <h1>페이지 타이틀</h1> -->
 
-
-
-
 <script type="text/javascript">
 	function likeBook(bookId, title, icon) {
-		console.log(bookId)
 		// 여기에 AJAX 요청 코드 추가
-		$.ajax({
+		console.log("")
+		$.ajax({			
 			type : 'POST',
 			url : '/api/addLike', // 좋아요를 처리하는 컨트롤러의 URL
 			data : {
@@ -31,6 +26,7 @@
 				console.log(response);
 				// 이 부분에 필요한 업데이트 로직을 추가할 수 있습니다.
 
+	
 				// 아이콘의 클래스를 토글
 	            $(icon).toggleClass('bi-heart bi-heart-fill');
 
@@ -41,12 +37,10 @@
 			}
 		});
 	}
-
-	$(document).ready(function() {
+		$(document).ready(function() {
 
 		$(".pageInfo a").on("click", function(e) {
 			//e.preventDefault();
-
 			//moveForm.find("input[name='pageNum']").val($(this).attr("href")); 
 			//moveForm.attr("action", "/book/list");
 			//moveForm.submit();
@@ -55,7 +49,6 @@
 
 	})
 </script>
-
 
 
 
@@ -189,5 +182,56 @@ a:hover {
 <c:if test="${empty list}">
 	<p>No books found.</p>
 </c:if>
-
 <%@include file="../layouts/footer.jsp"%>
+
+
+
+<%@include file="../layouts/header2.jsp"%>
+
+<h1>recommend book</h1>
+
+<c:if test="${not empty bookByCBF}">
+<ul>
+	<div class="card-container">
+		<c:forEach var="bookAI" items="${bookByCBF}">
+			<div class="card">
+				<img src="${bookAI.imageUrl}" alt="${bookAI.title}"
+					class="card-img-top">
+				<div class="card-body">
+					<h5 class="card-title">${bookAI.title}</h5>
+					<p class="card-text">저자: ${bookAI.author}</p>
+					<p class="card-text">출판사: ${bookAI.publisher}</p>
+					<p class="card-text">장르: ${bookAI.genre}</p>
+					<p class="card-text">카테고리: ${bookAI.category}</p>
+					<p class="card-text"></p>
+					<button class="btn btn-primary"
+						onclick="likeBook('${bookAI.bookid}')"><i class="bi-heart"></i>좋아요</button>
+					<button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+</ul>
+
+</c:if>
+
+<c:if test="${empty bookByCBF}">
+<ul>
+	<div class="card-container">
+		<c:forEach var="best" items="${best}">
+			<div class="card">
+				<img src="${best.images}" alt="${best.title}"
+					class="card-img-top">
+				<div class="card-body">
+					<h5 class="card-title">${best.title}</h5>
+					<p class="card-text">저자: ${best.author}</p>
+					<p class="card-text">출판사: ${best.publisher}</p>
+					<p class="card-text"></p>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+</ul>
+</c:if>
+
+

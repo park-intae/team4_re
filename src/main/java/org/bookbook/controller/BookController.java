@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+import org.bookbook.domain.BestVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
@@ -26,6 +29,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -44,29 +52,19 @@ public class BookController {
 
 		Map<String, List<String>> genreConvertedMap = convertToMap(genreList);
 
-		// log.info(genreConvertedMap);
-
 		Map<String, Map<String, List<String>>> map = new LinkedHashMap<>();
-
-		// log.info(topicList);
 
 		for (TopicVO topic : topicList) {
 			Map<String, List<String>> genreMap = new LinkedHashMap<>();
 
 			String genreToString = topic.getGenres();
 
-			// 초기 용량 설정을 통한 성능 최적화
 			List<String> genreToList = new ArrayList<>(Arrays.asList(genreToString.split(", ")));
 
 			for (String genre : genreToList) {
-				// 불필요한 객체 생성 최적화
-				// genre = genre.trim();
-//				log.info("----->---->" + genre);
+
 				List<String> categoriesToList = genreConvertedMap.get(genre);
 
-//				log.info("----------------->" + categoriesToList);
-
-				// 이미 있는 리스트를 재활용하여 새로운 리스트를 생성하지 않도록 최적화
 				if (categoriesToList == null) {
 					categoriesToList = new ArrayList<>();
 				}
@@ -95,12 +93,8 @@ public class BookController {
 				categoriesList = new ArrayList<String>(Arrays.asList(categoriesToString.split(", ")));
 			}
 
-			// log.info("------->>>"+categoriesList);
-
 			genreMap.put(genre, categoriesList);
 		}
-
-		// log.info("--------------------->>>>>"+ genreMap);
 
 		return genreMap;
 	}
@@ -108,25 +102,69 @@ public class BookController {
 	@GetMapping("/list")
 	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
 
-//		log.info("list Page");
-//		log.info(search);
+				
+        String flaskApiUrl = "http://49.50.166.252:5000/api/list";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String keywordParam = (search.getKeywords() != null) ?
+                String.join(",", search.getKeywords()) :
+                "";
+        
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
+                .queryParam("keyword", keywordParam)
+                ;
+        String response = restTemplate.getForObject(builder.toUriString(), String.class);
+        
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(response);
+
+            JsonNode resultNode = jsonNode.get("result");
+                                                
+            if (resultNode != null && resultNode.isArray()) {
+            	
+                List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false)
+                        .map(JsonNode::asLong)
+                        .collect(Collectors.toList());
+                
+                log.info("bookIds : "+bookIds);
+                
+                if (!bookIds.isEmpty()) {                	
+                	List<BookVO> books = service.getBookListById(bookIds);
+                	
+                	model.addAttribute("bookByCBF", books);
+                }
+
+            }
+        } catch (Exception e) {
+            System.out.println("------------>Error");
+        }
+
+        
+    	List<BestVO> bestBooks = service.getBestBookList();
+    	
+    	model.addAttribute("best", bestBooks);
+        
+
 		
 		List<BookVO> dataResult = service.getListPaging(cri);
 
 		model.addAttribute("list", dataResult);
-		
-//		log.info("dataResult:"+dataResult);
-		
+
 		int total = service.getTotal();
 		 
 		PageMakerDTO pagemake = new PageMakerDTO(cri, total);
 
 		model.addAttribute("pageMaker", pagemake); // 키 : 밸류
 
+
 		// log.info(model);
 
+
 	}
-	
+
 //	// 좋아요 부분
 //	@PostMapping("/addLike")
 //	@ResponseBody
@@ -138,18 +176,14 @@ public class BookController {
 //	    return ResponseEntity.ok("좋아요가 성공적으로 추가되었습니다");
 //	}
 
-    @GetMapping("/likes")
-    public String getLikes(Model model, @RequestParam(required = false) String userId) { // ?userId="test2"
-    	if (userId == null) {
+	@GetMapping("/likes")
+	public String getLikes(Model model, @RequestParam(required = false) String userId) { // ?userId="test2"
+		if (userId == null) {}
+		List<LikeVO> likes = service.getLikes(userId);
+		log.info(likes);
+	
+		model.addAttribute("likes", likes);
+		return "book/likes";
+	}
 
-        }
-    	
-    	List<LikeVO> likes = service.getLikes(userId);
-        
-        log.info(likes);
-        model.addAttribute("likes", likes);
-        return "book/likes"; 
-    }
-    
-    
 }
