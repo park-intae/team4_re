@@ -20,7 +20,12 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 	@Autowired
 	BookSearchMapper bookSearchMapper;
-	
+
+	@Override
+	public BookVO getBookById(int bookIds) {
+		return bookSearchMapper.selectBookById(bookIds);
+	}
+
 	@Override
 	public List<BestVO> getBestBookList() {
 		
@@ -35,19 +40,16 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 	@Override
 	public List<BookVO> getBookList(BookSearchVO bookSearch) {
-		log.info(bookSearch);
 		return bookSearchMapper.read(bookSearch);
 	}
 
 	@Override
 	public List<GenreVO> getGenreList(GenreVO genre) {
-		log.info(genre);
 		return bookSearchMapper.getGenre(genre);
 	}
 
 	@Override
 	public List<TopicVO> getTopicList(TopicVO Topic) {
-		log.info(Topic);
 		return bookSearchMapper.getTopic(Topic);
 	}
 

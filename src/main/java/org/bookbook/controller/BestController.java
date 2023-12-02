@@ -51,9 +51,9 @@ public class BestController {
 
 	
 	@GetMapping({ "/get" })
-	public void get(@RequestParam("column1") int column1, @ModelAttribute("cri") Criteria cri, Model model) {
-
-		log.info(service.get(column1));
+	public void get(@RequestParam("column1") int column1, @ModelAttribute("cri") Criteria cri,
+			Model model) {
+		
 		model.addAttribute("best", service.get(column1));
 	}
 }

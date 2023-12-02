@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@include file="layouts/header2.jsp"%>
+<%@include file="layouts/header.jsp"%>
 
 <div class="main"> <!-- 이 안에 본문 내용 넣어주시고 class 명도 꼭 같이 넣어주세요 -->
       <h1>더미 제목</h1>

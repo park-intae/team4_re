@@ -4,14 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <%@ include file="../layouts/header.jsp"%>
 
 
 <sec:authorize access="isAuthenticated()">
-	<!-- 사용자 정보 결정 -->
+	<!-- 현재 로그인한 사용자의 정보를 불러옵니다. -->
 	<c:set var="user"
-		value="${sessionScope.userId != null ? sessionScope : auth.principal}" />
+		value="${not empty sessionScope.naverUser ? sessionScope.naverUser : user}" />
 </sec:authorize>
 
 <meta name="_csrf" content="${_csrf.token}" />
@@ -22,107 +22,180 @@
 </script>
 
 <!-- 프로필 정보 섹션 -->
-<div class="wrap">
-	<div class="greenContainer">
-		<!-- 프로필 사진 표시 -->
-		<div class="grade">
-			<c:choose>
-				<c:when test="${not empty sessionScope.naverUser}">
-					<img class="avatar"
-						src="https://api.dicebear.com/7.x/identicon/svg?seed=${sessionScope.naverUser.id}" />
-				</c:when>
-				<c:otherwise>
-					<img class="avatar"
-						src="https://api.dicebear.com/7.x/identicon/svg?seed=${user.userid}" />
-				</c:otherwise>
-			</c:choose>
-		</div>
-		<div class="modify">i</div>
-	</div>
 
-	<!-- 사용자 정보 표시 -->
-	<div class="d-flex my-3 align-items-center">
-		<div class="ml-4">
-			<c:choose>
-				<c:when test="${not empty sessionScope.naverUser}">
-					<!-- 네이버 사용자 정보 -->
-					<div>ID: ${sessionScope.naverUser.id}</div>
-					<div>이름: ${sessionScope.naverUser.name}</div>
-					<div>Email: ${sessionScope.naverUser.email}</div>
-					<div>성별: ${sessionScope.naverUser.gender}</div>
-					<div>생일: ${sessionScope.naverUser.birthday}</div>
-				</c:when>
-				<c:otherwise>
-					<!-- 일반 사용자 정보 -->
-					<div>ID: ${user.userid}</div>
-					<div>이름 : ${user.username}</div>
-					<div>
-						가입일:
-						<fmt:formatDate value="${user.regDate}" pattern="yyyy-MM-dd HH:mm" />
+<div class="page-container">
+	<div class="line-separator"></div>
+
+	<div class="main-border">
+		<div class="upper-div"></div>
+
+		<div class="inner-container">
+			<div class="round-div">	<sec:authorize access="isAuthenticated()">
+        <c:choose>
+            <c:when test="${not empty sessionScope.naverUser}">
+                <!-- 네이버 로그인 사용자의 프로필 이미지 -->
+                <img src="https://api.dicebear.com/7.x/identicon/svg?seed=${sessionScope.naverUser.id}" alt="Profile Image" class="profile-image" />
+            </c:when>
+            <c:otherwise>
+                <!-- 일반 로그인 사용자의 프로필 이미지 -->
+                <img src="https://api.dicebear.com/7.x/identicon/svg?seed=${user.userid}" alt="Profile Image" class="profile-image" /> 
+            </c:otherwise>
+        </c:choose>
+    </sec:authorize>   
+    </div>
+		
+
+			<div class="info-follow-container">
+				<div class="info-container">
+					<c:choose>
+						<c:when test="${not empty sessionScope.naverUser}">
+							<!-- 네이버 로그인 사용자 정보 표시 -->
+							<!-- 이름과 닉네임을 함께 배치 -->
+							<div class="flex-row-container">
+								<div class="label-item-container">
+									<div class="label">이름</div>
+									<div class="item-name">${sessionScope.naverUser.name}</div>
+								</div>
+								<div class="label-item-container">
+									<div class="label">닉네임</div>
+									<div class="item-nickname">${sessionScope.naverUser.nickname}</div>
+								</div>
+							</div>
+
+							<!-- 생일과 성별을 함께 배치 -->
+							<div class="flex-row-container">
+								<div class="label-item-container">
+									<div class="label">생일</div>
+									<div class="item-birth">${sessionScope.naverUser.birthday}</div>
+								</div>
+								<div class="label-item-container">
+									<div class="label">성별</div>
+									<div class="item-gender">${sessionScope.naverUser.gender}</div>
+								</div>
+							</div>
+
+							<!-- 이메일 주소 -->
+							<div class="label-item-container">
+								<div class="label">이메일주소</div>
+								<div class="item-email">${sessionScope.naverUser.email}</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<!-- 일반 사용자 정보 표시 -->
+							<!-- 이름과 닉네임을 함께 배치 -->
+							<div class="flex-row-container">
+								<div class="label-item-container">
+									<div class="label">이름</div>
+									<div class="item-name">${user.username}</div>
+								</div>
+								<div class="label-item-container">
+									<div class="label">닉네임</div>
+									<div class="item-nickname">${user.nickname}</div>
+								</div>
+							</div>
+
+							<!-- 생일과 성별을 함께 배치 -->
+							<div class="flex-row-container">
+								<div class="label-item-container">
+									<div class="label">생일</div>
+									<div class="item-birth">
+										<fmt:formatDate value="${user.birth}" pattern="yyyy-MM-dd" />
+									</div>
+								</div>
+								<div class="label-item-container">
+									<div class="label">성별</div>
+									<div class="item-gender">${user.gender}</div>
+								</div>
+							</div>
+
+							<!-- 이메일 주소 -->
+							<div class="label-item-container">
+								<div class="label">이메일주소</div>
+								<div class="item-email">${user.email}</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
+					<div class="button-container">
+						<button id="showFollowModal" class="btn btn-primary">팔로우
+							목록 보기</button>
+						<button id="likeButton" class="btn btn-secondary">좋아요</button>
+						<script>
+							document.getElementById('likeButton')
+									.addEventListener('click', function() {
+										window.location.href = 'book/likes.jsp';
+									});
+						</script>
 					</div>
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</div>
-</div>
+				</div>
 
-
-<div class="listContainer">
-
-	<!-- 사용자 프로필 및 정보 -->
-	<div class="user-profile">
-		<!-- 프로필 정보 -->
-
-	</div>
-
-	<!-- 팔로우 모달창 표시 버튼 -->
-	<button id="showFollowModal" class="btn btn-primary">팔로우 목록 보기</button>
-
-	<!-- 팔로우 모달창 -->
-	<link rel="stylesheet" href="/resources/css/modal.css" />
-	<div id="followModal" class="modal_wrapper" style="display: none;">
-		<div class="modal-content">
-			<span class="close" onclick="closeFollowModal()">&times;</span>
-			<h2>팔로우</h2>
-			<div id="userList">
-				<!-- 사용자 목록 표시 -->
+				<div class="item-follow">
+					<!-- -->
+					<!--회원 정보 수정 버튼 자리 예정 -->
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- 모달창 overlayscrollbars -->
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/css/OverlayScrollbars.css">
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/js/OverlayScrollbars.js"></script>
-
-	<!-- 모달창 overlayscrollbars script-->
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			OverlayScrollbars(document.querySelectorAll('.modal-content'), {});
-		});
-	</script>
 
 
 
-	<a href="#" class="item">
-		<div class="icon">ii</div>
-		<div class="text">책 평가 및 리뷰 확인 기능</div>
-		<div class="right"></div>
-	</a> <a href="#" class="item">
-		<div class="icon">ii</div>
-		<div class="text">알림 기능 구현</div>
-		<div class="right"></div>
-	</a>
-	<div class="right"></div>
-</div>
+	<div class="line-separator"></div>
+
+	<div class="review-title">나의 리뷰</div>
+
+	<div class="review-content"></div>
+	<div class="review-content"></div>
+	<div class="review-content"></div>
+
+	<div class="line-separator"></div>
 
 
+	<div class="alarm-title">알림 내역</div>
+	
+	<div class="alarm-content">       </div>
 
+
+	<div class="line-separator"></div>
 
 </div>
 
-<link href="/resources/css/profile.css" rel="stylesheet" type="text/css">
+<!-- 사용자 프로필 및 정보 -->
+<div class="user-profile">
+	<!-- 프로필 정보 -->
+
+</div>
+
+
+<!-- 팔로우 모달창 -->
+<link rel="stylesheet" href="/resources/css/modal.css" />
+<div id="followModal" class="modal_wrapper" style="display: none;">
+	<div class="modal-content">
+		<span class="close" onclick="closeFollowModal()">&times;</span>
+		<h2>팔로우</h2>
+		<div id="userList">
+			<!-- 사용자 목록 표시 -->
+		</div>
+	</div>
+</div>
+
+<!-- 모달창 overlayscrollbars -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/css/OverlayScrollbars.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/js/OverlayScrollbars.js"></script>
+
+<!-- 모달창 overlayscrollbars script-->
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		OverlayScrollbars(document.querySelectorAll('.modal-content'), {});
+	});
+</script>
+
+
+
+
+<link href="/resources/css/mypage.css" rel="stylesheet" type="text/css">
+
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -156,10 +229,9 @@
 								.forEach(function(user) {
 									if (user.userid !== currentUserId) { // 현재 로그인한 사용자 제외
 										var tr = $('<tr>').append(
-												'<td>' + user.userid + '</td>')
-												.append(
-														'<td>' + user.username
-																+ '</td>');
+												'<td>' + user.nickname
+														+ '</td>').append(
+												'<td>' + "" + '</td>');
 										var followText = user.followStatus ? '언팔로우'
 												: '팔로우';
 										tr
