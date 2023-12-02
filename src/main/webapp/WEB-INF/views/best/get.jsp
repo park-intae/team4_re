@@ -154,7 +154,7 @@ function copyUrl(){
 	<!-- 추천생성 -->
 	<div>
 		<form method="post">
-    <input type="hidden" name="bookId" value="${book_rating.rating_review}">
+    <input type="hidden" name="bookId" value="${book_rating.book_id}">
     <div>
         <label for="title">제목:</label>
         <input type="text" id="title" name="title" required>
