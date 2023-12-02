@@ -21,12 +21,59 @@ public class BestServiceImpl implements BestService {
 	public int getTotalCount(Criteria cri) {
 		return mapper.getTotalCount(cri);
 	}
+	@Override
+	public int getTotalCount2(Criteria cri) {
+		return mapper.getTotalCount2(cri);
+	}
+	@Override
+	public int getTotalCount3(Criteria cri) {
+		return mapper.getTotalCount3(cri);
+	}
+	@Override
+	public int getTotalCount4(Criteria cri) {
+		return mapper.getTotalCount4(cri);
+	}
+	@Override
+	public int getTotalCount5(Criteria cri) {
+		return mapper.getTotalCount5(cri);
+	}
+	@Override
+	public int getTotalCount6(Criteria cri) {
+		return mapper.getTotalCount6(cri);
+	}
 
 	@Override
 	public List<BestVO> getList(Criteria cri) {
 		List<BestVO> list = mapper.getList(cri);
 		return mapper.getListWithPaging(cri);
 	}
+	
+	@Override
+	public List<BestVO> getList2(Criteria cri) {
+		List<BestVO> list = mapper.getList2(cri);
+		return mapper.getListWithPaging2(cri);
+	}
+	@Override
+	public List<BestVO> getList3(Criteria cri) {
+		List<BestVO> list = mapper.getList3(cri);
+		return mapper.getListWithPaging3(cri);
+	}
+	@Override
+	public List<BestVO> getList4(Criteria cri) {
+		List<BestVO> list = mapper.getList4(cri);
+		return mapper.getListWithPaging4(cri);
+	}
+	@Override
+	public List<BestVO> getList5(Criteria cri) {
+		List<BestVO> list = mapper.getList5(cri);
+		return mapper.getListWithPaging5(cri);
+	}
+	@Override
+	public List<BestVO> getList6(Criteria cri) {
+		List<BestVO> list = mapper.getList6(cri);
+		return mapper.getListWithPaging6(cri);
+	}
+
 
 	@Override
 	public BestVO get(int column1) {
@@ -38,6 +85,31 @@ public class BestServiceImpl implements BestService {
 	public int getTotal(Criteria cri) {
 		log.info("get total count");
 		return mapper.getTotalCount(cri);
+	}
+	@Override
+	public int getTotal2(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount2(cri);
+	}
+	@Override
+	public int getTotal3(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount3(cri);
+	}
+	@Override
+	public int getTotal4(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount4(cri);
+	}
+	@Override
+	public int getTotal5(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount5(cri);
+	}
+	@Override
+	public int getTotal6(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount6(cri);
 	}
 
 }
