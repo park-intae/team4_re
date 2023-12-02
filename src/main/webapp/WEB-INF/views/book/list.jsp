@@ -13,6 +13,8 @@
 </style>
 
 
+
+
 <div>
 	<form:form id="searchForm" modelAttribute="search" method="get"
 		class="d-flex">
@@ -255,24 +257,29 @@ a:hover {
 
 		<li>${book}</li>
 		<div class="card-container">
-			<c:forEach var="book" items="${list}">
-				<div class="card">
-					<img src="${book.imageUrl}" alt="${book.title}"
-						class="card-img-top">
-					<div class="card-body">
-						<h5 class="card-title">${book.title}</h5>
-						<p class="card-text">저자: ${book.author}</p>
-						<p class="card-text">출판사: ${book.publisher}</p>
-						<p class="card-text">장르: ${book.genre}</p>
-						<p class="card-text">카테고리: ${book.category}</p>
-						<p class="card-text"></p>
-						<button class="btn btn-primary"
-							onclick="likeBook('${book.bookid}')"><i class="bi-heart"></i>좋아요</button>
-						<button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
-					</div>
-				</div>
-			</c:forEach>
+		    <c:forEach var="book" items="${list}">
+		        <div class="card">
+		            <a href="/book/detail?bookid=${book.bookid}">
+		                <img src="${book.imageUrl}" alt="${book.title}" class="card-img-top">
+		            </a>
+		            <div class="card-body">
+		                <a href="/book/detail?bookid=${book.bookid}">
+		                    <h5 class="card-title">${book.title}</h5>
+		                </a>
+		                <p class="card-text">저자: ${book.author}</p>
+		                <p class="card-text">출판사: ${book.publisher}</p>
+		                <p class="card-text">장르: ${book.genre}</p>
+		                <p class="card-text">카테고리: ${book.category}</p>
+		                <p class="card-text"></p>
+		                <button class="btn btn-primary" onclick="likeBook('${book.bookid}')">
+		                    <i class="bi-heart"></i>좋아요
+		                </button>
+		                <button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
+		            </div>
+		        </div>
+		    </c:forEach>
 		</div>
+
 	</ul>
 
 	<form>
@@ -313,8 +320,6 @@ a:hover {
 </c:if>
 <c:if test="${empty list}">
 	<p>No books found.</p>
-
-
 
 </c:if>
 
