@@ -349,7 +349,7 @@ a:hover {
 <c:if test="${empty list}">
 	<p>No books found.</p>
 </c:if>
-<%@include file="../layouts/footer.jsp"%>
+
 
 
 
@@ -411,4 +411,4 @@ a:hover {
 	</ul>
 </c:if>
 
-
+<%@include file="../layouts/footer.jsp"%>
