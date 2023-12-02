@@ -20,7 +20,12 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 	@Autowired
 	BookSearchMapper bookSearchMapper;
-	
+
+	@Override
+	public BookVO getBookById(int bookIds) {
+		return bookSearchMapper.selectBookById(bookIds);
+	}
+
 	@Override
 	public List<BestVO> getBestBookList() {
 		

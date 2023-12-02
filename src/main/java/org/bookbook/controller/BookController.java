@@ -28,6 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -115,9 +116,10 @@ public class BookController {
 
 		String flaskApiUrl = "http://49.50.166.252:5000/api/list";
 
-		RestTemplate restTemplate = new RestTemplate();
 
 		String keywordParam = (search.getKeywords() != null) ? String.join(",", search.getKeywords()) : "";
+		
+		RestTemplate restTemplate = new RestTemplate();
 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
 				.queryParam("keyword", keywordParam)
@@ -166,7 +168,61 @@ public class BookController {
 	}
 
 	@GetMapping("/detail")
-	public void detail() {
+	public void detail(@RequestParam("bookid") int bookid, Model model, HttpSession session) {
+		
+		SecurityContextImpl securityContext = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
 
+		String username = "";
+
+		if (securityContext != null && securityContext.getAuthentication() != null) {
+			Object principal = securityContext.getAuthentication().getPrincipal();
+
+			if (principal instanceof UserDetails) {
+				username = ((UserDetails) principal).getUsername();
+				log.info("Username: " + username);
+			}
+		}
+		
+		BookVO book = service.getBookById(bookid);
+		
+		String flaskApiUrlIBCF = "http://49.50.166.252:5000/api/ibcf";
+		
+		RestTemplate restTemplate = new RestTemplate();
+
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrlIBCF)
+				.queryParam("bookid", bookid);
+		String response = restTemplate.getForObject(builder.toUriString(), String.class);
+		
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			JsonNode jsonNode = objectMapper.readTree(response);
+
+			JsonNode resultNode = jsonNode.get("ibcf");
+
+			if (resultNode != null && resultNode.isArray()) {
+
+				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false)
+						.map(JsonNode::asLong)
+						.collect(Collectors.toList());
+
+				log.info("bookIds : " + bookIds);
+
+				if (!bookIds.isEmpty()) {
+					List<BookVO> books = service.getBookListById(bookIds);
+
+					model.addAttribute("bookByCBF", books);
+				}
+
+			}
+		} catch (Exception e) {
+			System.out.println("------------>Error");
+		}
+		
+		List<BestVO> bestBooks = service.getBestBookList();
+
+		model.addAttribute("best", bestBooks);
+		
+		
+		model.addAttribute("book", book);
 	}
 }
