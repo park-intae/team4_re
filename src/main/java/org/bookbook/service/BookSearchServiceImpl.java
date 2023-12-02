@@ -6,6 +6,7 @@ import org.bookbook.domain.BestVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
+import org.bookbook.domain.LikeVO;
 import org.bookbook.domain.TopicVO;
 import org.bookbook.mapper.BookSearchMapper;
 import org.bookbook.model.Criteria;
@@ -62,4 +63,15 @@ public class BookSearchServiceImpl implements BookSearchService {
 	public int getTotal() {
 		return bookSearchMapper.getTotal();
 	}
+	
+	// 좋아요 추가 부분
+	 @Override
+	    public void addLike(LikeVO like) {
+	        bookSearchMapper.addLike(like);
+	    }
+
+	    @Override
+	    public List<LikeVO> getLikes(String userId) {
+	        return bookSearchMapper.getLikes(userId);
+	    }
 }
