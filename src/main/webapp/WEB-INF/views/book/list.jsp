@@ -154,7 +154,7 @@
 			<input type="hidden" id="selectedGenre" name="bookType" value=""
 				multiple>
 
-		<script>
+			<script>
 			function prepareAndSubmitForm() {
 				// 장르 정보 가져오기
 				var selectedGenre = document.getElementById('selectedGenre').value;
@@ -216,10 +216,10 @@
 
 .pageInfo {
 	list-style: none;
-    display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-    margin: 50px 0 0 0; /* 수정된 여백 설정 */
+	display: flex;
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	margin: 50px 0 0 0; /* 수정된 여백 설정 */
 }
 
 .pageInfo li {
@@ -257,27 +257,28 @@ a:hover {
 
 		<li>${book}</li>
 		<div class="card-container">
-		    <c:forEach var="book" items="${list}">
-		        <div class="card">
-		            <a href="/book/detail?bookid=${book.bookid}">
-		                <img src="${book.imageUrl}" alt="${book.title}" class="card-img-top">
-		            </a>
-		            <div class="card-body">
-		                <a href="/book/detail?bookid=${book.bookid}">
-		                    <h5 class="card-title">${book.title}</h5>
-		                </a>
-		                <p class="card-text">저자: ${book.author}</p>
-		                <p class="card-text">출판사: ${book.publisher}</p>
-		                <p class="card-text">장르: ${book.genre}</p>
-		                <p class="card-text">카테고리: ${book.category}</p>
-		                <p class="card-text"></p>
-		                <button class="btn btn-primary" onclick="likeBook('${book.bookid}')">
-		                    <i class="bi-heart"></i>좋아요
-		                </button>
-		                <button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
-		            </div>
-		        </div>
-		    </c:forEach>
+			<c:forEach var="book" items="${list}">
+				<div class="card">
+					<a href="/book/detail?bookid=${book.bookid}"> <img
+						src="${book.imageUrl}" alt="${book.title}" class="card-img-top">
+					</a>
+					<div class="card-body">
+						<a href="/book/detail?bookid=${book.bookid}">
+							<h5 class="card-title">${book.title}</h5>
+						</a>
+						<p class="card-text">저자: ${book.author}</p>
+						<p class="card-text">출판사: ${book.publisher}</p>
+						<p class="card-text">장르: ${book.genre}</p>
+						<p class="card-text">카테고리: ${book.category}</p>
+						<p class="card-text"></p>
+						<button class="btn btn-primary"
+							onclick="likeBook('${book.bookid}')">
+							<i class="bi-heart"></i>좋아요
+						</button>
+						<button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 
 	</ul>
@@ -324,46 +325,56 @@ a:hover {
 </c:if>
 
 <c:if test="${not empty bookByCBF}">
-<ul>
-	<div class="card-container">
-		<c:forEach var="bookAI" items="${bookByCBF}">
-			<div class="card">
-				<img src="${bookAI.imageUrl}" alt="${bookAI.title}"
-					class="card-img-top">
-				<div class="card-body">
-					<h5 class="card-title">${bookAI.title}</h5>
-					<p class="card-text">저자: ${bookAI.author}</p>
-					<p class="card-text">출판사: ${bookAI.publisher}</p>
-					<p class="card-text">장르: ${bookAI.genre}</p>
-					<p class="card-text">카테고리: ${bookAI.category}</p>
-					<p class="card-text"></p>
-					<button class="btn btn-primary"
-						onclick="likeBook('${bookAI.bookid}')"><i class="bi-heart"></i>좋아요</button>
-					<button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
+	<ul>
+		<div class="card-container">
+			<c:forEach var="bookAI" items="${bookByCBF}">
+				<div class="card">
+					<a href="/book/detail?bookid=${bookAI.bookid}"> <img
+						src="${bookAI.imageUrl}" alt="${bookAI.title}"
+						class="card-img-top">
+					</a>
+					<div class="card-body">
+						<a href="/book/detail?bookid=${bookAI.bookid}">
+							<h5 class="card-title">${bookAI.title}</h5>
+						</a>
+						<p class="card-text">저자: ${bookAI.author}</p>
+						<p class="card-text">출판사: ${bookAI.publisher}</p>
+						<p class="card-text">장르: ${bookAI.genre}</p>
+						<p class="card-text">카테고리: ${bookAI.category}</p>
+						<p class="card-text"></p>
+						<button class="btn btn-primary"
+							onclick="likeBook('${bookAI.bookid}')">
+							<i class="bi-heart"></i>좋아요
+						</button>
+						<button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
+					</div>
 				</div>
-			</div>
-		</c:forEach>
-	</div>
-</ul>
+			</c:forEach>
+		</div>
+	</ul>
 
 </c:if>
 <c:if test="${empty bookByCBF}">
-<ul>
-	<div class="card-container">
-		<c:forEach var="best" items="${best}">
-			<div class="card">
-				<img src="${best.images}" alt="${best.title}"
-					class="card-img-top">
-				<div class="card-body">
-					<h5 class="card-title">${best.title}</h5>
-					<p class="card-text">저자: ${best.author}</p>
-					<p class="card-text">출판사: ${best.publisher}</p>
-					<p class="card-text"></p>
+	<ul>
+		<div class="card-container">
+			<c:forEach var="best" items="${best}">
+				<div class="card">
+					<a href="/best/get?column1=${best.column1}"> <img
+						src="${best.images}" alt="${best.title}" class="card-img-top">
+					</a>
+					<div class="card-body">
+						<a href="/best/get?column1=${best.column1}">
+							<h5 class="card-title">${best.title}</h5>
+						</a>
+
+						<p class="card-text">저자: ${best.author}</p>
+						<p class="card-text">출판사: ${best.publisher}</p>
+						<p class="card-text"></p>
+					</div>
 				</div>
-			</div>
-		</c:forEach>
-	</div>
-</ul>
+			</c:forEach>
+		</div>
+	</ul>
 </c:if>
 
 
