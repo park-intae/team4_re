@@ -16,13 +16,16 @@ public class Criteria {
 	private int amount;
 	private String type;
 	private String keyword;
+	private int classi;
+	private int dateNum;
+	private int dateNum2;
 
 	public Criteria() {
-		this(1, 12);
+		this(1, 10);
 	}
 
 	public Criteria(int pageNum) {
-		this(pageNum, 12);
+		this(pageNum, 10);
 	}
 
 	public Criteria(int pageNum, int amount) {
@@ -70,5 +73,25 @@ public class Criteria {
 
 	public String getLinkWithColumn1(String base, int Column1) {
 		return getLink(base, pageNum) + "&column1=" + Column1;
+	}
+	
+	
+	public String getLinkWithColumn(String base) {
+		return getLink(base, pageNum);
+	}
+	public String getLinkWithColumn2(String base, int classi) {
+		return getLink(base, pageNum) + "&classi=" + 2;
+	}
+	public String getLinkWithColumn3(String base, int classi) {
+		return getLink(base, pageNum) + "&classi=" + 3;
+	}
+	public String getLinkWithColumn4(String base, int classi) {
+		return getLink(base, pageNum) + "&classi=" + 4;
+	}
+	public String getLinkWithColumn5(String base, int dateNum) {
+		return getLink(base, pageNum) + "&dateNum=" + 1;
+	}
+	public String getLinkWithColumn6(String base, int dateNum2) {
+		return getLink(base, pageNum) + "&dateNum2=" + 1;
 	}
 }

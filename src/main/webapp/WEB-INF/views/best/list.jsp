@@ -10,7 +10,7 @@
 	<h2>베스트셀러 도서</h2>
 </div>
 <div>
-	<%-- <%@ include file="category_bar.jsp" %> --%>
+	<%@ include file="category_bar.jsp" %>
 
 	<div class="row">
 		<c:forEach var="best" items="${list}">
