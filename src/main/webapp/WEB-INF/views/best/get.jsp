@@ -43,7 +43,7 @@
 	<link href="../../../resources/css/star.css" rel="stylesheet" />
 
 	<form class="mb-3" name="myform" id="myform" method="post"
-		action="/api/bookbook/rating/add">
+		>
 		<fieldset>
 			<span class="text-bold">${ratings.average_rating}</span> <input
 				type="radio" name="rating" value="5" id="rate1"> <label
@@ -58,48 +58,54 @@
 	</form>
 
 	<script>
-document.addEventListener("DOMContentLoaded", function() {
-	  document.getElementById("myform").addEventListener("submit", function(event) {
-	    event.preventDefault(); // 기본 제출 동작 방지
+	fetch("/best/list)
+	.then(response => response.json())
+	.then(data => {
+	  var column1 = data.column1; // 서버에서 받아온 column1 값
+	  
+	  document.addEventListener("DOMContentLoaded", function() {
+		    document.getElementById("myform").addEventListener("submit", function(event) {
+		        event.preventDefault(); // 기본 제출 동작 방지
 
-	    var selectedRating = document.querySelector('input[name="rating"]:checked');
-	    if (!selectedRating) {
-	      alert("별점을 선택해주세요.");
-	      return;
-	    }
+		        var selectedRating = document.querySelector('input[name="rating"]:checked');
+		        if (!selectedRating) {
+		            alert("별점을 선택해주세요.");
+		            return;
+		        }
 
-	    var ratingValue = selectedRating.value;
+		        var ratingValue = selectedRating.value;
 
-	    // 선택한 별점 값을 가져왔으므로, 서버로 전송하거나 다른 작업을 수행할 수 있습니다.
-	    sendDataToServer(ratingValue); // 서버로 데이터를 전송하는 함수 호출
-	  });
-	});
+		        sendDataToServer(ratingValue);
+		    });
+		});
 
-	function sendDataToServer(rating) {
-	  // Fetch API를 사용하여 서버로 데이터 전송
-	  fetch("/api/bookbook/rating/add", {
-	    method: "POST",
-	    headers: {
-	      "Content-Type": "application/json"
-	    },
-	    body: JSON.stringify({ "rating": rating, "bookId": bookId })
-	  })
-	  .then(response => {
-	    if (!response.ok) {
-	      throw new Error("Network response was not ok.");
-	    }
-	    return response.json();
-	  })
-	  .then(data => {
-	    // 서버로부터 받은 응답에 대한 처리
-	    console.log("서버 응답:", data);
-	    // 별도의 처리가 필요한 경우 여기에 작성
-	  })
-	  .catch(error => {
-	    console.error("There has been a problem with your fetch operation:", error);
-	    // 오류 처리가 필요한 경우 여기에 작성
-	  });
-	}
+
+
+		function sendDataToServer(rating) {
+		    // Fetch API를 사용하여 서버로 데이터 전송
+		    fetch({
+		        method: "POST",
+		        headers: {
+		            "Content-Type": "application/json"
+		        },
+		        body: JSON.stringify({ "rating": rating, "column1": column1 }) // column1을 어떻게 가져올지 명시 필요
+		    })
+		    .then(response => {
+		        if (!response.ok) {
+		            throw new Error("Network response was not ok.");
+		        }
+		        return response.json();
+		    })
+		    .then(data => {
+		        console.log("서버 응답:", data);
+		    })
+		    .catch(error => {
+		        console.error("There has been a problem with your fetch operation:", error);
+		    });
+		}
+	})
+	.catch(error => console.error("Error:", error));
+	
 
 </script>
 
@@ -110,27 +116,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 	<div>
-
-
-
-
-
-
 		<script>
-
-//현재 url 변수로 가져오기
 let nowUrl = window.location.href;
-
 function copyUrl(){ 
-  //nowUrl 변수에 담긴 주소를
   	navigator.clipboard.writeText(nowUrl).then(res=>{
 	  alert("주소가 복사되었습니다!");
 	})
 }
-
-
 </script>
-
 	</div>
 
 

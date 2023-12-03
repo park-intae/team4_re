@@ -1,13 +1,11 @@
 package org.bookbook.mapper;
 
-import java.util.List;
-
 import org.bookbook.domain.RatingVO;
 
 public interface RatingMapper {
-	public List<Long> getRatingList(String user_id);
+	double getRating(int column1);
 
-	public int addRating(RatingVO rating);
+	int addRating(RatingVO vo);
 
 //	public int deleteRating(RatingVO rating);
 

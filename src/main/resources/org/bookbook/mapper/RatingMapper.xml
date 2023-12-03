@@ -6,16 +6,17 @@
 
 <mapper namespace="org.bookbook.mapper.RatingMapper">
 
-	<select id="getRatingList" resultType="long">
-		select rating_id from
-		book_rating
-		where book_id = #{bookId}
+	<select id="getRatingList" resultType="int">
+		select avg(rating) from
+		best_rating
+		where column1 = #{column1}
 	</select>
 
 	<insert id="addRating">
-		insert into book_rating(book_id, rating, user_id)
+		insert into best_rating(rating, user_id)
 		values
-		(#{bookId}, #{rating}, #{userId})
+		(#{rating}, #{userId})
+		where column1 = #{column1}
 	</insert>
 	
 <!-- 	<delete id="deleteRating"> -->

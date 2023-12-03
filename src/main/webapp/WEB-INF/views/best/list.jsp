@@ -5,26 +5,32 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <%@ include file="../layouts/header.jsp"%>
-<%@include file="../layouts/sidebar.jsp" %>
+<%@include file="../layouts/sidebar.jsp"%>
 <div class="center">
 	<h2>베스트셀러 도서</h2>
 </div>
 <div>
-	<%@ include file="category_bar.jsp" %>
+	<%@ include file="category_bar.jsp"%>
 
 	<div class="row">
-		<c:forEach var="best" items="${list}">
-			<div class="col-sm-6 col-lg-2 mb-3">
+		<c:forEach var="best" items="${list}" varStatus="status" begin="1"
+			end="10">
+			<div class="col-sm-6 col-lg-4 mb-3">
 				<div class="card-deck">
-					<div class="card" style="width: 100%">
-						<a href="${cri.getLinkWithColumn1('get',best.column1)}"> <img
+					<div class="card" style="width: 100%; height: 550px">
+
+						<div class="card-header">
+							<c:out value="${status.count }" />
+							위
+						</div>
+
+						<a href="/best/get?column1=${best.column1}"> <img
 							class="card-img-top" src="${best.images}" alt="${best.title}">
 						</a>
 						<div class="card-body">
-							<h4 class="card-title">
-								<a href="${cri.getLinkWithColumn1('get',best.column1)}">
-									${best.title} </a>
-							</h4>
+							<h5 class="card-title">
+								<a href="/best/get?column1=${best.column1}"> ${best.title} </a>
+							</h5>
 
 
 							<p class="card-text">${best.author}</p>
@@ -36,5 +42,5 @@
 	</div>
 
 </div>
-<%@include file="pagination.jsp"%>
+<%-- <%@include file="pagination.jsp"%> --%>
 <%@ include file="../layouts/footer.jsp"%>

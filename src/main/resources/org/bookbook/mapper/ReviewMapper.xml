@@ -11,9 +11,11 @@
 	</select>
 
 	<insert id="create">
-
-		insert into best_rating (rating_id, user_id, rating_review)
+		insert into best_rating (rating_id, user_id,
+		rating_review)
 		values(#{rating_id}, #{user_id}, #{rating_review})
+		where
+		column1 = #{column1}
 	</insert>
 
 </mapper>
