@@ -7,14 +7,14 @@
 <%@ include file="../layouts/header.jsp"%>
 <%@include file="../layouts/sidebar.jsp"%>
 <div class="center">
-	<h2>베스트셀러 도서</h2>
+	<h2>베스트셀러 TOP10</h2>
 </div>
 <div>
 	<%@ include file="category_bar.jsp"%>
 
 	<div class="row">
-		<c:forEach var="best" items="${list}" varStatus="status" begin="1"
-			end="10">
+		<c:forEach var="best" items="${list}" varStatus="status" begin="0"
+			end="9">
 			<div class="stylee">
 				<div class="card-deck">
 					<div class="card"

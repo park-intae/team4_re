@@ -5,26 +5,10 @@
 
 
 <mapper namespace="org.bookbook.mapper.RatingMapper">
-<<<<<<< HEAD
 
-	<select id="getRatingList" resultType="int">
-		select avg(rating) from
-		best_rating
-		where column1 = #{column1}
-	</select>
-
-	<insert id="addRating">
-		insert into best_rating(rating, user_id, column1)
-		values
-		(#{rating}, #{userId}, #{column1} )
-		
-	</insert>
-=======
 	<select id="get" resultType="RatingVO">
 	select * from book_rating
 	where book_id = #{bookid};
 	</select>
-
->>>>>>> main
 
 </mapper>  
