@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bookbook.domain.AuthVO;
-import org.bookbook.domain.ChangePasswordVO;
+import org.bookbook.domain.UserUpdateVO;
 import org.bookbook.domain.UserVO;
 import org.bookbook.mapper.FollowerMapper;
 import org.bookbook.mapper.UserMapper;
@@ -53,27 +53,6 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	// 비밀번호 바꾸기
-	@Override
-	public boolean changePassword(ChangePasswordVO vo) {
-		UserVO user = userMapper.read(vo.getUserid());
-
-		log.info("입력된 orgPassword: " + vo.getOrgPassword());
-		log.info("저장된 비밀번호: " + user.getPassword());
-		// 데이터베이스에 저장되어있는 패스워드
-		if (!pwEncoder.matches(vo.getOrgPassword(), user.getPassword())) {
-			// 비번 오류
-			log.info("비밀번호 불일치.");
-			return false;
-		}
-
-		String encPassword = pwEncoder.encode(vo.getNewPassword());
-		vo.setEncPassword(encPassword);
-		userMapper.changePassword(vo);
-
-		return true;
-	}
-
 	@Override
 	public List<UserVO> getAllUsers() {
 		return userMapper.getAllUsers();
@@ -83,29 +62,62 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserVO> getAllUsersWithFollowStatus(String currentUserId) {
 		List<UserVO> users = userMapper.getAllUsers(); // 모든 사용자 목록을 가져옴
-	    List<UserVO> usersWithFollowStatus = new ArrayList<>(); // 팔로우 상태가 설정된 사용자 목록
+		List<UserVO> usersWithFollowStatus = new ArrayList<>(); // 팔로우 상태가 설정된 사용자 목록
 
-	    for (UserVO user : users) {
-	        if (!user.getUserid().equals(currentUserId)) { // 현재 로그인한 사용자 제외
-	            boolean isFollowing = isFollowing(currentUserId, user.getUserid());
-	            user.setFollowStatus(isFollowing); // 팔로우 상태 설정
-	            usersWithFollowStatus.add(user); // 리스트에 추가
-	        }
-	    }
+		for (UserVO user : users) {
+			if (!user.getUserid().equals(currentUserId)) { // 현재 로그인한 사용자 제외
+				boolean isFollowing = isFollowing(currentUserId, user.getUserid());
+				user.setFollowStatus(isFollowing); // 팔로우 상태 설정
+				usersWithFollowStatus.add(user); // 리스트에 추가
+			}
+		}
 
-	    return usersWithFollowStatus; // 현재 로그인한 사용자를 제외한 목록 반환
+		return usersWithFollowStatus; // 현재 로그인한 사용자를 제외한 목록 반환
 	}
-	
 
 	// 팔로우 여부를 확인하는 메서드
 	private boolean isFollowing(String currentUserId, String otherUserId) {
 		return followerMapper.findFollowByUserIds(currentUserId, otherUserId) != null;
 	}
-	
-	
+
 	public boolean isUserIdAvailable(String userid) {
-	    // ID가 데이터베이스에 존재하는지 확인하는 로직
-	    UserVO user = userMapper.read(userid);
-	    return user == null;
+		// ID가 데이터베이스에 존재하는지 확인하는 로직
+		UserVO user = userMapper.read(userid);
+		return user == null;
+	}
+
+	@Override
+	public void updateUserProfile(UserUpdateVO userUpdateVO) {
+	    try {
+	        UserVO existingUser = userMapper.read(userUpdateVO.getUserid());
+	        if (existingUser == null) {
+	            log.error("User not found with id: " + userUpdateVO.getUserid());
+	            return;
+	        }
+
+	        // 비밀번호 변경 로직
+	        if (userUpdateVO.getOrgPassword() != null && !userUpdateVO.getOrgPassword().isEmpty() &&
+	            userUpdateVO.getNewPassword() != null && !userUpdateVO.getNewPassword().isEmpty() &&
+	            pwEncoder.matches(userUpdateVO.getOrgPassword(), existingUser.getPassword())) {
+
+	            String encPassword = pwEncoder.encode(userUpdateVO.getNewPassword());
+	            userUpdateVO.setEncPassword(encPassword);
+	        } else {
+	            userUpdateVO.setEncPassword(existingUser.getPassword());
+	        }
+
+	        // 나머지 사용자 정보 업데이트
+	        existingUser.setUsername(userUpdateVO.getUsername());
+	        existingUser.setNickname(userUpdateVO.getNickname());
+	        existingUser.setEmail(userUpdateVO.getEmail());
+	        existingUser.setPassword(userUpdateVO.getEncPassword());
+	        existingUser.setBirth(userUpdateVO.getBirth());
+	        existingUser.setGender(userUpdateVO.getGender());
+
+	        // 회원 정보 업데이트 로직
+	        userMapper.updateProfile(existingUser);
+	    } catch (Exception e) {
+	        log.error("Error during updating user profile", e);
+	    }
 	}
 }

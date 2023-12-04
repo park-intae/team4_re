@@ -42,6 +42,7 @@
             </c:otherwise>
         </c:choose>
     </sec:authorize>   
+    
     </div>
 		
 
@@ -116,16 +117,23 @@
 						</c:otherwise>
 					</c:choose>
 					<div class="button-container">
-						<button id="showFollowModal" class="btn btn-primary">팔로우
-							목록 보기</button>
-						<button id="likeButton" class="btn btn-secondary">좋아요</button>
+					<button id="updateButton" class="btn btn-secondary">정보수정</button>
+<script>
+    document.getElementById('updateButton').addEventListener('click', function() {
+    	  window.location.href = '/security/updateProfile';
+
+    });
+</script>
+						<button id="showFollowModal" class="btn btn-primary">팔로우 </button>
+						
+						<button id="likeButton" class="btn btn-secondary">좋아요 </button>
 						<script>
 							document.getElementById('likeButton')
 									.addEventListener('click', function() {
-										window.location.href = 'book/likes.jsp';
+										window.location.href = '../book/likes';
 									});
 						</script>
-					</div>
+						</div>
 				</div>
 
 				<div class="item-follow">
@@ -152,12 +160,16 @@
 
 	<div class="alarm-title">알림 내역</div>
 	
-	<div class="alarm-content">       </div>
+	<div class="alarm-content">  
+	<div class="os-content">
+        <!-- 여기에 알림 내용이 동적으로 추가됩니다 -->
+    </div>
+	 </div>
 
 
 	<div class="line-separator"></div>
 
-</div>
+
 
 <!-- 사용자 프로필 및 정보 -->
 <div class="user-profile">

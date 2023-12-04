@@ -17,6 +17,7 @@ public class CustomUser extends User {
 
 	public CustomUser(String username, String userpassword, Collection<? extends GrantedAuthority> authorities) {
 		super(username, userpassword, authorities);
+
 	}
 
 	public CustomUser(UserVO vo) {
@@ -24,8 +25,8 @@ public class CustomUser extends User {
 		this.user = vo;
 	}
 
-
-
-
+	public String getUserid() {
+		return this.user.getUserid();
+	}
 
 }

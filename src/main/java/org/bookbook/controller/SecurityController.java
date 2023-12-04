@@ -2,12 +2,14 @@ package org.bookbook.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.bookbook.domain.UserUpdateVO;
 import org.bookbook.domain.UserVO;
 import org.bookbook.exception.DateConversionUtil;
 import org.bookbook.service.NotificationServiceimpl;
@@ -38,10 +40,9 @@ public class SecurityController {
 
 	@GetMapping("/login")
 	public void login() {
-		
+
 		log.info("login page");
 	}
-
 
 	@GetMapping("/signup")
 	public void signup(@ModelAttribute("user") UserVO user) {
@@ -51,12 +52,12 @@ public class SecurityController {
 	@GetMapping("/checkUserId")
 	@ResponseBody
 	public Map<String, Boolean> checkUserId(@RequestParam String userid) {
-	    boolean isAvailable = service.isUserIdAvailable(userid);
-	    Map<String, Boolean> response = new HashMap<>();
-	    response.put("isAvailable", isAvailable);
-	    return response;
+		boolean isAvailable = service.isUserIdAvailable(userid);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("isAvailable", isAvailable);
+		return response;
 	}
-	
+
 	@PostMapping("/signup")
 	public String signup(@Valid @ModelAttribute("user") UserVO user, Errors errors,
 			@RequestParam("birth.year") String year, @RequestParam("birth.month") String month,
@@ -100,32 +101,78 @@ public class SecurityController {
 		return "redirect:/";
 	}
 
-	
-	
 	@GetMapping("/profile")
 	public String profile(HttpSession session, Model model) {
-	    // 세션에서 사용자 정보를 가져옵니다.
-	    UserVO user = (UserVO) session.getAttribute("user");
+		// 세션에서 사용자 정보를 가져옵니다.
+		UserVO user = (UserVO) session.getAttribute("user");
 
-	    // 가져온 사용자 정보를 모델에 추가합니다.
-	    if (user != null) {
-	        model.addAttribute("user", user);
-	    }
+		// 가져온 사용자 정보를 모델에 추가합니다.
+		if (user != null) {
+			model.addAttribute("user", user);
+		}
 
-	    return "/security/profile";
+		return "/security/profile";
 	}
-
-	
-//	@GetMapping("/profile")
-//	public void profile() {
-//		
-//		
-//	}
-
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) throws IOException {
 		session.invalidate();
 		return "redirect:/";
+	}
+
+	@GetMapping("/updateProfile")
+	public String showUpdateProfileForm(Model model, HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		if (user != null) {
+			UserUpdateVO userUpdateVO = new UserUpdateVO();
+			// user 객체의 데이터를 userUpdateVO에 설정
+			userUpdateVO.setUserid(user.getUserid());
+			userUpdateVO.setUsername(user.getUsername());
+			userUpdateVO.setNickname(user.getNickname());
+			userUpdateVO.setEmail(user.getEmail());
+			userUpdateVO.setPassword(user.getPassword());
+			userUpdateVO.setBirth(user.getBirth());
+			userUpdateVO.setGender(user.getGender());
+			// 나머지 필드 설정
+
+			model.addAttribute("userUpdate", userUpdateVO);
+			return "security/updateProfile";
+		} else {
+			return "redirect:/security/login";
+		}
+	}
+
+	@PostMapping("/updateProfile")
+	public String updateProfile(@Valid @ModelAttribute("userUpdate") UserUpdateVO userUpdateVO, Errors errors,
+			HttpSession session) {
+		if (userUpdateVO.getNewPassword() != null && !userUpdateVO.getNewPassword().isEmpty()
+				&& !userUpdateVO.getNewPassword().equals(userUpdateVO.getNewPassword2())) {
+
+			errors.rejectValue("newPassword2", "비밀번호 불일치", "새 비밀번호 확인이 일치하지 않습니다.");
+			return "security/updateProfile";
+		}
+
+		service.updateUserProfile(userUpdateVO);
+
+		updateSessionUser(session, userUpdateVO);
+
+		if (errors.hasErrors()) {
+			return "security/updateProfile";
+		}
+
+		return "redirect:/security/profile";
+	}
+
+	private void updateSessionUser(HttpSession session, UserUpdateVO userUpdateVO) {
+		UserVO sessionUser = (UserVO) session.getAttribute("user");
+		if (sessionUser != null && sessionUser.getUserid().equals(userUpdateVO.getUserid())) {
+			sessionUser.setUsername(userUpdateVO.getUsername());
+			sessionUser.setNickname(userUpdateVO.getNickname());
+			sessionUser.setEmail(userUpdateVO.getEmail());
+			sessionUser.setBirth(userUpdateVO.getBirth());
+			sessionUser.setGender(userUpdateVO.getGender());
+			// 세션 정보 업데이트
+			session.setAttribute("user", sessionUser);
+		}
 	}
 }
