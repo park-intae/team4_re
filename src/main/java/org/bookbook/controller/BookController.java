@@ -115,7 +115,7 @@ public class BookController {
 
 			if (principal instanceof UserDetails) {
 				username = ((UserDetails) principal).getUsername();
-				log.info("Username: " + username);
+//				log.info("Username: " + username);
 			}
 		}
 
@@ -143,7 +143,7 @@ public class BookController {
 						.map(JsonNode::asLong)
 						.collect(Collectors.toList());
 
-				log.info("bookIds : " + bookIds);
+//				log.info("bookIds : " + bookIds);
 
 				if (!bookIds.isEmpty()) {
 					List<BookVO> books = service.getBookListById(bookIds);
@@ -184,7 +184,10 @@ public class BookController {
 
 			if (principal instanceof UserDetails) {
 				username = ((UserDetails) principal).getUsername();
-				log.info("Username: " + username);
+//				log.info("Username: " + username);
+//				log.info("Book_Id: " + bookid);
+//				service.insertBookId(username, bookid);
+				
 			}
 		}
 		
@@ -210,7 +213,7 @@ public class BookController {
 						.map(JsonNode::asLong)
 						.collect(Collectors.toList());
 
-				log.info("bookIds : " + bookIds);
+//				log.info("IBCF bookIds : " + bookIds);
 
 				if (!bookIds.isEmpty()) {
 					List<BookVO> books = service.getBookListById(bookIds);
