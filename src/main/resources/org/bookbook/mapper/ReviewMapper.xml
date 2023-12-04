@@ -5,17 +5,16 @@
 
 <mapper namespace="org.bookbook.mapper.ReviewMapper">
 	<select id="get" resultType="ReviewVO">
-		select * from best_rating
+		select rating_review from best_rating
 		where
 		column1 = #{column1}
 	</select>
 
 	<insert id="create">
 		insert into best_rating (rating_id, user_id,
-		rating_review)
-		values(#{rating_id}, #{user_id}, #{rating_review})
-		where
-		column1 = #{column1}
+		rating_review, column1)
+		values(#{ratingId}, #{userId}, #{ratingReview}, #{column1})
+	
 	</insert>
 
 </mapper>

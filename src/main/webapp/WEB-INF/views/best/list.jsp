@@ -15,23 +15,25 @@
 	<div class="row">
 		<c:forEach var="best" items="${list}" varStatus="status" begin="1"
 			end="10">
-			<div class="col-sm-6 col-lg-4 mb-3">
+			<div class="stylee">
 				<div class="card-deck">
-					<div class="card" style="width: 100%; height: 550px">
+					<div class="card"
+						style="width: 100%; height: 550px; border: 5px solid transparent; border-color: ${status.count == 1 ? 'gold' : (status.count == 2 ? 'silver' : (status.count == 3 ? 'darkgoldenrod' : 'transparent'))}">
 
 						<div class="card-header">
-							<c:out value="${status.count }" />
+							<c:out value="${status.count}" />
 							위
 						</div>
 
-						<a href="/best/get?column1=${best.column1}"> <img
-							class="card-img-top" src="${best.images}" alt="${best.title}">
-						</a>
+<%-- 						<a href="/best/get?column1=${best.column1}">  --%>
+								<img class="card-img-top" src="${best.images}" alt="${best.title}">
+<!-- 						</a> -->
 						<div class="card-body">
 							<h5 class="card-title">
-								<a href="/best/get?column1=${best.column1}"> ${best.title} </a>
+<%-- 							<a href="/best/get?column1=${best.column1}">  --%>
+									${best.title} 
+<!-- 							</a> -->
 							</h5>
-
 
 							<p class="card-text">${best.author}</p>
 						</div>

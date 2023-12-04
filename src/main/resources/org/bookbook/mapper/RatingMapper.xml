@@ -13,16 +13,10 @@
 	</select>
 
 	<insert id="addRating">
-		insert into best_rating(rating, user_id)
+		insert into best_rating(rating, user_id, column1)
 		values
-		(#{rating}, #{userId})
-		where column1 = #{column1}
+		(#{rating}, #{userId}, #{column1} )
+		
 	</insert>
-	
-<!-- 	<delete id="deleteRating"> -->
-<!-- 		delete from book_rating -->
-<!-- 		where book_id = #{bookId} and -->
-<!-- 		user_id = #{userId} -->
-<!-- 	</delete> -->
 
 </mapper>  

@@ -5,7 +5,7 @@ import org.bookbook.mapper.RatingMapper;
 
 public class RatingServiceImpl implements RatingService {
 
-    private final RatingMapper ratingMapper; // RatingMapper 객체를 주입받을 수 있도록 필드 추가
+    private final RatingMapper ratingMapper;
 
     public RatingServiceImpl(RatingMapper ratingMapper) {
         this.ratingMapper = ratingMapper;

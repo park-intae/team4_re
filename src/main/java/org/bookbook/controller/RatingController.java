@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,4 +27,12 @@ public class RatingController {
 	    String message = "별점이 등록되었습니다.";
 	    return ResponseEntity.ok(message);
 	}
+	
+	
+	@PostMapping("/submitRating")
+    public ResponseEntity<String> submitRating( RatingVO rating) {
+      mapper.addRating(rating);
+
+        return ResponseEntity.ok("Received rating: " + rating);
+    }
 }

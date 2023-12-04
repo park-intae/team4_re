@@ -14,6 +14,7 @@
 	margin-left: 335px;
 	margin-top: 60px;
 }
+
 </style>
 <div>
 	<hr>
@@ -42,73 +43,21 @@
 
 	<link href="../../../resources/css/star.css" rel="stylesheet" />
 
-	<form class="mb-3" name="myform" id="myform" method="post"
+	<form class="mb-3" name="myform" id="myform" method="post" action="/best/submitRating"
 		>
 		<fieldset>
-			<span class="text-bold">${ratings.average_rating}</span> <input
-				type="radio" name="rating" value="5" id="rate1"> <label
-				for="rate1">★</label> <input type="radio" name="rating" value="4"
-				id="rate2"> <label for="rate2">★</label> <input type="radio"
-				name="rating" value="3" id="rate3"> <label for="rate3">★</label>
-			<input type="radio" name="rating" value="2" id="rate4"> <label
-				for="rate4">★</label> <input type="radio" name="rating" value="1"
-				id="rate5"> <label for="rate5">★</label> <input
-				type="submit" value="별점 제출">
+<%-- 			<span class="text-bold">${ratings.average_rating}</span>  --%>
+			
+			<input type="hidden" name="column1" value="${best.column1}">
+			<input type="hidden" name="userId" value="${userId}">
+			<input type="radio" name="rating" value="5" id="rate1"> <label for="rate1">★</label> 
+			<input type="radio" name="rating" value="4" id="rate2"> <label for="rate2">★</label> 
+			<input type="radio" name="rating" value="3" id="rate3"> <label for="rate3">★</label>
+			<input type="radio" name="rating" value="2" id="rate4"> <label for="rate4">★</label> 
+			<input type="radio" name="rating" value="1" id="rate5"> <label for="rate5">★</label> 
+			<input type="submit" value="별점 제출">
 		</fieldset>
 	</form>
-
-	<script>
-	fetch("/best/list)
-	.then(response => response.json())
-	.then(data => {
-	  var column1 = data.column1; // 서버에서 받아온 column1 값
-	  
-	  document.addEventListener("DOMContentLoaded", function() {
-		    document.getElementById("myform").addEventListener("submit", function(event) {
-		        event.preventDefault(); // 기본 제출 동작 방지
-
-		        var selectedRating = document.querySelector('input[name="rating"]:checked');
-		        if (!selectedRating) {
-		            alert("별점을 선택해주세요.");
-		            return;
-		        }
-
-		        var ratingValue = selectedRating.value;
-
-		        sendDataToServer(ratingValue);
-		    });
-		});
-
-
-
-		function sendDataToServer(rating) {
-		    // Fetch API를 사용하여 서버로 데이터 전송
-		    fetch({
-		        method: "POST",
-		        headers: {
-		            "Content-Type": "application/json"
-		        },
-		        body: JSON.stringify({ "rating": rating, "column1": column1 }) // column1을 어떻게 가져올지 명시 필요
-		    })
-		    .then(response => {
-		        if (!response.ok) {
-		            throw new Error("Network response was not ok.");
-		        }
-		        return response.json();
-		    })
-		    .then(data => {
-		        console.log("서버 응답:", data);
-		    })
-		    .catch(error => {
-		        console.error("There has been a problem with your fetch operation:", error);
-		    });
-		}
-	})
-	.catch(error => console.error("Error:", error));
-	
-
-</script>
-
 
 
 
@@ -139,10 +88,10 @@ function copyUrl(){
 		<%-- 		<c:forEach var="rating_review" items=" ${book_rating.rating_review}"> --%>
 		<%-- 		</c:forEach> --%>
 
-		<c:forEach var="rating" items="${ratings}">
-			<p>User ID: ${book_rating.user_id}</p>
-			<p>Rating: ${ratings.average_rating}</p>
-			<p>Review: ${book_rating.rating_review}</p>
+		<c:forEach var="rating" items="${ReviewVO}">
+			<p>User ID: ${rating.user_id}</p>
+			<p>Rating: ${rating.rating}</p>
+			<p>Review: ${rating.ratinReview}</p>
 			<!-- 기타 필요한 출력 요소를 추가할 수 있습니다. -->
 		</c:forEach>
 	</div>

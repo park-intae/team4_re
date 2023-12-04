@@ -4,6 +4,8 @@ import org.bookbook.domain.Criteria;
 import org.bookbook.domain.PageDTO;
 import org.bookbook.service.BestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,7 @@ public class BestController {
 		int total4 = service.getTotal4(cri);
 		int total5 = service.getTotal5(cri);
 		int total6 = service.getTotal6(cri);
-		
+
 		model.addAttribute("list", service.getList(cri));
 		if (cri.getClassi() == 2) {
 			model.addAttribute("list", service.getList2(cri));
@@ -49,11 +51,12 @@ public class BestController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 
-	
 	@GetMapping({ "/get" })
-	public void get(@RequestParam("column1") int column1, @ModelAttribute("cri") Criteria cri,
-			Model model) {
-		
+	public void get(@RequestParam("column1") int column1, @ModelAttribute("cri") Criteria cri, Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userId = authentication.getName();
+
+		model.addAttribute("userId", userId);
 		model.addAttribute("best", service.get(column1));
 	}
 }
