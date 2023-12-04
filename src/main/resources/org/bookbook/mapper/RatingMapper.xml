@@ -6,22 +6,4 @@
 
 <mapper namespace="org.bookbook.mapper.RatingMapper">
 
-	<select id="getRatingList" resultType="long">
-		select rating_id from
-		book_rating
-		where book_id = #{bookId}
-	</select>
-
-	<insert id="addRating">
-		insert into book_rating(book_id, rating, user_id)
-		values
-		(#{bookId}, #{rating}, #{userId})
-	</insert>
-	
-<!-- 	<delete id="deleteRating"> -->
-<!-- 		delete from book_rating -->
-<!-- 		where book_id = #{bookId} and -->
-<!-- 		user_id = #{userId} -->
-<!-- 	</delete> -->
-
 </mapper>  
