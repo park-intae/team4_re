@@ -130,7 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectBestBook" resultType="BestVO">
 	SELECT * FROM best
-	limit 10
+	limit 5
 	</select>
 	
 	<select id="selectBookById" resultType="BookVO">

@@ -167,10 +167,7 @@ a:hover {
 						src="${bookAI.imageUrl.split(',')[0]}" alt="${bookAI.title}"
 						class="card-img-top">
 					</a>
-					<div class="card-body">
-						<a href="/book/detail?bookid=${bookAI.bookid}">
-							<h5 class="card-title">${bookAI.title}</h5>
-						</a>
+
 						<div class="card-body">
 							<a href="/book/detail?bookid=${bookAI.bookid}">
 								<h5 class="card-title">${bookAI.title}</h5>
@@ -183,7 +180,6 @@ a:hover {
 						<i class="bi bi-heart text-danger" style="cursor: pointer;" onclick="likeBook('${bookAI.bookid}', '${bookAI.title}', this)"></i>
 						</div>
 					</div>
-				</div>
 			</c:forEach>
 		</div>
 	</ul>
