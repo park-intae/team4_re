@@ -68,8 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN book_image bi
 		ON b.book_id = bi.book_id
 		LEFT JOIN book_keyword bk
-		ON b.book_id = bk.book_id
-	
+		ON b.book_id =
+		bk.book_id
+
 		<where>
 			<!-- Dynamic conditions for bookType -->
 			<if test="bookType != null and bookType.length > 0">
@@ -143,5 +144,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    insert into book_history (user_id, book_id)
 	    values (#{user_id}, #{book_id})
 	</insert>
+
+
+	<!-- 좋아요 부분 -->
+
+	<insert id="addLike" parameterType="LikeVO">
+		INSERT INTO like_list
+		(user_id, book_id) VALUES (#{userId}, #{bookId})
+	</insert>
+
+	<select id="getLikes" parameterType="String" resultType="LikeVO">
+		SELECT
+		ll.user_id, ll.book_id, b.title, b.author, b.publisher, b.genre,
+		b.category, b.Topic, bi.image_url
+		FROM like_list ll
+		LEFT JOIN book b ON ll.book_id = b.book_id
+		LEFT JOIN book_image bi ON b.book_id = bi.book_id
+		WHERE ll.user_id = #{userId};
+
+
+	</select>
 
 </mapper>

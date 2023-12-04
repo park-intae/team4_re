@@ -2,10 +2,37 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@include file="../layouts/header.jsp"%>
+ 
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+<!-- <h1>페이지 타이틀</h1> -->
 
-<h1>페이지 타이틀</h1>
+<script type="text/javascript">
+	function likeBook(bookId, title, icon) {
+		// 여기에 AJAX 요청 코드 추가
+		console.log("")
+		$.ajax({			
+			type : 'POST',
+			url : '/api/addLike', // 좋아요를 처리하는 컨트롤러의 URL
+			data : {
+				userId : 'test97', // 사용자 아이디를 동적으로 설정하거나 가져와야 합니다.
+				bookId : bookId, // 좋아요를 누른 도서의 아이디
+				title : title
+			},
+			success : function(response) {
+				// 성공적으로 요청이 완료된 경우 실행할 코드
+				console.log(response);
+				// 이 부분에 필요한 업데이트 로직을 추가할 수 있습니다.
 
+	
+				// 아이콘의 클래스를 토글
+	            $(icon).toggleClass('bi-heart bi-heart-fill');
+			}
+		})
+	}
+	</script>
 <style>
 #genre, .checkbox_cate {
 	margin-left: 25px;
@@ -219,7 +246,9 @@
 	display: flex;
 	justify-content: center; /* 가로 중앙 정렬 */
 	align-items: center; /* 세로 중앙 정렬 */
-	margin: 50px 0 0 0; /* 수정된 여백 설정 */
+	margin: 50px 0 0 0;
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 수정된 여백 설정 */
 }
 
 .pageInfo li {
@@ -252,6 +281,9 @@ a:hover {
 
 <h1>Book List</h1>
 
+
+
+
 <c:if test="${not empty list}">
 	<ul>
 
@@ -271,11 +303,8 @@ a:hover {
 						<p class="card-text">장르: ${book.genre}</p>
 						<p class="card-text">카테고리: ${book.category}</p>
 						<p class="card-text"></p>
-						<button class="btn btn-primary"
-							onclick="likeBook('${book.bookid}')">
-							<i class="bi-heart"></i>좋아요
-						</button>
-						<button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
+						<i class="bi bi-heart text-danger" style="cursor: pointer;" onclick="likeBook('${book.bookid}', '${book.title}', this)"></i>
+						
 					</div>
 				</div>
 			</c:forEach>
@@ -306,8 +335,6 @@ a:hover {
 						href="/book/list?pageNum=${num}">${num}</a></li>
 				</c:forEach>
 
-
-
 				<!-- 다음페이지 버튼 -->
 				<c:if test="${pageMaker.next}">
 					<li class="pageInfo_btn next"><a
@@ -321,8 +348,14 @@ a:hover {
 </c:if>
 <c:if test="${empty list}">
 	<p>No books found.</p>
-
 </c:if>
+
+
+
+
+
+
+<h1>recommend book</h1>
 
 <c:if test="${not empty bookByCBF}">
 	<ul>
@@ -354,6 +387,7 @@ a:hover {
 	</ul>
 
 </c:if>
+
 <c:if test="${empty bookByCBF}">
 	<ul>
 		<div class="card-container">
@@ -377,14 +411,4 @@ a:hover {
 	</ul>
 </c:if>
 
-
-<script>
-$(".pageInfo a").on("click", function(e){
-	 
-    e.preventDefault();
-    moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-    moveForm.attr("action", "/book/list");
-    moveForm.submit();
-    
-});
-</script>
+<%@include file="../layouts/footer.jsp"%>
