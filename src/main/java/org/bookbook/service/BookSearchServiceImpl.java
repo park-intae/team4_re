@@ -23,6 +23,15 @@ public class BookSearchServiceImpl implements BookSearchService {
 	BookSearchMapper bookSearchMapper;
 
 	@Override
+	public void insertBookId(String userId, int bookId) {
+		
+		log.info(userId);
+		log.info(bookId);
+	    bookSearchMapper.insertHistory(userId, bookId);
+	}
+
+
+	@Override
 	public BookVO getBookById(int bookIds) {
 		return bookSearchMapper.selectBookById(bookIds);
 	}
@@ -73,5 +82,11 @@ public class BookSearchServiceImpl implements BookSearchService {
 	    @Override
 	    public List<LikeVO> getLikes(String userId) {
 	        return bookSearchMapper.getLikes(userId);
+	    }
+	    
+	 // 도서 삭제 부분
+	    @Override
+	    public void deleteLike(LikeVO like) {
+	    	bookSearchMapper.deleteLike(like);
 	    }
 }
