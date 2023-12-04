@@ -26,6 +26,8 @@ public interface BookSearchMapper {
     public BookVO selectBookById(int bookId);
     
     public List<BestVO> selectBestBook();
+    
+    public void insertHistory(String user_id, int book_id);
 
 	/* °Ô½ÃÆÇ ÃÑ °¹¼ö */
 	public int getTotal();

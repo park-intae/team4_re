@@ -22,6 +22,15 @@ public class BookSearchServiceImpl implements BookSearchService {
 	BookSearchMapper bookSearchMapper;
 
 	@Override
+	public void insertBookId(String userId, int bookId) {
+		
+		log.info(userId);
+		log.info(bookId);
+	    bookSearchMapper.insertHistory(userId, bookId);
+	}
+
+
+	@Override
 	public BookVO getBookById(int bookIds) {
 		return bookSearchMapper.selectBookById(bookIds);
 	}
