@@ -130,7 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectBestBook" resultType="BestVO">
 	SELECT * FROM best
-	limit 10
+	limit 5
 	</select>
 	
 	<select id="selectBookById" resultType="BookVO">
@@ -139,6 +139,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	on b.book_id = bi.book_id
 	where b.book_id = #{bookId}
 	</select>
+	
+	<insert id="insertHistory">
+	    insert into book_history (user_id, book_id)
+	    values (#{user_id}, #{book_id})
+	</insert>
 
 
 	<!-- 좋아요 부분 -->

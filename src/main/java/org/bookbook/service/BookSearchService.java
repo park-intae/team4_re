@@ -24,6 +24,8 @@ public interface BookSearchService {
 	public BookVO getBookById(int bookIds);
 	
 	public List<BestVO> getBestBookList();
+	
+	public void insertBookId(String userId, int bookId);
 		
 	 /* °Ô½ÃÆÇ ÃÑ °¹¼ö */
     public int getTotal();
