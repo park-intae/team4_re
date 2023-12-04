@@ -16,10 +16,14 @@
         var s_cat = document.querySelector('.s-cat');
 
         menuBtn.addEventListener('click', function() {
-            nav.classList.toggle('nav-open');
+        	
+        	nav.classList.toggle('nav-open');
+        	if(nav.classList.contains('nav-open')){
+        		side-bar
+        	}
             b_cat.classList.toggle('open');
             if (!b_cat.classList.contains('open')) {
-                s_cat.style.display = 'none';
+                m_cat.style.display = 'none';
             }
             searchbar.classList.toggle('open');
         });

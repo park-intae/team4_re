@@ -63,9 +63,10 @@ header {
 	border: 1px solid #cccccc;
 }
 
-#searchIco {
-	width: 38px;
-	height: 38px;
+#search-btn {
+	width: 27px;
+	height: 27px;
+	padding: 1px;
 }
 
 #searching {
