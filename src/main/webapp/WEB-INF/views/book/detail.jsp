@@ -119,11 +119,7 @@ a:hover {
 							<p class="card-text">장르: ${bookAI.genre}</p>
 							<p class="card-text">카테고리: ${bookAI.category}</p>
 							<p class="card-text"></p>
-							<button class="btn btn-primary"
-								onclick="likeBook('${bookAI.bookid}')">
-								<i class="bi-heart"></i>좋아요
-							</button>
-							<button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
+						<i class="bi bi-heart text-danger" style="cursor: pointer;" onclick="likeBook('${bookAI.bookid}', '${bookAI.title}', this)"></i>
 						</div>
 					</div>
 				</c:forEach>
@@ -147,6 +143,7 @@ a:hover {
 							<p class="card-text">저자: ${best.author}</p>
 							<p class="card-text">출판사: ${best.publisher}</p>
 							<p class="card-text"></p>
+							<i class="bi bi-heart text-danger" style="cursor: pointer;" onclick="likeBook('${best.column1}', '${best.title}', this)"></i>
 						</div>
 					</div>
 				</c:forEach>

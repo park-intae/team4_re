@@ -3,21 +3,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@include file="../layouts/header.jsp"%>
- 
+
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <!-- <h1>페이지 타이틀</h1> -->
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.user.userid" var="userid" />
+</sec:authorize>
 
 <script type="text/javascript">
 	function likeBook(bookId, title, icon) {
-		// 여기에 AJAX 요청 코드 추가
+		var userid = "${userid}";
+		
 		console.log("")
 		$.ajax({			
 			type : 'POST',
 			url : '/api/addLike', // 좋아요를 처리하는 컨트롤러의 URL
 			data : {
-				userId : 'test97', // 사용자 아이디를 동적으로 설정하거나 가져와야 합니다.
+				userId : userid, // 사용자 아이디를 동적으로 설정하거나 가져와야 합니다.
 				bookId : bookId, // 좋아요를 누른 도서의 아이디
 				title : title
 			},
@@ -121,8 +125,9 @@ a:hover {
 						<p class="card-text">장르: ${book.genre}</p>
 						<p class="card-text">카테고리: ${book.category}</p>
 						<p class="card-text"></p>
-						<i class="bi bi-heart text-danger" style="cursor: pointer;" onclick="likeBook('${book.bookid}', '${book.title}', this)"></i>
-						
+						<i class="bi bi-heart text-danger" style="cursor: pointer;"
+							onclick="likeBook('${book.bookid}', '${book.title}', this)"></i>
+
 					</div>
 				</div>
 			</c:forEach>
@@ -193,11 +198,8 @@ a:hover {
 						<p class="card-text">장르: ${bookAI.genre}</p>
 						<p class="card-text">카테고리: ${bookAI.category}</p>
 						<p class="card-text"></p>
-						<button class="btn btn-primary"
-							onclick="likeBook('${bookAI.bookid}')">
-							<i class="bi-heart"></i>좋아요
-						</button>
-						<button class="btn btn-primary" onclick="addToFavorites('')">즐겨찾기</button>
+						<i class="bi bi-heart text-danger" style="cursor: pointer;"
+							onclick="likeBook('${bookAI.bookid}', '${bookAI.title}', this)"></i>
 					</div>
 				</div>
 			</c:forEach>
@@ -222,6 +224,8 @@ a:hover {
 						<p class="card-text">저자: ${best.author}</p>
 						<p class="card-text">출판사: ${best.publisher}</p>
 						<p class="card-text"></p>
+						<i class="bi bi-heart text-danger" style="cursor: pointer;"
+							onclick="likeBook('${best.column1}', '${best.title}', this)"></i>
 					</div>
 				</div>
 			</c:forEach>
