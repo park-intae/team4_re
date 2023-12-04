@@ -4,11 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+	rel="stylesheet">
 <%@ include file="../layouts/header.jsp"%>
 
 
 <sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.user.userid" var="userid" />
 	<!-- 현재 로그인한 사용자의 정보를 불러옵니다. -->
 	<c:set var="user"
 		value="${not empty sessionScope.naverUser ? sessionScope.naverUser : user}" />
@@ -30,20 +33,25 @@
 		<div class="upper-div"></div>
 
 		<div class="inner-container">
-			<div class="round-div">	<sec:authorize access="isAuthenticated()">
-        <c:choose>
-            <c:when test="${not empty sessionScope.naverUser}">
-                <!-- 네이버 로그인 사용자의 프로필 이미지 -->
-                <img src="https://api.dicebear.com/7.x/identicon/svg?seed=${sessionScope.naverUser.id}" alt="Profile Image" class="profile-image" />
-            </c:when>
-            <c:otherwise>
-                <!-- 일반 로그인 사용자의 프로필 이미지 -->
-                <img src="https://api.dicebear.com/7.x/identicon/svg?seed=${user.userid}" alt="Profile Image" class="profile-image" /> 
-            </c:otherwise>
-        </c:choose>
-    </sec:authorize>   
-    </div>
-		
+			<div class="round-div">
+				<sec:authorize access="isAuthenticated()">
+					<c:choose>
+						<c:when test="${not empty sessionScope.naverUser}">
+							<!-- 네이버 로그인 사용자의 프로필 이미지 -->
+							<img
+								src="https://api.dicebear.com/7.x/identicon/svg?seed=${sessionScope.naverUser.id}"
+								alt="Profile Image" class="profile-image" />
+						</c:when>
+						<c:otherwise>
+							<!-- 일반 로그인 사용자의 프로필 이미지 -->
+							<img
+								src="https://api.dicebear.com/7.x/identicon/svg?seed=${user.userid}"
+								alt="Profile Image" class="profile-image" />
+						</c:otherwise>
+					</c:choose>
+				</sec:authorize>
+			</div>
+
 
 			<div class="info-follow-container">
 				<div class="info-container">
@@ -120,10 +128,13 @@
 							목록 보기</button>
 						<button id="likeButton" class="btn btn-secondary">좋아요</button>
 						<script>
-							document.getElementById('likeButton')
-									.addEventListener('click', function() {
-										window.location.href = 'book/likes.jsp';
-									});
+							document
+									.getElementById('likeButton')
+									.addEventListener(
+											'click',
+											function() {
+												window.location.href = `/book/likes?userId=${userid}`;
+											});
 						</script>
 					</div>
 				</div>
@@ -151,8 +162,8 @@
 
 
 	<div class="alarm-title">알림 내역</div>
-	
-	<div class="alarm-content">       </div>
+
+	<div class="alarm-content"></div>
 
 
 	<div class="line-separator"></div>
@@ -301,6 +312,7 @@
 		}
 	};
 </script>
+
 <script src="/path/to/overlay-scrollbars-init.js"></script>
 
 <%@ include file="../layouts/footer.jsp"%>
