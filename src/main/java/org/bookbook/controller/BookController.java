@@ -234,16 +234,7 @@ public class BookController {
 		model.addAttribute("book", book);
 	}
 
-//	// 좋아요 부분
-//	@PostMapping("/addLike")
-//	@ResponseBody
-//	public ResponseEntity<String> addLike(@RequestParam String userId, @RequestParam int bookId) {
-//	    LikeVO like = new LikeVO(); 
-//	    like.setUserid(userId);
-//	    like.setBookid(bookId);
-//	    service.addLike(like);
-//	    return ResponseEntity.ok("좋아요가 성공적으로 추가되었습니다");
-//	}
+
 
 	@GetMapping("/likes")
 	public String getLikes(Model model, @RequestParam(required = false) String userId) { // ?userId="test2"

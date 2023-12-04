@@ -33,5 +33,8 @@ public interface BookSearchService {
     // 좋아요 추가 부분
     void addLike(LikeVO like);
     List<LikeVO> getLikes(String userid);
+    
+ // 도서 삭제 부분
+    void deleteLike(LikeVO like);
 
 }

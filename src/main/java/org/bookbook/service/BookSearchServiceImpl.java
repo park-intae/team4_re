@@ -83,4 +83,10 @@ public class BookSearchServiceImpl implements BookSearchService {
 	    public List<LikeVO> getLikes(String userId) {
 	        return bookSearchMapper.getLikes(userId);
 	    }
+	    
+	 // 도서 삭제 부분
+	    @Override
+	    public void deleteLike(LikeVO like) {
+	    	bookSearchMapper.deleteLike(like);
+	    }
 }

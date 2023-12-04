@@ -36,4 +36,7 @@ public interface BookSearchMapper {
 	// 수정부분
 	void addLike(LikeVO like);
 	List<LikeVO> getLikes(String userid);
+	
+	//삭제 
+	void deleteLike(LikeVO like);
 }
