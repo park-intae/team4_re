@@ -22,7 +22,6 @@ public class RatingController {
     public RatingVO getReply(@RequestParam int bookid) {
         log.info("---->>> Rating : " + bookid);
         return mapper.get(bookid);
->>>>>>> main
     }
 }
 
