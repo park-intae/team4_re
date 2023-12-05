@@ -5,6 +5,7 @@
 }
 
 .card-img-top {
+/* 	object-fit: cover; */
 	height: 150;
 	/* 	object-fit: cover; */
 }
@@ -13,25 +14,26 @@
 	width: 209px;
 	height: 350px;
 	margin-left: 17px;
-	margin-right: 17px;
+/* 	margin-right: 17px; */
+	margin-bottom:30px;
 	display: inline-block;
 }
 
 button.active {
-	background-color: blue; /* 원하는 색상으로 변경 가능 */
-	color: white; /* 원하는 글자색으로 변경 가능 */
-	/* 원하는 스타일을 추가로 지정할 수 있습니다. */
+	background-color: blue;
+	color: white; 
 }
 
 .card {
-	width: 100%;
+	width: 209px;;
 	height: 300px;
-	border: 5px solid transparent;
-	border-color: ${status.count== 1? 'gold': (status.count== 2? 'silver': (status.count==
-		 3? 'darkgoldenrod': 'black'))
+	
+	   
+		 }
+.card-text {
+	font-size: 11px;
 }
 
-}
-.card-text {
-	font-size: 13px;
+.row{
+	margin-left: 124px;
 }
