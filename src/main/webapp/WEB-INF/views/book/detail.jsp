@@ -11,45 +11,41 @@
 <script src="../../../resources/js/comment.js"></script>
 
 <script>
-const COMMENT_URL = `/api/book/detail/${book.bookid}/comment/`;
+  const COMMENT_URL = `/api/book/detail/${book.bookid}/comment/`;
 
-console.log(COMMENT_URL)
+  $(document).ready(async function() {
+    let book_id = ${book.bookid};
+    let username = '${username}'; // 작성자(로그인 유저)
 
-$(document).ready(async function() {
-	let book_id = ${book.bookid};
-	let username = '${username}';	// 작성자(로그인 유저)
+    loadComments(book_id, username); // 댓글 목록 불러오기
 
-	console.log("writer ---- >>> "+username);
+    // 댓글 추가 버튼 처리
+    $('.comment-add-btn').click(function(e) {
+      createComment(book_id, username, ratingValue);
+    });
 
-	loadComments(book_id, username);	// 댓글 목록 불러오기
-	
-	// 댓글 추가 버튼 처리
-	$('.comment-add-btn').click(function(e) {
-		console.log("ratingValue --->>> " + ratingValue)
-		createComment(book_id, username, ratingValue);		
-	});
-	
-	$('.comment-list').on('click', '.comment-update-show-btn', showUpdateComment );
-	
-	// 수정 확인 버튼 클릭
-	$('.comment-list').on('click', '.comment-update-btn', function (e){
-		const el = $(this).closest('.comment');
-		updateComment(el, username);
-	});
-	
+    $('.comment-list').on('click', '.comment-update-show-btn', showUpdateComment);
 
-	// 수정 취소 버튼 클릭
-	$('.comment-list').on('click', '.comment-update-cancel-btn', 
-							cancelCommentUpdate);
-	
-	// 삭제 버튼 클릭
-	$('.comment-list').on('click', '.comment-delete-btn', 
-							deleteComment);	
+    // 수정 확인 버튼 클릭
+    $('.comment-list').on('click', '.comment-update-btn', function(e){
+      const el = $(this).closest('.comment');
+      updateComment(el, username);
+    });
 
-})
+    // 수정 취소 버튼 클릭
+    $('.comment-list').on('click', '.comment-update-cancel-btn', cancelCommentUpdate);
 
+    // 삭제 버튼 클릭
+    $('.comment-list').on('click', '.comment-delete-btn', deleteComment);
+
+
+
+    // 별점 선택 시 이벤트 추가
+    $('input[name="rating"]').on('change', function() {
+      handleRatingChange(parseInt($(this).val()));
+    });
+  });
 </script>
-
 
 
 <%-- 개별 페이지 --%>
@@ -265,56 +261,6 @@ a:hover {
 
 <link href="../../../resources/css/star.css" rel="stylesheet" />
 
-<form class="mb-3" name="myform" id="myform" method="post"
-	action="/api/bookbook/rating/add"></form>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-	  document.getElementById("myform").addEventListener("submit", function(event) {
-	    event.preventDefault(); // 기본 제출 동작 방지
-
-	    var selectedRating = document.querySelector('input[name="rating"]:checked');
-	    if (!selectedRating) {
-	      alert("별점을 선택해주세요.");
-	      return;
-	    }
-
-	    var ratingValue = selectedRating.value;
-
-	    // 선택한 별점 값을 가져왔으므로, 서버로 전송하거나 다른 작업을 수행할 수 있습니다.
-	    sendDataToServer(ratingValue); // 서버로 데이터를 전송하는 함수 호출
-	  });
-	});
-
-	function sendDataToServer(rating) {
-	  // Fetch API를 사용하여 서버로 데이터 전송
-	  fetch("/api/bookbook/rating/add", {
-	    method: "POST",
-	    headers: {
-	      "Content-Type": "application/json"
-	    },
-	    body: JSON.stringify({ "rating": rating, "bookId": bookId })
-	  })
-	  .then(response => {
-	    if (!response.ok) {
-	      throw new Error("Network response was not ok.");
-	    }
-	    return response.json();
-	  })
-	  .then(data => {
-	    // 서버로부터 받은 응답에 대한 처리
-	    console.log("서버 응답:", data);
-	    // 별도의 처리가 필요한 경우 여기에 작성
-	  })
-	  .catch(error => {
-	    console.error("There has been a problem with your fetch operation:", error);
-	    // 오류 처리가 필요한 경우 여기에 작성
-	  });
-	}
-
-</script>
-
-
 <div class="bottom">
 
 	<script>
@@ -359,18 +305,12 @@ function copyUrl(){
 					name="rating" value="1" onclick="handleRatingChange(1)"> <label
 					for="rating1" title="1점"></label>
 			</fieldset>
-
+			
 			<script>
-var ratingValue = 0;
-
-function handleRatingChange(rating) {
-    ratingValue = rating;
-
-    console.log(ratingValue);
-
-    return ratingValue;
-}
-
+		    // 등급 변경 함수
+		    function handleRatingChange(rating) {
+		      ratingValue = rating;
+		    }
 			</script>
 
 		</div>

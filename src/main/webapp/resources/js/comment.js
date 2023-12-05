@@ -14,8 +14,6 @@ const commentUpdatable = `
 // 댓글 바디
 
 function createCommentTemplate(comment, username) {
-  console.log(comment);
-
   // 별점 생성 함수
   function createStarRating(rating) {
     let starRating = '<fieldset class="rated">';
@@ -41,12 +39,9 @@ function createCommentTemplate(comment, username) {
                   <span class="text-muted ms-3 comment-date">
                       ${moment(comment.rating_date).format("YYYY-MM-DD hh:mm")}
                   </span>
-                  <span class="text-muted ms-3 StarRate">${comment.rating}
+                  <span class="rating-data">${comment.rating}</span>
                   <span>${createStarRating(comment.rating)}
                   </span>
-                  </span>
-                  
-
               </div>
               <div  class="btn-group">
               ${
@@ -127,17 +122,12 @@ function showUpdateComment(e) {
   const contentEl = commentEl.find(".comment-content");
   const comment = { no, content: contentEl.html().trim() };
 
-  console.log(comment);
-
   contentEl.hide();
   commentEl.find(".btn-group").hide();
 
   const template = createCommentEditTemplate(comment);
   const el = $(template);
   commentEl.find(".comment-body").append(el);
-
-  // 특정 조건을 확인하여 클래스 변경
-  commentEl.removeClass("rated").addClass("rate");
 }
 
 // 댓글 수정하기
@@ -147,16 +137,13 @@ async function updateComment(commentEl, userid) {
   const editContentEl = commentEl.find(".comment-edit-block"); // 수정 창
   const rating_review = editContentEl.find(".comment-editor").val(); // 수정 내용
   const ratingid = parseInt(commentEl.data("no"));
-  const rating = parseInt(commentEl.find(".text-muted.ms-3.StarRate").text());
-  console.log("-------------->>>> rating : " + rating);
-  console.log("---------->>> " + ratingid);
+  const rating = parseInt(commentEl.find(".rating-data").text());
+
+  console.log(rating);
+
   let comment = { ratingid, userid, rating_review, rating };
 
-  console.log("----->>  Data : " + comment.userid);
-  console.log("----->>  Data : " + comment.rating_review);
-
   comment = await rest_modify(COMMENT_URL + comment.ratingid, comment);
-  console.log("수정", comment);
 
   const contentEl = commentEl.find(".comment-content");
   editContentEl.remove();
