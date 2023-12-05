@@ -22,5 +22,5 @@ public class BookVO {
 	private String category;
 	private String Topic;
 	private String imageUrl; // ${book.imageUrl} === Book ��ü�� getimageUrl()
-	 
+
 }
