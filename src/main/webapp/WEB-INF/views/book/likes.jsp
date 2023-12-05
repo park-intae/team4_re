@@ -13,7 +13,8 @@
 .card-container {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 20px;
+	gap: 40px;
+	justify-content: center; /* 수평 가운데 정렬 */
 }
 
 .card {
@@ -56,6 +57,11 @@
 	cursor: pointer;
 	color: red;
 	margin-top: 10px;
+	background: none;
+	border: none;
+	font-size: 16px;
+	text-decoration: underline;
+	display: inline-block;
 }
 </style>
 

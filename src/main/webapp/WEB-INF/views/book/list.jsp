@@ -44,7 +44,10 @@
 .card-container {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 20px;
+	gap: 50px;
+	justify-content: center; /* 수평 가운데 정렬 */
+	align-items: center; /* 수직 가운데 정렬 */
+	margin: 30px auto; /* 여백 추가 및 수평 가운데 정렬을 위해 auto 설정 */
 }
 
 .card {
@@ -55,9 +58,10 @@
 }
 
 .card-img-top {
-	width: 100%;
-	height: 150px;
+	width: 140px;
+	height: 170px;
 	object-fit: cover;
+	margin: 20px 35px 6px 34px; /* 위 20px, 오른쪽 35px, 아래 80px, 왼쪽 34px 여백 설정 */
 }
 
 .card-body {
@@ -101,6 +105,10 @@ a:hover {
 .active {
 	background-color: #cdd5ec;
 }
+h1 {
+    text-align: left; /* 텍스트를 오른쪽으로 정렬합니다. */
+    margin-left: 160px; /* 텍스트와 오른쪽 여백을 설정합니다. 필요한 만큼 조절하세요. */
+}
 </style>
 
 <h1>Book List</h1>
@@ -125,7 +133,6 @@ a:hover {
 						<p class="card-text">출판사: ${book.publisher}</p>
 						<p class="card-text">장르: ${book.genre}</p>
 						<p class="card-text">카테고리: ${book.category}</p>
-						<p class="card-text"></p>
 						<i class="bi bi-heart text-danger" style="cursor: pointer;"
 							onclick="likeBook('${book.bookid}', '${book.title}', this)"></i>
 
@@ -141,7 +148,7 @@ a:hover {
 		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 		<input type="hidden" name="keywords" value="${param.keywords}">
 		<input type="hidden" name="selectedCategories" value="${param.selectedCategories}"> 
-		<input type="hidden" name="selectedTopics" value="${param.selectedTopics}"> 
+		<input type="hidden" name="selectedTopics" value="${param.selectedTopics}">
 		<input type="hidden" name="bookType" value="${param.bookType}">
 
 		<!-- 필요한 경우 다른 검색 매개변수를 추가로 숨은 필드로 포함합니다 -->
