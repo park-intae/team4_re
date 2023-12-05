@@ -292,8 +292,9 @@ a:hover {
 		<div class="card-container">
 			<c:forEach var="book" items="${list}">
 				<div class="card">
-					<a href="/book/detail?bookid=${book.bookid}">
-					  <img src="${book.imageUrl.split(',')[0]}" alt="${book.title}" class="card-img-top">
+					<a href="/book/detail?bookid=${book.bookid}"> <img
+						src="${book.imageUrl.split(',')[0]}" alt="${book.title}"
+						class="card-img-top">
 					</a>
 					<div class="card-body">
 						<a href="/book/detail?bookid=${book.bookid}">
@@ -318,6 +319,9 @@ a:hover {
 		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 		<input type="hidden" name="keywords" value="${param.keywords}">
+		<input type="hidden" name="selectedCategories" value="${param.selectedCategories}"> 
+		<input type="hidden" name="selectedTopics" value="${param.selectedTopics}"> 
+		<input type="hidden" name="bookType" value="${param.bookType}">
 		<!-- 필요한 경우 다른 검색 매개변수를 추가로 숨은 필드로 포함합니다 -->
 	</form>
 
@@ -374,8 +378,9 @@ a:hover {
 		<div class="card-container">
 			<c:forEach var="bookAI" items="${bookByCBF}">
 				<div class="card">
-					<a href="/book/detail?bookid=${bookAI.bookid}">
-					  <img src="${bookAI.imageUrl.split(',')[0]}" alt="${bookAI.title}" class="card-img-top">
+					<a href="/book/detail?bookid=${bookAI.bookid}"> <img
+						src="${bookAI.imageUrl.split(',')[0]}" alt="${bookAI.title}"
+						class="card-img-top">
 					</a>
 
 					<div class="card-body">
