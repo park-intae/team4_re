@@ -16,15 +16,23 @@
 				<button class="btn btn-secondary dropdown-toggle cate" type="button"
 					id="dropdownMenuButton1" data-bs-toggle="dropdown"
 					aria-expanded="false">카테고리</button>
+
 				<ul id="searchBar-category" class="dropdown-menu">
-					<!-- <li><a class="dropdown-item" href="#"
+					<li><a class="dropdown-item" href="#"
 						onclick="changeCategory('대분류1')">대분류1</a></li>
 					<li><a class="dropdown-item" href="#"
 						onclick="changeCategory('대분류2')">대분류2</a></li>
 					<li><a class="dropdown-item" href="#"
-						onclick="changeCategory('대분류3')">대분류3</a></li> -->
+						onclick="changeCategory('대분류3')">대분류3</a></li>
 				</ul>
-				
+
+				<!-- <script>
+					function changeCategory(selectedCategory) {
+						// 버튼의 텍스트 내용을 선택된 값으로 업데이트
+						document.getElementById('dropdownMenuButton1').textContent = selectedCategory;
+					}
+				</script> -->
+
 				<script>
 					 var ul = document.getElementById("searchBar-category");
 	     	         var searchBookList = ${ searchBook };
@@ -47,9 +55,10 @@
 		              	details.appendChild(summary);
 					 	}
 					 
-					 function changeCategory(selected) {
-							document.getElementById('dropdownMenuButton1').textContent = selected;
-						}
+					 function changeCategory(selectedCategory) {
+						// 버튼의 텍스트 내용을 선택된 값으로 업데이트
+						document.getElementById('dropdownMenuButton1').textContent = selectedCategory;
+					}
 				</script>
 			</div>
 			<input id="searching" name="keywords" type="text"
