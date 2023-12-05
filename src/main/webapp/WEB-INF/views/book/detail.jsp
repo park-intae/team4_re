@@ -59,20 +59,18 @@ $(document).ready(async function() {
 
 <style>
 .fixed-content {
-	margin-left: 335px;
+	margin-left: 215px;
 	margin-top: 60px;
+	margin-bottom: 13px;
 }
 </style>
 
 <hr>
 
 <div class="clearfix">
-	<div class="fixed-content">
-		${book.author} <br> ${book.publisher} <br>
-		${book.publicationdate}
-	</div>
 
-	<div class="image-panel float-left mr-3">
+
+	<div class="image-panel float-left mr-3 ">
 
 		<style>
 #book-carousel {
@@ -94,44 +92,50 @@ $(document).ready(async function() {
 </style>
 
 
+		<div class="image-lay">
+			<div id="book-carousel" class="carousel slide" data-ride="carousel">
 
-		<div id="book-carousel" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ul class="carousel-indicators">
+					<c:forEach items="${book.imageUrl.split(',')}" varStatus="status">
+						<li data-target="#book-carousel" data-slide-to="${status.index}"
+							class="<c:if test="${status.first}">active</c:if>"></li>
 
-			<!-- Indicators -->
-			<ul class="carousel-indicators">
-				<c:forEach items="${book.imageUrl.split(',')}" varStatus="status">
-					<li data-target="#book-carousel" data-slide-to="${status.index}"
-						class="<c:if test="${status.first}">active</c:if>"></li>
+					</c:forEach>
 
-				</c:forEach>
+				</ul>
 
-			</ul>
+				<!-- The slideshow -->
+				<div class="carousel-inner">
+					<c:forEach var="image" items="${book.imageUrl.split(',')}"
+						varStatus="status">
+						<div
+							class="carousel-item <c:if test="${status.first}">active</c:if>">
+							<img src="${image}" alt="${book.title}" >
+						</div>
+					</c:forEach>
+				</div>
 
-			<!-- The slideshow -->
-			<div class="carousel-inner">
-				<c:forEach var="image" items="${book.imageUrl.split(',')}"
-					varStatus="status">
-					<div
-						class="carousel-item <c:if test="${status.first}">active</c:if>">
-						<img src="${image}" alt="${book.title}">
-					</div>
-				</c:forEach>
+				<!-- Left and right controls -->
+				<a class="carousel-control-prev" href="#book-carousel"
+					data-slide="prev"> <span class="carousel-control-prev-icon"></span>
+				</a> <a class="carousel-control-next" href="#book-carousel"
+					data-slide="next"> <span class="carousel-control-next-icon"></span>
+				</a>
+
 			</div>
-
-			<!-- Left and right controls -->
-			<a class="carousel-control-prev" href="#book-carousel"
-				data-slide="prev"> <span class="carousel-control-prev-icon"></span>
-			</a> <a class="carousel-control-next" href="#book-carousel"
-				data-slide="next"> <span class="carousel-control-next-icon"></span>
-			</a>
 
 		</div>
 
-
-
 	</div>
 
-	<div>${book.bookintro}</div>
+	<div class="intro">
+		<div class="fixed-content">
+			${book.author} <br> ${book.publisher} <br>
+			${book.publicationdate}
+		</div>
+		${book.bookintro}
+	</div>
 
 
 	<br>
@@ -346,26 +350,26 @@ function copyUrl(){
 
 
 
-			<div>
-				<button type="button" class="copy-btn" onclick="copyUrl()">링크
-					복사</button>
-			</div>
+	<div>
+		<button type="button" class="copy-btn" onclick="copyUrl()">링크
+			복사</button>
+	</div>
 
 
 	<!-- 새 댓글 작성 -->
-<div class="bg-light p-2 rounded my-5">
-	<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
-	<div>
-		<textarea class="form-control new-comment-content" rows="3"
-			${username == null ? 'disabled' : '' }></textarea>
-		<div class="text-right">
-			<button class="btn btn-primary btn-sm my-2 comment-add-btn"
-				${username == null ? 'disabled' : '' }>
-				<i class="fa-regular fa-comment"></i> 확인
-			</button>
+	<div class="bg-light p-2 rounded my-5">
+		<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
+		<div>
+			<textarea class="form-control new-comment-content" rows="3"
+				${username == null ? 'disabled' : '' }></textarea>
+			<div class="text-right">
+				<button class="btn btn-primary btn-sm my-2 comment-add-btn"
+					${username == null ? 'disabled' : '' }>
+					<i class="fa-regular fa-comment"></i> 확인
+				</button>
+			</div>
 		</div>
 	</div>
-</div>
 
 
 	<div class="my-5">
@@ -373,7 +377,7 @@ function copyUrl(){
 		<hr>
 		<div class="comment-list"></div>
 	</div>
-	
+
 
 </div>
 
