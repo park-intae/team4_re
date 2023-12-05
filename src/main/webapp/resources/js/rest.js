@@ -29,8 +29,6 @@ async function rest_create(url, data) {
 }
 
 async function rest_modify(url, data) {
-  console.log("------->>> URL " + url);
-  console.log("------->>> data " + data.rating_review);
   try {
     let res = await fetch(url, {
       method: "PUT",
