@@ -46,14 +46,6 @@ nav .menu-btn {
 	cursor: pointer;
 }
 
-nav .menu-btn .icon1 {
-	transform: rotate(0);
-}
-
-nav .menu-btn .icon1.icon2 {
-	transform: rotate(0.5turn);
-}
-
 nav .search-bar {
 	margin-right: auto;
 	margin-left: auto;
@@ -76,8 +68,8 @@ nav #searchIco {
 	width: 24px;
 	height: 24px;
 }
+
 nav .nav-cat{
-	position: relative;
 	z-index: 103;
 }
 nav .nav-cat * {

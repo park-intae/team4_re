@@ -6,22 +6,22 @@
 		<div class="notice text">카테고리 검색</div>
 		<i class="fa-solid fa-chevron-right icon1"></i>
 	</div>
-	<form action="/book/list" id="searchForm" method="get" class="d-flex">
+	<form action="/book/list" id="searchForm" method="get" class="d-flex flex-column">
 		<div class="mt-5 input-group search-bar">
 			<input id="searching" name="keywords" type="text"
 				class="form-control text" placeholder="추천 키워드를 입력하세요"
 				aria-label="Recipient's username" aria-describedby="button-addon2" />
-			<button type="button" id="search-btn" class="btn btn-success rounded-0"
-				onclick="prepareAndSubmitForm()">
+			<button type="button" id="search-btn"
+				class="btn btn-success rounded-0" onclick="prepareAndSubmitForm()">
 				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>
 		</div>
-	</form>
-	<div class="nav-cat">
-		<div>
-			<form action="/book/list" id="searchForm" method="get" class="d-flex">
+		<%-- </form> --%>
+		<div class="nav-cat">
+			<div>
+				<%-- <form action="/book/list" id="searchForm" method="get" class="d-flex"> --%>
 				<div class="input-group">
-<!-- 					<div class="mx-auto mt-5 input-group mb-3 search-bar">
+					<!-- 					<div class="mx-auto mt-5 input-group mb-3 search-bar">
 						<input id="searching" name="keywords" type="text"
 							class="form-control text" placeholder="추천 키워드를 입력하세요"
 							aria-label="Recipient's username"
@@ -173,25 +173,29 @@
 					<script>
             function prepareAndSubmitForm() {
               // 장르 정보 가져오기
+              
+              
+              
               var selectedGenre =
                 document.getElementById("selectedGenre").value;
-
+              console.log("selectedGenre 되니?"+selectedGenre);
               var selectedTopicElement =
                 document.getElementById("selectedTopic");
-
+              console.log("되니?");
               if (selectedTopicElement) {
                 var selectedTopicSet = new Set(
                   selectedTopicElement.value.split(",")
                 );
+                console.log("되니?2");
                 var selectedTopicsList = Array.from(selectedTopicSet);
                 var selectedTopicElement = selectedTopicsList.join(",");
                 console.log(selectedTopicElement);
               } else {
                 console.error('Element with id "selectedTopic" not found.');
               }
-
+              console.log("되니?3");
               // 검색어 및 카테고리 정보 저장
-              searchState.keywords = document.getElementById('keywords').value;
+              // searchState.keywords = document.getElementById('keywords').value;
 
               // 선택된 카테고리를 hidden input에 설정
               // document.getElementById('selectedCategory').value = searchState.selectedCategories.join(',');
@@ -201,11 +205,12 @@
 
               // 장르 정보를 앞에 붙여서 form을 서버로 제출
               // document.getElementById('searchForm').action = '/your/search/endpoint/' + encodeURIComponent(selectedGenre);
+              console.log(document.getElementById("searchForm"));
               document.getElementById("searchForm").submit();
             }
           </script>
 				</div>
-			</form>
+			</div>
 		</div>
-	</div>
+	</form>
 </nav>
