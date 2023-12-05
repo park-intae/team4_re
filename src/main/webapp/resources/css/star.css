@@ -1,35 +1,70 @@
-#myform fieldset{
-    display: inline-block;
-    direction: rtl;
-    border:0;
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+.rate {
+  display: inline-block;
+  border: 0;
+  margin-right: 15px;
 }
-#myform fieldset legend{
-    text-align: right;
+.rate > input {
+  display: none;
 }
-#myform input[type=radio]{
-    display: none;
+.rate > label {
+  float: right;
+  color: #ddd;
 }
-#myform label{
-    font-size: 3em;
-    color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
+.rate > label:before {
+  display: inline-block;
+  font-size: 1rem;
+  padding: 0.3rem 0.2rem;
+  margin: 0;
+  cursor: pointer;
+  font-family: FontAwesome;
+  content: "\f005 ";
 }
-#myform label:hover{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+.rate .half:before {
+  content: "\f089 ";
+  position: absolute;
+  padding-right: 0;
 }
-#myform label:hover ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+.rate input:checked ~ label,
+.rate label:hover,
+.rate label:hover ~ label {
+  color: #f73c32 !important;
 }
-#myform input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+.rate input:checked + .rate label:hover,
+.rate input input:checked ~ label:hover,
+.rate input:checked ~ .rate label:hover ~ label,
+.rate label:hover ~ input:checked ~ label {
+  color: #f73c32 !important;
 }
-#reviewContents {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
+
+/* rated */
+
+.rated {
+  display: inline-block;
+  border: 0;
+  margin-right: 15px;
+}
+
+.rated > input {
+  display: none;
+}
+
+.rated > label {
+  float: right;
+  color: #ddd;
+}
+
+.rated > label:before {
+  display: inline-block;
+  font-size: 1rem;
+  padding: 0.3rem 0.2rem;
+  margin: 0;
+  font-family: FontAwesome;
+  content: "\f005 ";
+}
+
+.rated .half:before {
+  content: "\f089 ";
+  position: absolute;
+  padding-right: 0;
 }

@@ -12,44 +12,41 @@
 <script src="../../../resources/js/comment.js"></script>
 
 <script>
-const COMMENT_URL = `/api/book/detail/${book.bookid}/comment/`;
+  const COMMENT_URL = `/api/book/detail/${book.bookid}/comment/`;
 
-console.log(COMMENT_URL)
+  $(document).ready(async function() {
+    let book_id = ${book.bookid};
+    let username = '${username}'; // 작성자(로그인 유저)
 
-$(document).ready(async function() {
-	let book_id = ${book.bookid};
-	let username = '${username}';	// 작성자(로그인 유저)
+    loadComments(book_id, username); // 댓글 목록 불러오기
 
-	console.log("writer ---- >>> "+username);
+    // 댓글 추가 버튼 처리
+    $('.comment-add-btn').click(function(e) {
+      createComment(book_id, username, ratingValue);
+    });
 
-	loadComments(book_id, username);	// 댓글 목록 불러오기
-	
-	// 댓글 추가 버튼 처리
-	$('.comment-add-btn').click(function(e) {
-		createComment(book_id, username);		
-	});
-	
-	$('.comment-list').on('click', '.comment-update-show-btn', showUpdateComment );
-	
-	// 수정 확인 버튼 클릭
-	$('.comment-list').on('click', '.comment-update-btn', function (e){
-		const el = $(this).closest('.comment');
-		updateComment(el, username);
-	});
-	
+    $('.comment-list').on('click', '.comment-update-show-btn', showUpdateComment);
 
-	// 수정 취소 버튼 클릭
-	$('.comment-list').on('click', '.comment-update-cancel-btn', 
-							cancelCommentUpdate);
-	
-	// 삭제 버튼 클릭
-	$('.comment-list').on('click', '.comment-delete-btn', 
-							deleteComment);	
+    // 수정 확인 버튼 클릭
+    $('.comment-list').on('click', '.comment-update-btn', function(e){
+      const el = $(this).closest('.comment');
+      updateComment(el, username);
+    });
 
-})
+    // 수정 취소 버튼 클릭
+    $('.comment-list').on('click', '.comment-update-cancel-btn', cancelCommentUpdate);
 
+    // 삭제 버튼 클릭
+    $('.comment-list').on('click', '.comment-delete-btn', deleteComment);
+
+
+
+    // 별점 선택 시 이벤트 추가
+    $('input[name="rating"]').on('change', function() {
+      handleRatingChange(parseInt($(this).val()));
+    });
+  });
 </script>
-
 
 
 <%-- 개별 페이지 --%>
@@ -269,6 +266,7 @@ a:hover {
 
 <link href="../../../resources/css/star.css" rel="stylesheet" />
 
+<<<<<<< HEAD
 <form class="ratings" name="myform" id="myform" method="post"
 	action="/api/bookbook/rating/add">
 	<fieldset>
@@ -331,6 +329,8 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
+=======
+>>>>>>> main
 <div class="bottom">
 
 	<script>
@@ -355,11 +355,43 @@ function copyUrl(){
 		<button type="button" class="copy-btn" onclick="copyUrl()">링크
 			복사</button>
 	</div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 
 
 	<!-- 새 댓글 작성 -->
 	<div class="bg-light p-2 rounded my-5">
 		<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
+<<<<<<< HEAD
+=======
+
+		<div class="starRate">
+
+			<fieldset class="rate">
+					<input type="radio" id="rating4" name="rating"
+					value="4" onclick="handleRatingChange(4)"> <label
+					for="rating4" title="4점"></label> <input type="radio" id="rating3"
+					name="rating" value="3" onclick="handleRatingChange(3)"> <label
+					for="rating3" title="3점"></label> <input type="radio" id="rating2"
+					name="rating" value="2" onclick="handleRatingChange(2)"> <label
+					for="rating2" title="2점"></label> <input type="radio" id="rating1"
+					name="rating" value="1" onclick="handleRatingChange(1)"> <label
+					for="rating1" title="1점"></label>
+			</fieldset>
+			
+			<script>
+		    // 등급 변경 함수
+		    function handleRatingChange(rating) {
+		      ratingValue = rating;
+		    }
+			</script>
+
+		</div>
+
+
+>>>>>>> main
 		<div>
 			<textarea class="form-control new-comment-content" rows="3"
 				${username == null ? 'disabled' : '' }></textarea>

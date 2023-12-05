@@ -31,6 +31,6 @@ button.active {
 	font-size: 11px;
 }
 
-/* .row{ */
-/* 	margin-right: 40px; */
-/* } */
+.row{
+	margin-left: 40px;
+}
