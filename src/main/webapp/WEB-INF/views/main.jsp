@@ -17,19 +17,15 @@
 					id="dropdownMenuButton1" data-bs-toggle="dropdown"
 					aria-expanded="false">카테고리</button>
 				<ul id="searchBar-category" class="dropdown-menu">
-					<li><a class="dropdown-item" href="#"
+					<!-- <li><a class="dropdown-item" href="#"
 						onclick="changeCategory('대분류1')">대분류1</a></li>
 					<li><a class="dropdown-item" href="#"
 						onclick="changeCategory('대분류2')">대분류2</a></li>
 					<li><a class="dropdown-item" href="#"
-						onclick="changeCategory('대분류3')">대분류3</a></li>
+						onclick="changeCategory('대분류3')">대분류3</a></li> -->
 				</ul>
+				
 				<script>
-					function changeCategory(selectedCategory) {
-						document.getElementById('dropdownMenuButton1').textContent = selectedCategory;
-					}
-				</script>
-				<!-- <script>
 					 var ul = document.getElementById("searchBar-category");
 	     	         var searchBookList = ${ searchBook };
 	     	         var topics = Object.keys(searchBookList);
@@ -47,10 +43,14 @@
 		              	summary.classList.add('dropdown-item');
 					 	summary.href='#';
 		              	summary.appendChild(document.createElement('br'));
-		              	summary.onclick="changeCategory(topic)";
+		              	summary.onclick= changeCategory(topic);
 		              	details.appendChild(summary);
 					 	}
-					</script> -->
+					 
+					 function changeCategory(selected) {
+							document.getElementById('dropdownMenuButton1').textContent = selected;
+						}
+				</script>
 			</div>
 			<input id="searching" name="keywords" type="text"
 				class="form-control text" placeholder="추천 키워드를 입력하세요"

@@ -178,22 +178,20 @@
               
               var selectedGenre =
                 document.getElementById("selectedGenre").value;
-              console.log("selectedGenre 되니?"+selectedGenre);
+
               var selectedTopicElement =
                 document.getElementById("selectedTopic");
-              console.log("되니?");
+
               if (selectedTopicElement) {
                 var selectedTopicSet = new Set(
                   selectedTopicElement.value.split(",")
                 );
-                console.log("되니?2");
                 var selectedTopicsList = Array.from(selectedTopicSet);
                 var selectedTopicElement = selectedTopicsList.join(",");
                 console.log(selectedTopicElement);
               } else {
                 console.error('Element with id "selectedTopic" not found.');
               }
-              console.log("되니?3");
               // 검색어 및 카테고리 정보 저장
               // searchState.keywords = document.getElementById('keywords').value;
 
@@ -205,7 +203,6 @@
 
               // 장르 정보를 앞에 붙여서 form을 서버로 제출
               // document.getElementById('searchForm').action = '/your/search/endpoint/' + encodeURIComponent(selectedGenre);
-              console.log(document.getElementById("searchForm"));
               document.getElementById("searchForm").submit();
             }
           </script>
