@@ -107,21 +107,8 @@ div.search-bar {
 	background-color: white;
 }
 
-.center {
-	text-align: center;
-}
 
 .mt-5 {
 	clear: both;
 }
 
-.card-img-top {
-	height: 300;
-	object-fit: cover;
-}
-
-.stylee {
-	float: left;
-	width: 20%;
-	margin-bottom: 10px;
-}
