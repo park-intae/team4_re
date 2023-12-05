@@ -6,7 +6,7 @@
 		<div class="notice text">카테고리 검색</div>
 		<i class="fa-solid fa-chevron-right icon1"></i>
 	</div>
-	<form action="book/list" method="GET">
+	<form action="/book/list" id="searchForm" method="get" class="d-flex">
 		<div class="mt-5 input-group search-bar">
 			<input id="searching" name="keywords" type="text"
 				class="form-control text" placeholder="추천 키워드를 입력하세요"
@@ -19,7 +19,7 @@
 	</form>
 	<div class="nav-cat">
 		<div>
-			<form action="/book/list" id="searchForm" method="get" class="d-flex">
+			<%-- <form action="/book/list" id="searchForm" method="get" class="d-flex"> --%>
 				<div class="input-group">
 <!-- 					<div class="mx-auto mt-5 input-group mb-3 search-bar">
 						<input id="searching" name="keywords" type="text"
@@ -38,6 +38,7 @@
 
 					<div id="browse-category">
 						<script>
+
               var searchState = {
               	keywords: "", // 필요한 속성들을 추가하세요
               	selectedCategories: []
@@ -205,7 +206,7 @@
             }
           </script>
 				</div>
-			</form>
+			<%-- </form> --%>
 		</div>
 	</div>
 </nav>
