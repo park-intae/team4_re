@@ -19,7 +19,7 @@
 	</form>
 	<div class="nav-cat">
 		<div>
-			<%-- <form action="/book/list" id="searchForm" method="get" class="d-flex"> --%>
+			<form action="/book/list" id="searchForm" method="get" class="d-flex">
 				<div class="input-group">
 <!-- 					<div class="mx-auto mt-5 input-group mb-3 search-bar">
 						<input id="searching" name="keywords" type="text"
@@ -191,14 +191,13 @@
               }
 
               // 검색어 및 카테고리 정보 저장
-              // searchState.keywords = document.getElementById('keywords').value;
+              searchState.keywords = document.getElementById('keywords').value;
 
               // 선택된 카테고리를 hidden input에 설정
               // document.getElementById('selectedCategory').value = searchState.selectedCategories.join(',');
 
               // 선택된 토픽을 숨겨진 입력란에 설정
-              document.getElementById("selectedTopic").value =
-                selectedTopicElement;
+              document.getElementById("selectedTopic").value = selectedTopicElement;
 
               // 장르 정보를 앞에 붙여서 form을 서버로 제출
               // document.getElementById('searchForm').action = '/your/search/endpoint/' + encodeURIComponent(selectedGenre);
@@ -206,7 +205,7 @@
             }
           </script>
 				</div>
-			<%-- </form> --%>
+			</form>
 		</div>
 	</div>
 </nav>
