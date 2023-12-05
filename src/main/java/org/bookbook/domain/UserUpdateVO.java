@@ -19,7 +19,6 @@ public class UserUpdateVO {
 		private String nickname;
 		private String email;
 		private String password;
-		private String passwordcheck;
 		private String orgPassword; // 현재 비밀번호
 		private String newPassword; // 새 비밀번호
 		private String newPassword2; // 새 비밀번호 확인

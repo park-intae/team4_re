@@ -109,9 +109,7 @@ public class UserServiceImpl implements UserService {
 	        // 나머지 사용자 정보 업데이트
 	        existingUser.setUsername(userUpdateVO.getUsername());
 	        existingUser.setNickname(userUpdateVO.getNickname());
-	        existingUser.setEmail(userUpdateVO.getEmail());
 	        existingUser.setPassword(userUpdateVO.getEncPassword());
-	        existingUser.setBirth(userUpdateVO.getBirth());
 	        existingUser.setGender(userUpdateVO.getGender());
 
 	        // 회원 정보 업데이트 로직

@@ -72,7 +72,8 @@
 						</form:label></th>
 						<td>
 							<div id="SuperviserEmail" class="email-group">
-								<form:input path="email" class="s-input-form" id="viserEmail" />
+								<form:input path="email" class="s-input-form" id="viserEmail"
+								 />
 								<span id="displayEmail"></span> <input class="s-input-form box"
 									id="domain-txt" type="text" /> <select
 									class="s-input-form box" id="domain-list">
@@ -86,94 +87,35 @@
 					</tr>
 
 					<script>
-						// 이메일 주소를 설정하는 함수
-						function setEmailAddress() {
-							const domainListEl = document
-									.querySelector('#domain-list');
-							const domainInputEl = document
-									.querySelector('#domain-txt');
-							const emailDisplay = document
-									.querySelector('#displayEmail');
-							const viserEmail = document
-									.querySelector('#viserEmail');
+    const domainListEl = document.querySelector('#domain-list');
+    const domainInputEl = document.querySelector('#domain-txt');
+    const emailDisplay = document.querySelector('#displayEmail');
+    const viserEmail = document.querySelector('#viserEmail');
 
-							// 이메일 주소 분리
-							var emailParts = viserEmail.value.split('@');
-							if (emailParts.length === 2) {
-								viserEmail.value = emailParts[0];
-								var emailDomain = emailParts[1];
+    domainListEl.addEventListener('change', (event) => {
+    	
+        if (event.target.value !== "type") {
+            domainInputEl.value = event.target.value;
+            domainInputEl.disabled = true;
+            
+         // domainInputEl이 직접 입력일 때는 emailDisplay에 표시하지 않도록
+            emailDisplay.textContent = `${viserEmail.value}@${event.target.value}`;
+        } else {
+            domainInputEl.value = "";
+            domainInputEl.disabled = false;
+       //     emailDisplay.textContent = viserEmail.value; // 직접 입력시 emailDisplay에 @type을 포함시키지 않음
+        }
 
-								// 도메인 옵션 설정
-								var domainOptionExists = false;
-								for (var i = 0; i < domainListEl.options.length; i++) {
-									if (domainListEl.options[i].value === emailDomain) {
-										domainListEl.value = emailDomain;
-										domainInputEl.value = emailDomain;
-										domainInputEl.disabled = true;
-										domainOptionExists = true;
-										break;
-									}
-								}
+        // Email 생성 및 표시 로직
+        const domain = domainInputEl.value;
+       emailDisplay.textContent = `${viserEmail.value}@${domain}`;
+    });
 
-								if (!domainOptionExists) {
-									domainListEl.value = "type";
-									domainInputEl.value = emailDomain;
-									domainInputEl.disabled = false;
-								}
-							}
-
-							emailDisplay.textContent = `${viserEmail.value}@${domainInputEl.value}`;
-						}
-
-						// 폼 제출 전 이메일 주소 결합
-						document
-								.querySelector('#updateProfile')
-								.addEventListener(
-										'submit',
-										function() {
-											const viserEmail = document
-													.querySelector('#viserEmail');
-											const domainInputEl = document
-													.querySelector('#domain-txt');
-											viserEmail.value = viserEmail.value
-													+ "@" + domainInputEl.value;
-										});
-
-						// 페이지 로드 시 이메일 주소 설정
-						document.addEventListener("DOMContentLoaded",
-								setEmailAddress);
-					</script>
-
+    // 초기화
+    domainInputEl.disabled = true;
+</script>
 					<!-- 생일 필드 -->
-					<tr>
-						<th><form:label path="birth">생일</form:label></th>
-						<td>
-							<div class="birthday-select-group">
-								<select class="s-input-form box" id="birth.year"
-									name="birth.year">
-									<!-- 연도 옵션들 -->
-									<option disabled selected>Year</option>
-									<c:forEach var="year" begin="1950" end="2023">
-										<option value="${year}">${year}</option>
-									</c:forEach>
-								</select> <select class="s-input-form box" id="birth.month"
-									name="birth.month">
-									<!-- 월 옵션들 -->
-									<option disabled selected>월</option>
-									<c:forEach var="month" begin="1" end="12">
-										<option value="${month}">${month}</option>
-									</c:forEach>
-								</select> <select class="s-input-form box" id="birth.day"
-									name="birth.day">
-									<!-- 일 옵션들 -->
-									<option disabled selected>일</option>
-									<c:forEach var="day" begin="1" end="31">
-										<option value="${day}">${day}</option>
-									</c:forEach>
-								</select>
-							</div> <form:errors path="birth" cssClass="error" />
-						</td>
-					</tr>
+					
 					<!-- 성별 필드 -->
 					<tr>
 						<th><form:label path="gender">성별

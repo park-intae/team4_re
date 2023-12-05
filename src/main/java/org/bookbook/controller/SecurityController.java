@@ -131,7 +131,6 @@ public class SecurityController {
 			userUpdateVO.setNickname(user.getNickname());
 			userUpdateVO.setEmail(user.getEmail());
 			userUpdateVO.setPassword(user.getPassword());
-			userUpdateVO.setBirth(user.getBirth());
 			userUpdateVO.setGender(user.getGender());
 			// 나머지 필드 설정
 
@@ -152,6 +151,7 @@ public class SecurityController {
 			return "security/updateProfile";
 		}
 
+	
 		service.updateUserProfile(userUpdateVO);
 
 		updateSessionUser(session, userUpdateVO);
@@ -168,8 +168,6 @@ public class SecurityController {
 		if (sessionUser != null && sessionUser.getUserid().equals(userUpdateVO.getUserid())) {
 			sessionUser.setUsername(userUpdateVO.getUsername());
 			sessionUser.setNickname(userUpdateVO.getNickname());
-			sessionUser.setEmail(userUpdateVO.getEmail());
-			sessionUser.setBirth(userUpdateVO.getBirth());
 			sessionUser.setGender(userUpdateVO.getGender());
 			// 세션 정보 업데이트
 			session.setAttribute("user", sessionUser);

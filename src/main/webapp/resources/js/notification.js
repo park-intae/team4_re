@@ -1,3 +1,27 @@
+// 알림을 로컬 스토리지에 저장
+function saveNotificationToStorage(notification) {
+    var storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    storedNotifications.push(notification);
+    localStorage.setItem('notifications', JSON.stringify(storedNotifications));
+}
+
+// 로컬 스토리지에서 알림을 불러와 화면에 표시
+function loadNotificationsFromStorage() {
+    var storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    storedNotifications.forEach(function(notification) {
+        addNotificationToContent(notification, true);
+    });
+}
+
+// 알림을 로컬 스토리지에서 제거
+function removeNotificationFromStorage(notificationId) {
+    var storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    var updatedNotifications = storedNotifications.filter(function(notification) {
+        return notification.id !== notificationId;
+    });
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+}
+
 let osInstance;
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -32,12 +56,13 @@ function loadNotifications() {
                 var notificationId = 'content-notification-' + notification.id;
                 if (!document.getElementById(notificationId)) {
                     addNotificationToContent(notification);
+                    saveNotificationToStorage(notification); // 로컬 스토리지에 저장
                 }
             });
             updateAlarmContentHeight();
-             if (osInstance) {
-        osInstance.update();
-    }
+            if (osInstance) {
+                osInstance.update();
+            }
         },
         error: function(error) {
             console.error("알림 데이터를 불러오는데 실패", error);
@@ -45,8 +70,9 @@ function loadNotifications() {
     });
 }
 
+// 알림을 추가하는 함수
 function addNotificationToContent(notification, isInitialLoad = false) {
-      var notificationId = 'content-notification-' + notification.id;
+     var notificationId = 'content-notification-' + notification.id;
     if (document.getElementById(notificationId)) {
         // 이미 존재하는 알림은 추가하지 않음
         return;
@@ -65,13 +91,14 @@ function addNotificationToContent(notification, isInitialLoad = false) {
 
     $('.alarm-content .os-content').append(notificationDiv);
 
+    // 저장 로직은 초기 로드 시에만 적용
     if (!isInitialLoad) {
         saveNotificationToStorage(notification);
     }
     
-    osInstance.update();
-    updateAlarmContentHeight();
+    updateAlarmContentHeight(); // 높이 업데이트
 }
+
 
 
 
@@ -82,12 +109,22 @@ function updateAlarmContentHeight() {
     });
 
     var alarmContent = $('.alarm-content');
-    alarmContent.css('height', totalHeight + 'px');
+    var maxHeight = 300; // 최대 높이 설정
 
-    if(totalHeight > alarmContent.outerHeight()) {
-        alarmContent.css('overflow-y', 'scroll');
+    if (totalHeight > maxHeight) {
+        alarmContent.css({
+            'height': maxHeight + 'px',
+            'overflow-y': 'scroll'
+        });
     } else {
-        alarmContent.css('overflow-y', 'hidden');
+        alarmContent.css({
+            'height': totalHeight + 'px',
+            'overflow-y': 'hidden'
+        });
+    }
+
+    if (osInstance) {
+        osInstance.update();
     }
 }
 
@@ -98,7 +135,7 @@ function deleteNotification(notificationId, div) {
         type: 'POST',
         success: function(result) {
             div.remove();
-            removeNotificationFromStorage(notificationId); // localStorage에서 알림 제거
+              removeNotificationFromStorage(notificationId); // localStorage에서 알림 제거
             if (osInstance) {
                 osInstance.update(); // 오버레이 스크롤바 업데이트
             }
@@ -127,6 +164,7 @@ function startSSE() {
             const data = JSON.parse(event.data);
             displayNotificationInList(data); // 우측 상단 알림 목록에 알림 표시
             addNotificationToContent(data, true); // 알림을 페이지에 동적으로 추가. 저장안함
+          
         } catch (error) {
             console.error('JSON parsing error:', error);
         }

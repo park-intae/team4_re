@@ -14,8 +14,6 @@ public interface UserMapper {
 	
 	public void insertAuth(AuthVO auth);
 	
-	public void changePassword(ChangePasswordVO vo); 
-
 	public List<UserVO> getAllUsers();
 	
 	public void update(UserVO user);
