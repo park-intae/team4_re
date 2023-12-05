@@ -1,13 +1,49 @@
+// 알림을 로컬 스토리지에 저장
+function saveNotificationToStorage(notification) {
+    var storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    storedNotifications.push(notification);
+    localStorage.setItem('notifications', JSON.stringify(storedNotifications));
+}
+
+// 로컬 스토리지에서 알림을 불러와 화면에 표시
+function loadNotificationsFromStorage() {
+    var storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    storedNotifications.forEach(function(notification) {
+        addNotificationToContent(notification, true);
+    });
+}
+
+// 알림을 로컬 스토리지에서 제거
+function removeNotificationFromStorage(notificationId) {
+    var storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    var updatedNotifications = storedNotifications.filter(function(notification) {
+        return notification.id !== notificationId;
+    });
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+}
+
+let osInstance;
+
 document.addEventListener('DOMContentLoaded', (event) => {
     startSSE();
     loadNotifications();
+    loadNotificationsFromStorage(); // 페이지 로드 시 저장된 알림 로드
     applyOverlayScrollbars();
 
-   // alarm-conten 영역에 삭제 버튼 처리
-     $('.alarm-content').on('click', '.delete-icon', function() {
+     $('.alarm-content').on('click', '.alarm-content .delete-icon', function() {
         const notificationDiv = $(this).closest('.notification-item');
         const notificationId = notificationDiv.attr('id').replace('content-notification-', '');
         deleteNotification(notificationId, notificationDiv);
+    });
+
+    OverlayScrollbars(document.querySelectorAll('.alarm-content'), {
+        overflowBehavior: {
+            x: "hidden",
+            y: "scroll"
+        },
+        scrollbars: {
+            autoHide: "never"
+        }
     });
 });
 
@@ -17,10 +53,16 @@ function loadNotifications() {
         type: 'GET',
         success: function(notifications) {
             notifications.forEach(function(notification) {
-                if (!document.getElementById('content-notification-' + notification.id)) {
+                var notificationId = 'content-notification-' + notification.id;
+                if (!document.getElementById(notificationId)) {
                     addNotificationToContent(notification);
+                    saveNotificationToStorage(notification); // 로컬 스토리지에 저장
                 }
             });
+            updateAlarmContentHeight();
+            if (osInstance) {
+                osInstance.update();
+            }
         },
         error: function(error) {
             console.error("알림 데이터를 불러오는데 실패", error);
@@ -28,21 +70,84 @@ function loadNotifications() {
     });
 }
 
+// 알림을 추가하는 함수
 function addNotificationToContent(notification, isInitialLoad = false) {
-    
-      var div = $('<div></div>').addClass('notification-item').text(notification.content);
-    div.attr('id', 'content-notification-' + notification.id);
-    
-    // 삭제 버튼 추가
-    var deleteButton = $('<i class="fa-solid fa-trash" style="color: #000000;"></i>').addClass('delete-button');
+     var notificationId = 'content-notification-' + notification.id;
+    if (document.getElementById(notificationId)) {
+        // 이미 존재하는 알림은 추가하지 않음
+        return;
+    }
+
+    var notificationDiv = $('<div></div>').addClass('notification-item');
+    notificationDiv.attr('id', notificationId);
+    var notificationText = $('<div></div>').text(notification.content).addClass('notification-text');
+    notificationDiv.append(notificationText);
+
+    var deleteButton = $('<i class="fa-solid fa-trash"></i>').addClass('delete-button');
     deleteButton.on('click', function() {
-        deleteNotification(notification.id, div);
+        deleteNotification(notification.id, notificationDiv);
+    });
+    notificationDiv.append(deleteButton);
+
+    $('.alarm-content .os-content').append(notificationDiv);
+
+    // 저장 로직은 초기 로드 시에만 적용
+    if (!isInitialLoad) {
+        saveNotificationToStorage(notification);
+    }
+    
+    updateAlarmContentHeight(); // 높이 업데이트
+}
+
+
+
+
+function updateAlarmContentHeight() {
+    var totalHeight = 0;
+    $('.alarm-content .notification-item').each(function() {
+        totalHeight += $(this).outerHeight(true);
     });
 
-    div.append(deleteButton);
-    
-    $('.alarm-content').prepend(div);
+    var alarmContent = $('.alarm-content');
+    var maxHeight = 300; // 최대 높이 설정
+
+    if (totalHeight > maxHeight) {
+        alarmContent.css({
+            'height': maxHeight + 'px',
+            'overflow-y': 'scroll'
+        });
+    } else {
+        alarmContent.css({
+            'height': totalHeight + 'px',
+            'overflow-y': 'hidden'
+        });
+    }
+
+    if (osInstance) {
+        osInstance.update();
+    }
 }
+
+
+function deleteNotification(notificationId, div) {
+    $.ajax({
+        url: '/api/deleteNotification/' + notificationId,
+        type: 'POST',
+        success: function(result) {
+            div.remove();
+              removeNotificationFromStorage(notificationId); // localStorage에서 알림 제거
+            if (osInstance) {
+                osInstance.update(); // 오버레이 스크롤바 업데이트
+            }
+        },
+        error: function(error) {
+            console.error("알림 삭제 실패", error);
+        }
+    });
+}
+
+
+
 
 let eventSource;
 
@@ -58,7 +163,8 @@ function startSSE() {
         try {
             const data = JSON.parse(event.data);
             displayNotificationInList(data); // 우측 상단 알림 목록에 알림 표시
-            addNotificationToContent(data); // 알림을 페이지에 동적으로 추가
+            addNotificationToContent(data, true); // 알림을 페이지에 동적으로 추가. 저장안함
+          
         } catch (error) {
             console.error('JSON parsing error:', error);
         }
@@ -101,25 +207,16 @@ function toggleNotifications() {
 }
 
 
-
-// 알림 삭제 함수
-function deleteNotification(notificationId, div) {
-    $.ajax({
-        url: '/api/deleteNotification/' + notificationId,
-        type: 'POST',
-        success: function(result) {
-            div.remove();
+function applyOverlayScrollbars() {
+    osInstance = OverlayScrollbars(document.querySelectorAll('.alarm-content'), {
+        overflowBehavior: {
+            x: "hidden",
+            y: "scroll"
         },
-        error: function(error) {
-            console.error("알림 삭제 실패", error);
+        scrollbars: {
+            autoHide: "never"
         }
     });
-}
-
-
-
-function applyOverlayScrollbars() {
-    OverlayScrollbars(document.querySelectorAll('.alarm-content'), {});
 }
 
 $(document).ready(function() {

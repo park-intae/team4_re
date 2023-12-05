@@ -1,0 +1,123 @@
+* {
+	margin: 0;
+	padding: 0;
+	color: #252a34;
+	font-family: ns-m;
+}
+
+.wrap {
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	flex-grow: 1;
+}
+
+.hr-solid {
+	border-bottom: 1px solid #ccc; /* 색상과 두께 조절 가능 */
+	padding-bottom: 10px; /* 선과 내용 사이의 간격 */
+	margin-bottom: 10px; /* 선과 테이블 사이의 간격 */
+}
+
+.title {
+	margin-top: 30px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.content {
+	width: 400px;
+	margin: 0 auto;
+}
+
+.input-box>* {
+	margin-top: 10px;
+}
+
+.s-input-form {
+	width: 100%;
+	font-size: 18px;
+	display: block;
+	padding: 0.8rem;
+	outline: none;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	margin-bottom: 1px;
+}
+
+.s-input-form:focus {
+	box-shadow: 0 0 0 0.1rem #eee;
+}
+
+
+.btn-box {
+	margin-top: 20px;
+}
+
+.btn-box>a {
+	text-decoration: none;
+}
+
+.s-btn {
+	border: none;
+	border-radius: 5px;
+	width: 100%;
+	height: 55px;
+	display: block;
+	box-sizing: border-box;
+	transition-duration: 0.5s;
+	font-size: 18px;
+	font-family: ns-light;
+	margin-top: 10px;
+}
+
+.s-bc1 {
+	background-color: rgba(0, 90, 13, 0.9);
+	color: #fff;
+	border: none;
+}
+
+.s-bc1:hover {
+	cursor: pointer;
+}
+
+.s-bc2 {
+	border: 1px solid rgba(0, 90, 13, 0.9);
+	background-color: #fff;
+	color: rgba(0, 90, 13);
+}
+
+.s-bc2:hover {
+	cursor: pointer;
+}
+
+
+
+/* "로그인" 텍스트 위치 조정 */
+.title h1 {
+    margin-bottom: 30px; /* 텍스트를 아래로 이동시키기 위한 값, 조정 가능 */
+    text-align: center;
+}
+
+
+.form-check {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 1px; /* 폼 사이의 간격을 줄임 */
+}
+
+.form-remember {
+    position: relative; /* 상대적 위치 설정 */
+    right: 220px; /* 오른쪽으로 20px 이동 */
+    margin-bottom: 15px; /* 필요한 경우 여백 조절 */
+}
+
+.form-remember .form-check-label {
+    font-size: 20px; /* 폰트 크기 조절 */
+}
+
+.form-check-input {
+    margin-top: 15px; /* 체크박스를 아래로 조금 이동 */
+}

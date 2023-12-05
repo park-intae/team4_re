@@ -6,7 +6,7 @@ import java.util.List;
 import org.bookbook.domain.UserVO;
 import org.bookbook.domain.notification.Notification;
 import org.bookbook.service.FollowerService;
-import org.bookbook.service.NotificationServiceimpl;
+import org.bookbook.service.NotificationService;
 import org.bookbook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class UserController {
 	private FollowerService followerService;
 
 	@Autowired
-	private NotificationServiceimpl notificationService;
+	private NotificationService notificationService;
 
 	@GetMapping("/usersWithFollowStatus")
 	@ResponseBody
