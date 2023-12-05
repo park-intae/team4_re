@@ -25,6 +25,9 @@ function createCommentTemplate(comment, username) {
                   <span class="text-muted ms-3 comment-date">
                       ${moment(comment.rating_date).format("YYYY-MM-DD hh:mm")}
                   </span>
+                  <span class="text-muted ms-3 StarRate">${
+                    comment.rating
+                  }</span>
               </div>
               <div  class="btn-group">
               ${
