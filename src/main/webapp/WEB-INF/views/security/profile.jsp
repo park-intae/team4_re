@@ -3,15 +3,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-	rel="stylesheet">
+
+		prefix="sec"%>
+<link 
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+		rel="stylesheet">
+
 <%@ include file="../layouts/header.jsp"%>
 
 
 <sec:authorize access="isAuthenticated()">
-	<sec:authentication property="principal.user.userid" var="userid" />
+
+    <sec:authentication property="principal.user.userid" var="userid" />
+
 	<!-- 현재 로그인한 사용자의 정보를 불러옵니다. -->
 	<c:set var="user"
 		value="${not empty sessionScope.naverUser ? sessionScope.naverUser : user}" />
@@ -33,24 +37,22 @@
 		<div class="upper-div"></div>
 
 		<div class="inner-container">
-			<div class="round-div">
-				<sec:authorize access="isAuthenticated()">
-					<c:choose>
-						<c:when test="${not empty sessionScope.naverUser}">
-							<!-- 네이버 로그인 사용자의 프로필 이미지 -->
-							<img
-								src="https://api.dicebear.com/7.x/identicon/svg?seed=${sessionScope.naverUser.id}"
-								alt="Profile Image" class="profile-image" />
-						</c:when>
-						<c:otherwise>
-							<!-- 일반 로그인 사용자의 프로필 이미지 -->
-							<img
-								src="https://api.dicebear.com/7.x/identicon/svg?seed=${user.userid}"
-								alt="Profile Image" class="profile-image" />
-						</c:otherwise>
-					</c:choose>
-				</sec:authorize>
-			</div>
+
+			<div class="round-div">	<sec:authorize access="isAuthenticated()">
+        <c:choose>
+            <c:when test="${not empty sessionScope.naverUser}">
+                <!-- 네이버 로그인 사용자의 프로필 이미지 -->
+                <img src="https://api.dicebear.com/7.x/identicon/svg?seed=${sessionScope.naverUser.id}" alt="Profile Image" class="profile-image" />
+            </c:when>
+            <c:otherwise>
+                <!-- 일반 로그인 사용자의 프로필 이미지 -->
+                <img src="https://api.dicebear.com/7.x/identicon/svg?seed=${user.userid}" alt="Profile Image" class="profile-image" /> 
+            </c:otherwise>
+        </c:choose>
+    </sec:authorize>   
+    
+    </div>
+		
 
 
 			<div class="info-follow-container">
@@ -60,9 +62,10 @@
 							<!-- 네이버 로그인 사용자 정보 표시 -->
 							<!-- 이름과 닉네임을 함께 배치 -->
 							<div class="flex-row-container">
-								<div class="label-item-container">
-									<div class="label">이름</div>
-									<div class="item-name">${sessionScope.naverUser.name}</div>
+								<div class="label-item-container" >
+								
+									<div class="label" >이름</div>
+									<div class="item-name" >${sessionScope.naverUser.name}</div>
 								</div>
 								<div class="label-item-container">
 									<div class="label">닉네임</div>
@@ -124,19 +127,24 @@
 						</c:otherwise>
 					</c:choose>
 					<div class="button-container">
-						<button id="showFollowModal" class="btn btn-primary">팔로우
-							목록 보기</button>
-						<button id="likeButton" class="btn btn-secondary">좋아요</button>
+					<button id="updateButton" class="btn btn-secondary">정보수정</button>
+<script>
+    document.getElementById('updateButton').addEventListener('click', function() {
+    	  window.location.href = '/security/updateProfile';
+
+    });
+</script>
+						<button id="showFollowModal" class="btn btn-primary"> 팔로우 </button>
+						
+						<button id="likeButton" class="btn btn-secondary">좋아요 </button>
 						<script>
-							document
-									.getElementById('likeButton')
-									.addEventListener(
-											'click',
-											function() {
-												window.location.href = `/book/likes?userId=${userid}`;
-											});
+
+							document.getElementById('likeButton')
+									.addEventListener('click', function() {
+                                        window.location.href = `/book/likes?userId=${userid}`;
+									});
 						</script>
-					</div>
+						</div>
 				</div>
 
 				<div class="item-follow">
@@ -161,14 +169,21 @@
 	<div class="line-separator"></div>
 
 
-	<div class="alarm-title">알림 내역</div>
 
-	<div class="alarm-content"></div>
+	<div class="alarm-title"> 
+	<div class="alarm-title-text">알림 내역</div>
+</div>
+	<div class="alarm-content">  
+	<div class="os-content">
+        <!-- 여기에 알림 내용이 동적으로 추가됩니다 -->
+    </div>
+	 </div>
+
 
 
 	<div class="line-separator"></div>
 
-</div>
+
 
 <!-- 사용자 프로필 및 정보 -->
 <div class="user-profile">

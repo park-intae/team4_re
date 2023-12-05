@@ -42,3 +42,4 @@
 </script>
 </body>
 </html>
+<%@include file="../alarm.jsp" %>

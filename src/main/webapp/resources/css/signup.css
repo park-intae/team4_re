@@ -1,137 +1,235 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
-
-body {
-    font-family: "Noto Sans KR", sans-serif;
-    color: #333333;
+/*기본 설정*/
+* {
+	margin: 0;
+	padding: 0;
+	color: #252a34;
+	font-family: ns-m;
 }
 
-p {
-    margin: auto 0;
-}
-form{
-    width: 100%
-}
-.subject{
-    font-size: x-large;
-    font-weight: bold;
+.wrap {
+	width: 1200px;
+	margin: 0 auto;
+	margin-top: 60px;
+	margin-bottom: 50px;
+	flex-grow: 1;
 }
 
-.box {
-    width: 400px;
-    display: flex;
-    justify-content: center;
-    margin: 50px auto;
-    text-align: center;
+.title {
+	margin-top: 60px;
+	margin-bottom: 30px;
+	text-align: center;
 }
 
-.input-box {
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    margin: 10px auto;
+.content {
+	width: 800px;
+	margin: 0 auto;
 }
 
-.text-end {
-    margin: 0;
-    text-align: end;
-    font-size: xx-small;
+.hr {
+	border-bottom: 1px solid #ccc; /* 색상과 두께 조절 가능 */
+	padding-bottom: 35px; /* 선과 내용 사이의 간격 */
+	margin-bottom: 30px; /* 선과 테이블 사이의 간격 */
 }
 
-.hr-solid {
-    border: 0px;
-    border-top: 2px solid #525AF2;
+.hr>* {
+	margin-top: 10px;
 }
 
-.input-text {
-    width: 80%;
-    padding-left: 10px;
-    border: 1px solid #777DF2;
-    border-radius: 5px;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-    outline: none;
-}
-.input-radio {
-    width: 30%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.input-radio input[type=radio]{
-    display: none;
-}
-.input-radio input[type=radio]+label{
-    display: inline-block;
-    cursor: pointer;
-    height: 24px;
-    width: 90px;
-    border: 1px solid #777DF2;
-    border-radius: 3px;
-    line-height: 28px;
-    text-align: center;
-    font-weight:bold;
-    font-size:13px;
-}
-.input-radio input[type=radio]+label{
-    background-color: #fff;
-    color: #777DF2;
-    height: 30px;
-    width: 45%;
-}
-.input-radio input[type=radio]:checked+label{
-    background-color: #777DF2;
-    color: #fff;
-    height: 30px;
-    width: 45%;
+.red {
+	color: red;
 }
 
-.input-date{
-    width: 30%;
-    border: 1px solid #777DF2;
-    border-radius: 5px;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-    outline: none;
-}
-input::placeholder {
-    color: #777DF2;
-}
-input[type="date"]::-webkit-datetime-edit-text,
-input[type="date"]::-webkit-datetime-edit-month-field,
-input[type="date"]::-webkit-datetime-edit-day-field,
-input[type="date"]::-webkit-datetime-edit-year-field{
-    color: #777DF2;
-    text-align: center;
-}
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    color: #777DF2;
-    display: none;
-}
-input[type="date"]{
-    text-align:center;
+.s-tbl {
+	width: 80%;
+	border-spacing: 0px;
+	border-collapse: collapse;
 }
 
-input[type="text"]:focus,
-input[type="date"]:focus{
-    border: 3px solid #777DF2;
+.s-tbl th, .s-tbl td {
+	text-align: left;
+	vertical-align: middle; /* 또는 top */
+	padding: 20px;
 }
 
-.input-button{
-    display: inline-block;
-    cursor: pointer;
-    height: 24px;
-    width: 100%;
-    background: #525AF2;
-    color: #fff;
-    border: 1px solid #525AF2;
-    border-radius: 3px;
-    line-height: 24px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 13px;
-    height: 40px;
+.s-tbl th {
+	width: 25%;
+	padding-bottom: 20px;
 }
-.div-button{
-    margin-top: 40px;
+
+.s-tbl th>label {
+	font-size: 18px;
+}
+
+.s-tbl td {
+	width: 80%;
+	
+}
+
+.s-tbl td>span {
+	display: block;
+	height: 40px;
+}
+
+.s-input-form {
+	width: 100%;
+	height: 50px;
+	font-size: 18px;
+	display: block;
+	outline: none;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	padding-left: 10px;
+}
+
+.s-input-form:focus {
+	box-shadow: 0 0 0 0.1rem #eee;
+}
+
+.id-wrap {
+	display: flex;
+}
+
+.id-wrap>input {
+	width: 80%;
+}
+
+.id-wrap>button {
+	width: 20%;
+}
+
+.btn-box {
+	margin-top: 30px;
+	text-align: center;
+	width: 100%;
+}
+
+.s-btn {
+	width: 300px;
+	border: none;
+	border-radius: 5px;
+	height: 50px;
+	box-sizing: border-box;
+	transition-duration: 0.5s;
+	font-size: 18px;
+	font-family: ns-light;
+}
+
+.s-bc1 {
+	background-color: rgba(0, 90, 13, 0.9);
+	color: #fff;
+	border: none;
+}
+
+.s-bc1:hover {
+	cursor: pointer;
+}
+
+.all {
+	font-size: 18px;
+}
+
+.agreement {
+	font-size: 18px;
+	overflow: hidden;
+}
+
+.agreement>* {
+	margin-top: 10px;
+}
+
+.use, .privacy {
+	color: rgba(0, 90, 13);
+	text-align: right;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.s-bc2 {
+	border: 1px solid rgb(0, 90, 13);
+	background-color: #fff;
+	color: rgb(0, 90, 13);
+}
+
+.s-bc2:hover {
+	cursor: pointer;
+}
+
+.email-group {
+	display: flex;
+	align-items: center;
+}
+
+.email-group .s-input-form, .email-group .box {
+	flex: 1; /* 폭을 동일하게 설정 */
+	margin-right: 5px; /* 요소들 사이의 간격 */
+}
+
+.birthday-select-group {
+	display: flex;
+}
+
+.birthday-select-group .s-input-form {
+	flex: 1; /* 각 요소가 동일한 공간을 차지하도록 설정 */
+	margin-right: 10px; /* 요소들 사이의 간격 */
+}
+
+.birthday-select-group .s-input-form:last-child {
+	margin-right: 0; /* 마지막 요소의 오른쪽 마진 제거 */
+}
+
+.gender-option {
+	display: flex;
+	align-items: center;
+}
+
+.gender-radio {
+	/* 라디오 버튼 크기 조절 */
+	transform: scale(1.5); /* 예시: 원래 크기의 1.5배 */
+	margin-right: 10px; /* 라벨과의 간격 */
+}
+
+.gender-option label {
+	margin-right: 20px; /* 다음 요소와의 간격 */
+}
+
+/* 중복 확인 버튼을 포함하는 컨테이너 */
+.id-input-container {
+    display: flex; 
+    align-items: center; /* 수직 중앙 정렬 */
+    width: 124%; /* 부모 요소의 전체 너비를 사용 */
+     margin-top: 10px; /* 위쪽 필드와의 간격 조정 */
+    margin-bottom: 10px; /* 아래쪽 필드와의 간격 조정 */
+}
+
+/* 아이디 입력 필드 */
+.id-input-container .s-input-form {
+    flex-grow: 1; /* 가능한 모든 공간을 차지 */
+    margin-right: 20px; /* 버튼과의 간격 */
+}
+
+/* 중복 확인 버튼 */
+.id-input-container .check-btn {
+     width: 100px; /* 버튼 내용에 따라 너비 자동 조절 */
+    padding: 0 15px; /* 버튼 내부의 좌우 패딩 */
+    font-size: 13px; /* 버튼 텍스트 크기 */
+    background-color: rgba(0, 90, 13, 0.9); /* 배경색 */
+    color: #fff; /* 글자색 */
+    border: none; /* 테두리 제거 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    height: 50px; /* 버튼 높이 */
+    box-sizing: border-box; /* 박스 크기 계산 방법 */
+    cursor: pointer; /* 마우스 오버시 커서 변경 */
+    /* 추가적인 스타일링 필요한 경우 여기에 추가 */
+}
+
+
+.s-tbl th label[for='userid'] {
+    margin-bottom: 50px; /* 라벨 아래의 공간을 조금 더 확장 */
+    /* 필요한 추가 스타일링 */
 }
