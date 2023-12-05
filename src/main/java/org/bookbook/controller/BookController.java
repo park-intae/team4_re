@@ -187,6 +187,7 @@ public class BookController {
 //				log.info("Username: " + username);
 //				log.info("Book_Id: " + bookid);
 //				service.insertBookId(username, bookid);
+				model.addAttribute("username", username);
 				
 			}
 		}
