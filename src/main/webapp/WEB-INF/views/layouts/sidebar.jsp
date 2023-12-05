@@ -38,7 +38,6 @@
 
 					<div id="browse-category">
 						<script>
-
               var searchState = {
               	keywords: "", // 필요한 속성들을 추가하세요
               	selectedCategories: []

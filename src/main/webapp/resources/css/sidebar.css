@@ -13,9 +13,13 @@ nav {
 }
 
 nav.nav-open {
+	overflow: scroll;
 	transform: translateX(0px);
 	border-radius: 0% 0% 0% 0%;
 	background: rgba(255, 255, 255, 0.8);
+}
+nav.nav-open::-webkit-scrollbar {
+  display: none;
 }
 
 nav * {
