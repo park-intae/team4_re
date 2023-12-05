@@ -1,22 +1,22 @@
 package org.bookbook.model;
 
 public class Criteria {
-	/* 현재 페이지 */
+	/* �쁽�옱 �럹�씠吏� */
 	private int pageNum;
 
-	/* 한 페이지 당 보여질 게시물 갯수 */
+	/* �븳 �럹�씠吏� �떦 蹂댁뿬吏� 寃뚯떆臾� 媛��닔 */
 	private int amount;
 
-	/* 스킵 할 게시물 수( (pageNum-1) * amount ) */
+	/* �뒪�궢 �븷 寃뚯떆臾� �닔( (pageNum-1) * amount ) */
 	private int skip;
 
-	/* 기본 생성자 -> 기봅 세팅 : pageNum = 1, amount = 10 */
+	/* 湲곕낯 �깮�꽦�옄 -> 湲곕큶 �꽭�똿 : pageNum = 1, amount = 10 */
 	public Criteria() {
-		this(1, 10);
+		this(1, 5);
 		this.skip = 0;
 	}
 
-	/* 생성자 => 원하는 pageNum, 원하는 amount */
+	/* �깮�꽦�옄 => �썝�븯�뒗 pageNum, �썝�븯�뒗 amount */
 	public Criteria(int pageNum, int amount) {
 		this.pageNum = pageNum;
 		this.amount = amount;

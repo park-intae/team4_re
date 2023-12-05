@@ -104,7 +104,7 @@ public class BookController {
 	}
 
 	@GetMapping("/list")
-	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri, HttpSession session) {
+	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri, HttpSession session) {		
 
 		SecurityContextImpl securityContext = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
 
@@ -121,14 +121,12 @@ public class BookController {
 
 		String flaskApiUrl = "http://49.50.166.252:5000/api/list";
 
-
 		String keywordParam = (search.getKeywords() != null) ? String.join(",", search.getKeywords()) : "";
-		
+
 		RestTemplate restTemplate = new RestTemplate();
 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
-				.queryParam("keyword", keywordParam)
-				.queryParam("username", username);
+				.queryParam("keyword", keywordParam).queryParam("username", username);
 		String response = restTemplate.getForObject(builder.toUriString(), String.class);
 
 		try {
@@ -139,8 +137,7 @@ public class BookController {
 
 			if (resultNode != null && resultNode.isArray()) {
 
-				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false)
-						.map(JsonNode::asLong)
+				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
 						.collect(Collectors.toList());
 
 				log.info("bookIds : " + bookIds);
@@ -174,7 +171,7 @@ public class BookController {
 
 	@GetMapping("/detail")
 	public void detail(@RequestParam("bookid") int bookid, Model model, HttpSession session) {
-		
+
 		SecurityContextImpl securityContext = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
 
 		String username = "";
@@ -187,17 +184,16 @@ public class BookController {
 				log.info("Username: " + username);
 			}
 		}
-		
+
 		BookVO book = service.getBookById(bookid);
-		
+
 		String flaskApiUrlIBCF = "http://49.50.166.252:5000/api/ibcf";
-		
+
 		RestTemplate restTemplate = new RestTemplate();
 
-		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrlIBCF)
-				.queryParam("bookid", bookid);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrlIBCF).queryParam("bookid", bookid);
 		String response = restTemplate.getForObject(builder.toUriString(), String.class);
-		
+
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode jsonNode = objectMapper.readTree(response);
@@ -206,8 +202,7 @@ public class BookController {
 
 			if (resultNode != null && resultNode.isArray()) {
 
-				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false)
-						.map(JsonNode::asLong)
+				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
 						.collect(Collectors.toList());
 
 				log.info("bookIds : " + bookIds);
@@ -222,23 +217,21 @@ public class BookController {
 		} catch (Exception e) {
 			System.out.println("------------>Error");
 		}
-		
+
 		List<BestVO> bestBooks = service.getBestBookList();
 
 		model.addAttribute("best", bestBooks);
-		
-		
+
 		model.addAttribute("book", book);
 	}
 
-
-
 	@GetMapping("/likes")
 	public String getLikes(Model model, @RequestParam(required = false) String userId) { // ?userId="test2"
-		if (userId == null) {}
+		if (userId == null) {
+		}
 		List<LikeVO> likes = service.getLikes(userId);
 		log.info(likes);
-	
+
 		model.addAttribute("likes", likes);
 		return "book/likes";
 	}
