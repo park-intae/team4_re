@@ -23,7 +23,6 @@
 	</resultMap>
 
 
-
 	<select id="read" resultMap="userMap">
 		SELECT u.user_id, u.username,
 		u.nickname, u.email, u.password,
@@ -35,19 +34,17 @@
 	</select>
 
 
- <!-- 모든 사용자 정보를 가져오는 쿼리   -->
-    <select id="getAllUsers" resultMap="userMap">
-        SELECT * FROM user
-    </select>
+	<!-- 모든 사용자 정보를 가져오는 쿼리 -->
+	<select id="getAllUsers" resultMap="userMap">
+		SELECT * FROM user
+	</select>
 
 
 	<insert id="insert" parameterType="org.bookbook.domain.UserVO">
 		INSERT INTO user (user_id,
-		username, nickname, password, email, birth,
-		gender)
+		username, nickname, password, email, birth, gender)
 		VALUES (#{userid},
-		#{username}, #{nickname}, #{password}, #{email},
-		#{birth}, #{gender})
+		#{username}, #{nickname}, #{password}, #{email}, #{birth}, #{gender})
 	</insert>
 
 
@@ -57,11 +54,16 @@
 		#{auth})
 	</insert>
 
+	<update id="updateProfile" parameterType="org.bookbook.domain.UserUpdateVO">
+		UPDATE user SET
+		username = #{username},
+		nickname = #{nickname},
+		password = #{password}, <!-- 암호화된 비밀번호 -->
+		email = #{email},
+		birth = #{birth},
+		gender = #{gender}
+		WHERE user_id = #{userid}
+	</update>
 
 
-	<!-- <update id="changePassword"> update tbl_users set password = #{encPassword} 
-		where userid = #{userid} </update> -->
-
-	<!-- <update id="updateUser"> update tbl_users set password = #{password}, 
-		email = #{email} where username = #{username} </update> -->
 </mapper>
