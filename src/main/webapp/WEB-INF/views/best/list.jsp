@@ -20,7 +20,7 @@
 				<div class="stylee">
 					<div class="card-deck">
 						<div class="card"
-							style="width: 100%; border: 5px solid transparent; border-color: ${status.count == 1 ? 'gold' : (status.count == 2 ? 'silver' : (status.count == 3 ? 'darkgoldenrod' : 'black'))}">
+							style="width: 100%; height: 350px; border: 5px solid transparent; border-color: ${status.count == 1 ? 'gold' : (status.count == 2 ? 'silver' : (status.count == 3 ? 'darkgoldenrod' : 'black'))}">
 
 							<div class="card-header">
 								<c:out value="${status.count}" />
