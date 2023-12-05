@@ -58,7 +58,6 @@
 				<i class="fa-solid fa-magnifying-glass"></i> 검색
 			</button>
 
-
 			<!-- <script src="../../resources/SearchBook.js"></script> -->
 
 			<div id="browse-category">
@@ -286,8 +285,6 @@ a:hover {
 <h1>Book List</h1>
 
 
-
-
 <c:if test="${not empty list}">
 	<ul>
 
@@ -317,38 +314,48 @@ a:hover {
 
 	</ul>
 
-	<form>
-		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-		<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+	<form id="paginationForm" action="/book/list" method="get">
+		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+		<input type="hidden" name="keywords" value="${param.keywords}">
+		<!-- 필요한 경우 다른 검색 매개변수를 추가로 숨은 필드로 포함합니다 -->
 	</form>
 
 	<div class="pageInfo_wrap">
 		<div class="pageInfo_area">
 			<ul id="pageInfo" class="pageInfo">
-
 				<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMaker.prev}">
 					<li class="pageInfo_btn previous"><a
-						href="/book/list?pageNum=${pageMaker.startPage-1}">Previous</a></li>
+						href="javascript:void(0);"
+						onclick="submitPage(${pageMaker.startPage-1})">이전</a></li>
 				</c:if>
 
 				<!-- 각 번호 페이지 버튼 -->
 				<c:forEach var="num" begin="${pageMaker.startPage}"
 					end="${pageMaker.endPage}">
-					<li class="pageInfo_btn"
-						${pageMaker.cri.pageNum == num ? "active":"${num}"}><a
-						href="/book/list?pageNum=${num}">${num}</a></li>
+					<li
+						class="pageInfo_btn ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+						<a href="javascript:void(0);" onclick="submitPage(${num})">${num}</a>
+					</li>
 				</c:forEach>
 
 				<!-- 다음페이지 버튼 -->
 				<c:if test="${pageMaker.next}">
-					<li class="pageInfo_btn next"><a
-						href="/book/list?pageNum=${pageMaker.endPage + 1 }">Next</a></li>
+					<li class="pageInfo_btn next"><a href="javascript:void(0);"
+						onclick="submitPage(${pageMaker.endPage + 1})">다음</a></li>
 				</c:if>
-
 			</ul>
 		</div>
 	</div>
+
+	<script>
+    function submitPage(pageNum) {
+        document.getElementById('paginationForm').elements['pageNum'].value = pageNum;
+        document.getElementById('paginationForm').submit();
+    }
+</script>
+
 
 </c:if>
 <c:if test="${empty list}">
