@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.bookbook.mapper.CommentsMapper">
+    <resultMap id="CommentsResultMap" type="CommentsVO">
+        <id property="ratingid" column="rating_id"/>
+        <result property="userid" column="user_id"/>
+        <result property="review_password" column="review_password"/>
+        <result property="bookid" column="book_id"/>
+        <result property="rating_review" column="rating_review" jdbcType="LONGVARCHAR"/>
+        <result property="rating" column="rating"/>
+        <result property="rating_date" column="rating_date"/>
+    </resultMap>
+
+    <select id="readAll" resultMap="CommentsResultMap">
+        SELECT * FROM book_rating
+        WHERE book_id = #{bookid};
+    </select>
+    
+    
+	<insert id="create">
+	    insert into book_rating (book_id, user_id, rating_review, rating_date)
+	    values (#{bookid}, #{userid}, #{rating_review}, NOW())
+	    <selectKey resultType="int" keyProperty="ratingid"
+	        keyColumn="rating_id" order="AFTER">
+	        SELECT LAST_INSERT_ID() as rating_id
+	    </selectKey>
+	</insert>
+
+	
+	
+	
+	<update id="update">
+		update book_rating
+		set 
+			rating_review = #{rating_review},
+			rating_date = NOW()
+			
+		where rating_id = #{ratingid}
+	</update>
+	
+	<delete id="delete">
+		delete from book_rating
+		where rating_id = #{ratingid}
+	</delete>
+	
+	<select id="get" resultType="CommentsVO">
+	select * from book_rating
+	where rating_id = #{ratingid}
+	</select>
+
+</mapper>
