@@ -66,9 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				// 네이버 로그인 관련 URL을 인증 없이 접근 가능하도록 설정
 				.antMatchers("/naver-login-url", "/callback").permitAll().antMatchers("/api/users")
+				
 				.hasAnyAuthority("ROLE_ADMIN", "ROLE_USER").antMatchers("/security/toggleFollow").authenticated()
-				.antMatchers("/security/profile").authenticated().antMatchers("/connect", "/sse/*").permitAll()
-
+				.antMatchers("/security/profile", "/security/updateProfile").authenticated()
+				.antMatchers("/connect", "/sse/*").permitAll()
 				.and();
 
 		http.formLogin().usernameParameter("userid") // 사용자 이름 필드를 'userid'로 설정
@@ -84,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/"); // 로그아웃 이후 이동할 페이지
 
 		http.rememberMe() // remember-me 기능 설정
-				.key("bookbook") // "remember-me" 기능에서 사용할 키를 설정
+				.key("remember-me") // "remember-me" 기능에서 사용할 키를 설정
 				.tokenRepository(persistentTokenRepository()) // "remember-me" 토큰의 저장과 검색을 담당하는 리포지토리를 설정
 				.tokenValiditySeconds(3 * 24 * 60 * 60); // "remember-me" 토큰의 유효성 기간을 설정. 3일 동안 유효한 토큰을 설정
 

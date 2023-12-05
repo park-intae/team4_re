@@ -292,8 +292,8 @@ a:hover {
 		<div class="card-container">
 			<c:forEach var="book" items="${list}">
 				<div class="card">
-					<a href="/book/detail?bookid=${book.bookid}"> <img
-						src="${book.imageUrl}" alt="${book.title}" class="card-img-top">
+					<a href="/book/detail?bookid=${book.bookid}">
+					  <img src="${book.imageUrl.split(',')[0]}" alt="${book.title}" class="card-img-top">
 					</a>
 					<div class="card-body">
 						<a href="/book/detail?bookid=${book.bookid}">
@@ -374,10 +374,10 @@ a:hover {
 		<div class="card-container">
 			<c:forEach var="bookAI" items="${bookByCBF}">
 				<div class="card">
-					<a href="/book/detail?bookid=${bookAI.bookid}"> <img
-						src="${bookAI.imageUrl}" alt="${bookAI.title}"
-						class="card-img-top">
+					<a href="/book/detail?bookid=${bookAI.bookid}">
+					  <img src="${bookAI.imageUrl.split(',')[0]}" alt="${bookAI.title}" class="card-img-top">
 					</a>
+
 					<div class="card-body">
 						<a href="/book/detail?bookid=${bookAI.bookid}">
 							<h5 class="card-title">${bookAI.title}</h5>
