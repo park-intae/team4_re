@@ -27,6 +27,8 @@ public interface BookSearchMapper {
     public BookVO selectBookById(int bookId);
     
     public List<BestVO> selectBestBook();
+    
+    public void insertHistory(String user_id, int book_id);
 
 	/* 게시판 총 갯수 */
 	public int getTotal();
@@ -34,4 +36,7 @@ public interface BookSearchMapper {
 	// 수정부분
 	void addLike(LikeVO like);
 	List<LikeVO> getLikes(String userid);
+	
+	//삭제 
+	void deleteLike(LikeVO like);
 }

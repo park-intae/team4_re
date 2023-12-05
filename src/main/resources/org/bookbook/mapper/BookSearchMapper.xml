@@ -130,7 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectBestBook" resultType="BestVO">
 	SELECT * FROM best
-	limit 10
+	limit 5
 	</select>
 	
 	<select id="selectBookById" resultType="BookVO">
@@ -139,6 +139,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	on b.book_id = bi.book_id
 	where b.book_id = #{bookId}
 	</select>
+	
+	<insert id="insertHistory">
+	    insert into book_history (user_id, book_id)
+	    values (#{user_id}, #{book_id})
+	</insert>
 
 
 	<!-- 좋아요 부분 -->
@@ -156,8 +161,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN book b ON ll.book_id = b.book_id
 		LEFT JOIN book_image bi ON b.book_id = bi.book_id
 		WHERE ll.user_id = #{userId};
-
-
 	</select>
+	
+	
+    <delete id="deleteLike" parameterType="org.bookbook.domain.LikeVO">
+        DELETE FROM like_list
+        WHERE user_id = #{userId} AND book_id = #{bookId}
+    </delete>
 
 </mapper>

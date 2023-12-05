@@ -3,15 +3,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
+
 		prefix="sec"%>
 <link 
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
 		rel="stylesheet">
+
 <%@ include file="../layouts/header.jsp"%>
 
 
 <sec:authorize access="isAuthenticated()">
+
     <sec:authentication property="principal.user.userid" var="userid" />
+
 	<!-- 현재 로그인한 사용자의 정보를 불러옵니다. -->
 	<c:set var="user"
 		value="${not empty sessionScope.naverUser ? sessionScope.naverUser : user}" />
@@ -33,6 +37,7 @@
 		<div class="upper-div"></div>
 
 		<div class="inner-container">
+
 			<div class="round-div">	<sec:authorize access="isAuthenticated()">
         <c:choose>
             <c:when test="${not empty sessionScope.naverUser}">
@@ -48,6 +53,7 @@
     
     </div>
 		
+
 
 			<div class="info-follow-container">
 				<div class="info-container">
@@ -132,6 +138,7 @@
 						
 						<button id="likeButton" class="btn btn-secondary">좋아요 </button>
 						<script>
+
 							document.getElementById('likeButton')
 									.addEventListener('click', function() {
                                         window.location.href = `/book/likes?userId=${userid}`;
@@ -162,6 +169,7 @@
 	<div class="line-separator"></div>
 
 
+
 	<div class="alarm-title"> 
 	<div class="alarm-title-text">알림 내역</div>
 </div>
@@ -170,6 +178,7 @@
         <!-- 여기에 알림 내용이 동적으로 추가됩니다 -->
     </div>
 	 </div>
+
 
 
 	<div class="line-separator"></div>
@@ -318,6 +327,7 @@
 		}
 	};
 </script>
+
 <script src="/path/to/overlay-scrollbars-init.js"></script>
 
 <%@ include file="../layouts/footer.jsp"%>
