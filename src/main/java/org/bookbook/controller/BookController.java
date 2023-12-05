@@ -104,20 +104,8 @@ public class BookController {
 	}
 
 	@GetMapping("/list")
-	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri, HttpSession session) {		
-
-		SecurityContextImpl securityContext = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
-
-		String username = "";
-
-		if (securityContext != null && securityContext.getAuthentication() != null) {
-			Object principal = securityContext.getAuthentication().getPrincipal();
-
-			if (principal instanceof UserDetails) {
-				username = ((UserDetails) principal).getUsername();
-//				log.info("Username: " + username);
-			}
-		}
+	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
+		
 
 		String flaskApiUrl = "http://49.50.166.252:5000/api/list";
 
@@ -126,7 +114,7 @@ public class BookController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
-				.queryParam("keyword", keywordParam).queryParam("username", username);
+				.queryParam("keyword", keywordParam);
 		String response = restTemplate.getForObject(builder.toUriString(), String.class);
 
 		try {
@@ -139,8 +127,6 @@ public class BookController {
 
 				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
 						.collect(Collectors.toList());
-
-//				log.info("bookIds : " + bookIds);
 
 				if (!bookIds.isEmpty()) {
 					List<BookVO> books = service.getBookListById(bookIds);
@@ -181,9 +167,7 @@ public class BookController {
 
 			if (principal instanceof UserDetails) {
 				username = ((UserDetails) principal).getUsername();
-//				log.info("Username: " + username);
-//				log.info("Book_Id: " + bookid);
-//				service.insertBookId(username, bookid);
+
 				model.addAttribute("username", username);
 				
 			}
@@ -208,8 +192,6 @@ public class BookController {
 
 				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
 						.collect(Collectors.toList());
-
-//				log.info("IBCF bookIds : " + bookIds);
 
 				if (!bookIds.isEmpty()) {
 					List<BookVO> books = service.getBookListById(bookIds);

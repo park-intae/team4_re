@@ -11,44 +11,41 @@
 <script src="../../../resources/js/comment.js"></script>
 
 <script>
-const COMMENT_URL = `/api/book/detail/${book.bookid}/comment/`;
+  const COMMENT_URL = `/api/book/detail/${book.bookid}/comment/`;
 
-console.log(COMMENT_URL)
+  $(document).ready(async function() {
+    let book_id = ${book.bookid};
+    let username = '${username}'; // 작성자(로그인 유저)
 
-$(document).ready(async function() {
-	let book_id = ${book.bookid};
-	let username = '${username}';	// 작성자(로그인 유저)
+    loadComments(book_id, username); // 댓글 목록 불러오기
 
-	console.log("writer ---- >>> "+username);
+    // 댓글 추가 버튼 처리
+    $('.comment-add-btn').click(function(e) {
+      createComment(book_id, username, ratingValue);
+    });
 
-	loadComments(book_id, username);	// 댓글 목록 불러오기
-	
-	// 댓글 추가 버튼 처리
-	$('.comment-add-btn').click(function(e) {
-		createComment(book_id, username);		
-	});
-	
-	$('.comment-list').on('click', '.comment-update-show-btn', showUpdateComment );
-	
-	// 수정 확인 버튼 클릭
-	$('.comment-list').on('click', '.comment-update-btn', function (e){
-		const el = $(this).closest('.comment');
-		updateComment(el, username);
-	});
-	
+    $('.comment-list').on('click', '.comment-update-show-btn', showUpdateComment);
 
-	// 수정 취소 버튼 클릭
-	$('.comment-list').on('click', '.comment-update-cancel-btn', 
-							cancelCommentUpdate);
-	
-	// 삭제 버튼 클릭
-	$('.comment-list').on('click', '.comment-delete-btn', 
-							deleteComment);	
+    // 수정 확인 버튼 클릭
+    $('.comment-list').on('click', '.comment-update-btn', function(e){
+      const el = $(this).closest('.comment');
+      updateComment(el, username);
+    });
 
-})
+    // 수정 취소 버튼 클릭
+    $('.comment-list').on('click', '.comment-update-cancel-btn', cancelCommentUpdate);
 
+    // 삭제 버튼 클릭
+    $('.comment-list').on('click', '.comment-delete-btn', deleteComment);
+
+
+
+    // 별점 선택 시 이벤트 추가
+    $('input[name="rating"]').on('change', function() {
+      handleRatingChange(parseInt($(this).val()));
+    });
+  });
 </script>
-
 
 
 <%-- 개별 페이지 --%>
@@ -264,68 +261,6 @@ a:hover {
 
 <link href="../../../resources/css/star.css" rel="stylesheet" />
 
-<form class="mb-3" name="myform" id="myform" method="post"
-	action="/api/bookbook/rating/add">
-	<fieldset>
-		<span class="text-bold">${ratings.average_rating}</span> <input
-			type="radio" name="rating" value="5" id="rate1"> <label
-			for="rate1">★</label> <input type="radio" name="rating" value="4"
-			id="rate2"> <label for="rate2">★</label> <input type="radio"
-			name="rating" value="3" id="rate3"> <label for="rate3">★</label>
-		<input type="radio" name="rating" value="2" id="rate4"> <label
-			for="rate4">★</label> <input type="radio" name="rating" value="1"
-			id="rate5"> <label for="rate5">★</label> <input type="submit"
-			value="별점 제출">
-	</fieldset>
-</form>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-	  document.getElementById("myform").addEventListener("submit", function(event) {
-	    event.preventDefault(); // 기본 제출 동작 방지
-
-	    var selectedRating = document.querySelector('input[name="rating"]:checked');
-	    if (!selectedRating) {
-	      alert("별점을 선택해주세요.");
-	      return;
-	    }
-
-	    var ratingValue = selectedRating.value;
-
-	    // 선택한 별점 값을 가져왔으므로, 서버로 전송하거나 다른 작업을 수행할 수 있습니다.
-	    sendDataToServer(ratingValue); // 서버로 데이터를 전송하는 함수 호출
-	  });
-	});
-
-	function sendDataToServer(rating) {
-	  // Fetch API를 사용하여 서버로 데이터 전송
-	  fetch("/api/bookbook/rating/add", {
-	    method: "POST",
-	    headers: {
-	      "Content-Type": "application/json"
-	    },
-	    body: JSON.stringify({ "rating": rating, "bookId": bookId })
-	  })
-	  .then(response => {
-	    if (!response.ok) {
-	      throw new Error("Network response was not ok.");
-	    }
-	    return response.json();
-	  })
-	  .then(data => {
-	    // 서버로부터 받은 응답에 대한 처리
-	    console.log("서버 응답:", data);
-	    // 별도의 처리가 필요한 경우 여기에 작성
-	  })
-	  .catch(error => {
-	    console.error("There has been a problem with your fetch operation:", error);
-	    // 오류 처리가 필요한 경우 여기에 작성
-	  });
-	}
-
-</script>
-
-
 <div class="bottom">
 
 	<script>
@@ -346,26 +281,52 @@ function copyUrl(){
 
 
 
-			<div>
-				<button type="button" class="copy-btn" onclick="copyUrl()">링크
-					복사</button>
-			</div>
+	<div>
+		<button type="button" class="copy-btn" onclick="copyUrl()">링크
+			복사</button>
+	</div>
+
 
 
 	<!-- 새 댓글 작성 -->
-<div class="bg-light p-2 rounded my-5">
-	<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
-	<div>
-		<textarea class="form-control new-comment-content" rows="3"
-			${username == null ? 'disabled' : '' }></textarea>
-		<div class="text-right">
-			<button class="btn btn-primary btn-sm my-2 comment-add-btn"
-				${username == null ? 'disabled' : '' }>
-				<i class="fa-regular fa-comment"></i> 확인
-			</button>
+	<div class="bg-light p-2 rounded my-5">
+		<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
+
+		<div class="starRate">
+
+			<fieldset class="rate">
+					<input type="radio" id="rating4" name="rating"
+					value="4" onclick="handleRatingChange(4)"> <label
+					for="rating4" title="4점"></label> <input type="radio" id="rating3"
+					name="rating" value="3" onclick="handleRatingChange(3)"> <label
+					for="rating3" title="3점"></label> <input type="radio" id="rating2"
+					name="rating" value="2" onclick="handleRatingChange(2)"> <label
+					for="rating2" title="2점"></label> <input type="radio" id="rating1"
+					name="rating" value="1" onclick="handleRatingChange(1)"> <label
+					for="rating1" title="1점"></label>
+			</fieldset>
+			
+			<script>
+		    // 등급 변경 함수
+		    function handleRatingChange(rating) {
+		      ratingValue = rating;
+		    }
+			</script>
+
+		</div>
+
+
+		<div>
+			<textarea class="form-control new-comment-content" rows="3"
+				${username == null ? 'disabled' : '' }></textarea>
+			<div class="text-right">
+				<button class="btn btn-primary btn-sm my-2 comment-add-btn"
+					${username == null ? 'disabled' : '' }>
+					<i class="fa-regular fa-comment"></i> 확인
+				</button>
+			</div>
 		</div>
 	</div>
-</div>
 
 
 	<div class="my-5">
@@ -373,7 +334,7 @@ function copyUrl(){
 		<hr>
 		<div class="comment-list"></div>
 	</div>
-	
+
 
 </div>
 
