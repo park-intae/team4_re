@@ -266,17 +266,8 @@ a:hover {
 
 <form class="mb-3" name="myform" id="myform" method="post"
 	action="/api/bookbook/rating/add">
-	<fieldset>
-		<span class="text-bold">${ratings.average_rating}</span> <input
-			type="radio" name="rating" value="5" id="rate1"> <label
-			for="rate1">★</label> <input type="radio" name="rating" value="4"
-			id="rate2"> <label for="rate2">★</label> <input type="radio"
-			name="rating" value="3" id="rate3"> <label for="rate3">★</label>
-		<input type="radio" name="rating" value="2" id="rate4"> <label
-			for="rate4">★</label> <input type="radio" name="rating" value="1"
-			id="rate5"> <label for="rate5">★</label> <input type="submit"
-			value="별점 제출">
-	</fieldset>
+
+	
 </form>
 
 <script>
@@ -346,26 +337,52 @@ function copyUrl(){
 
 
 
-			<div>
-				<button type="button" class="copy-btn" onclick="copyUrl()">링크
-					복사</button>
-			</div>
+	<div>
+		<button type="button" class="copy-btn" onclick="copyUrl()">링크
+			복사</button>
+	</div>
 
 
 	<!-- 새 댓글 작성 -->
-<div class="bg-light p-2 rounded my-5">
-	<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
-	<div>
-		<textarea class="form-control new-comment-content" rows="3"
-			${username == null ? 'disabled' : '' }></textarea>
-		<div class="text-right">
-			<button class="btn btn-primary btn-sm my-2 comment-add-btn"
-				${username == null ? 'disabled' : '' }>
-				<i class="fa-regular fa-comment"></i> 확인
-			</button>
+	<div class="bg-light p-2 rounded my-5">
+		<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
+		
+		<div class="starRate">
+			
+	<fieldset class="rate">
+		<input type="radio" id="rating10" name="rating" value="10"><label
+			for="rating10" title="5점"></label> <input type="radio" id="rating9"
+			name="rating" value="9"><label class="half" for="rating9"
+			title="4.5점"></label> <input type="radio" id="rating8" name="rating"
+			value="8"><label for="rating8" title="4점"></label> <input
+			type="radio" id="rating7" name="rating" value="7"><label
+			class="half" for="rating7" title="3.5점"></label> <input type="radio"
+			id="rating6" name="rating" value="6"><label for="rating6"
+			title="3점"></label> <input type="radio" id="rating5" name="rating"
+			value="5"><label class="half" for="rating5" title="2.5점"></label>
+		<input type="radio" id="rating4" name="rating" value="4"><label
+			for="rating4" title="2점"></label> <input type="radio" id="rating3"
+			name="rating" value="3"><label class="half" for="rating3"
+			title="1.5점"></label> <input type="radio" id="rating2" name="rating"
+			value="2"><label for="rating2" title="1점"></label> <input
+			type="radio" id="rating1" name="rating" value="1"><label
+			class="half" for="rating1" title="0.5점"></label>
+
+	</fieldset>
+		</div>
+		
+		
+		<div>
+			<textarea class="form-control new-comment-content" rows="3"
+				${username == null ? 'disabled' : '' }></textarea>
+			<div class="text-right">
+				<button class="btn btn-primary btn-sm my-2 comment-add-btn"
+					${username == null ? 'disabled' : '' }>
+					<i class="fa-regular fa-comment"></i> 확인
+				</button>
+			</div>
 		</div>
 	</div>
-</div>
 
 
 	<div class="my-5">
@@ -373,7 +390,7 @@ function copyUrl(){
 		<hr>
 		<div class="comment-list"></div>
 	</div>
-	
+
 
 </div>
 
