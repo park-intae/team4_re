@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@ include file="../layouts/header.jsp"%>
+<link rel="stylesheet" href="/resources/css/detail.css" />
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
@@ -111,7 +112,7 @@ $(document).ready(async function() {
 						varStatus="status">
 						<div
 							class="carousel-item <c:if test="${status.first}">active</c:if>">
-							<img src="${image}" alt="${book.title}" >
+							<img src="${image}" alt="${book.title}">
 						</div>
 					</c:forEach>
 				</div>
@@ -134,7 +135,7 @@ $(document).ready(async function() {
 			${book.author} <br> ${book.publisher} <br>
 			${book.publicationdate}
 		</div>
-		${book.bookintro}
+		<div class="bookIntro">${book.bookintro}</div>
 	</div>
 
 
@@ -268,7 +269,7 @@ a:hover {
 
 <link href="../../../resources/css/star.css" rel="stylesheet" />
 
-<form class="mb-3" name="myform" id="myform" method="post"
+<form class="ratings" name="myform" id="myform" method="post"
 	action="/api/bookbook/rating/add">
 	<fieldset>
 		<span class="text-bold">${ratings.average_rating}</span> <input

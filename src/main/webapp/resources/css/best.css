@@ -5,16 +5,13 @@
 }
 
 .card-img-top {
-/* 	object-fit: cover; */
 	height: 150;
-	/* 	object-fit: cover; */
 }
 
 .stylee {
 	width: 209px;
 	height: 350px;
 	margin-left: 17px;
-/* 	margin-right: 17px; */
 	margin-bottom:30px;
 	display: inline-block;
 }
@@ -27,12 +24,13 @@ button.active {
 .card {
 	width: 209px;
 	height: 300px;
+	
 }
 		 
 .card-text {
 	font-size: 11px;
 }
 
-.row{
-	margin-left: 145px;
-}
+/* .row{ */
+/* 	margin-right: 40px; */
+/* } */
