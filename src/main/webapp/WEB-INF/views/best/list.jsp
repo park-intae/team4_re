@@ -19,7 +19,7 @@
 				end="9">
 				<div class="stylee">
 					<div class="card-deck">
-						<div class="card" style="width: 209px; height: 350px; border: 5px solid transparent; border-color: ${status.count== 1? 'gold': (status.count== 2? 'silver': (status.count==
+						<div class="card" style="width: ; height: 350px; border: 5px solid transparent; border-color: ${status.count== 1? 'gold': (status.count== 2? 'silver': (status.count==
 		 3? 'darkgoldenrod': 'black'))}  "> 
 
 							<div class="card-header">

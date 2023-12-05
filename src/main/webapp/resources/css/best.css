@@ -25,11 +25,10 @@ button.active {
 }
 
 .card {
-	width: 209px;;
+	width: 209px;
 	height: 300px;
-	
-	   
-		 }
+}
+		 
 .card-text {
 	font-size: 11px;
 }

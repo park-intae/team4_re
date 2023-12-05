@@ -8,6 +8,7 @@ html, body {
 }
 
 body {
+<<<<<<< HEAD
 	background-color: #add18f;
 }
 
@@ -18,6 +19,18 @@ body {
 	margin: 15px;
 	padding: 15px;
 	background-color: #fafae5;
+=======
+  background-color: #3287D6;
+}
+
+.background {
+  overflow: scroll;
+  width: 95%;
+  height: 95%;
+  margin: 15px;
+  padding: 15px;
+  background-color: #F2FFED;
+>>>>>>> main
 }
 
 .background::-webkit-scrollbar {
