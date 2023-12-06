@@ -3,7 +3,7 @@
 nav {
 	overflow: hidden;
 	position: fixed;
-	transform: translateX(-140px);
+	transform: translateX(-85%);
 	height: 85%;
 	width: 300px;
 	transition: all 800ms cubic-bezier(.8, 0, .33, 1);
@@ -26,17 +26,6 @@ nav * {
 	z-index: 101;
 }
 
-.notice{
-	width: 100px;
-	display: inline-block;
-	position: absolute;
-	top: 7%;
-	right: 70%;
-}
-nav.nav-open .notice{
-	display: none;
-}
-
 nav .menu-btn {
 	position: absolute;
 	top: 3%;
@@ -44,14 +33,6 @@ nav .menu-btn {
 	padding: 0;
 	width: 30px;
 	cursor: pointer;
-}
-
-nav .menu-btn .icon1 {
-	transform: rotate(0);
-}
-
-nav .menu-btn .icon1.icon2 {
-	transform: rotate(0.5turn);
 }
 
 nav .search-bar {
@@ -76,8 +57,8 @@ nav #searchIco {
 	width: 24px;
 	height: 24px;
 }
+
 nav .nav-cat{
-	position: relative;
 	z-index: 103;
 }
 nav .nav-cat * {
@@ -101,6 +82,10 @@ nav .b_cat.open {
 	margin-left: auto;
 	margin-right: auto;
 	border: 3px solid red;
+}
+
+#genre{
+	width: auto;
 }
 
 #browse-category{
