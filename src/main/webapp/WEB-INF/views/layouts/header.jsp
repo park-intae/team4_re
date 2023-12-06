@@ -41,15 +41,16 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
+header{
+	width: 100%;
+	justify-content: space-between;
+}
 .blank {
 	/* 	border: 3px solid red; */ /* 레이아웃 표시용 빈 상자 테두리 */
 	width: 140px;
 	height: 39px;
 }
 
-.sign .btn {
-	margin-bottom: 5px;
-}
 </style>
 </head>
 

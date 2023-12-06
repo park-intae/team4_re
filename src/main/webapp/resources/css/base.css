@@ -16,30 +16,46 @@ body {
 
 
 .background {
-	overflow: scroll;
+	overflow: auto;
 	width: 90%;
 	height: 90%;
-	margin: auto auto;
 	padding: 15px;
 	background-color: #F2FFED;
-	border-radius: 5%;
+	/* display: flex;
+	justify-content: center;
+	align-items: center; */
 }
 
 .background::-webkit-scrollbar {
 	display: none;
 }
 
+.background .search-bar{
+	width: 700px;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
 	border-bottom: 3px solid gray;
-	height: 93px;
+	min-height: 60px;
+	height: 83px;
+	align-items: center;
+	margin-left: auto;
+	text-align: right;
+
 }
 
-.sign {
+ul.sign {
 	list-style: none;
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: row;
+	margin-right: 50px;
+	}
+
+li.sign {
+	height: auto;
+	margin: auto 2px;
 }
 
 .logo_sm {
@@ -66,10 +82,6 @@ a.nav-link {
 
 h1 {
 	font-family: "MaruBuriBold";
-}
-
-header {
-	text-align: right;
 }
 
 .title {
@@ -106,24 +118,20 @@ img.logo {
 }
 
 div.search-bar {
-	width: 60%;
+	width: 70%;
 	border: 2px solid black;
 	border-radius: 5px;
 	background-color: white;
 }
 
-<<<<<<< HEAD
 .center {
 	text-align: center;
 }
-=======
->>>>>>> main
 
 .mt-5 {
 	clear: both;
 }
 
-<<<<<<< HEAD
 .card-img-top {
 	height: 300;
 	object-fit: cover;
@@ -134,5 +142,3 @@ div.search-bar {
 	justify-content: center;
 	align-items: center;
 }
-=======
->>>>>>> main

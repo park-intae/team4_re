@@ -52,10 +52,6 @@ header {
 	justify-content: flex-end;
 }
 
-.sign .btn {
-	margin-bottom: 5px;
-}
-
 .cate {
 	background-color: white;
 	color: black;
