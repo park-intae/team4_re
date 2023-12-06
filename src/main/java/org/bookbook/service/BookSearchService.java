@@ -5,6 +5,7 @@ import java.util.List;
 import org.bookbook.domain.BestVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
+import org.bookbook.domain.CommentsVO;
 import org.bookbook.domain.GenreVO;
 import org.bookbook.domain.LikeVO;
 import org.bookbook.domain.TopicVO;
@@ -27,14 +28,14 @@ public interface BookSearchService {
 	
 	public void insertBookId(String userId, int bookId);
 		
-	 /* °Ô½ÃÆÇ ÃÑ °¹¼ö */
+	 /* ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     public int getTotal();
     
-    // ÁÁ¾Æ¿ä Ãß°¡ ºÎºÐ
+    // ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ß°ï¿½ ï¿½Îºï¿½
     void addLike(LikeVO like);
     List<LikeVO> getLikes(String userid);
     
- // µµ¼­ »èÁ¦ ºÎºÐ
+ // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
     void deleteLike(LikeVO like);
 
 }

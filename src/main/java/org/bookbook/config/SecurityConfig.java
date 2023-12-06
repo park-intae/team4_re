@@ -65,11 +65,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				// 네이버 로그인 관련 URL을 인증 없이 접근 가능하도록 설정
-				.antMatchers("/naver-login-url", "/callback").permitAll().antMatchers("/api/users")
+				.antMatchers("/naver-login-url", "/callback").permitAll()
+				.antMatchers("/api/users").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 				
-				.hasAnyAuthority("ROLE_ADMIN", "ROLE_USER").antMatchers("/security/toggleFollow").authenticated()
+				.antMatchers("/security/toggleFollow").authenticated()
 				.antMatchers("/security/profile", "/security/updateProfile").authenticated()
 				.antMatchers("/connect", "/sse/*").permitAll()
+				.antMatchers("/api/book/detail/**/comment/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 				.and();
 
 		http.formLogin().usernameParameter("userid") // 사용자 이름 필드를 'userid'로 설정
