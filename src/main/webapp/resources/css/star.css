@@ -37,6 +37,46 @@
   color: #f73c32 !important;
 }
 
+/* 수정 */
+
+.star-edit {
+  display: inline-block;
+  border: 0;
+  margin-right: 15px;
+}
+.star-edit > input {
+  display: none;
+}
+.star-edit > label {
+  float: right;
+  color: #ddd;
+}
+.star-edit > label:before {
+  display: inline-block;
+  font-size: 1rem;
+  padding: 0.3rem 0.2rem;
+  margin: 0;
+  cursor: pointer;
+  font-family: FontAwesome;
+  content: "\f005 ";
+}
+.star-edit .half:before {
+  content: "\f089 ";
+  position: absolute;
+  padding-right: 0;
+}
+.star-edit input:checked ~ label,
+.star-edit label:hover,
+.star-edit label:hover ~ label {
+  color: #f73c32 !important;
+}
+.star-edit input:checked + .star-edit label:hover,
+.star-edit input input:checked ~ label:hover,
+.star-edit input:checked ~ .star-edit label:hover ~ label,
+.star-edit label:hover ~ input:checked ~ label {
+  color: #f73c32 !important;
+}
+
 /* rated */
 
 .rated {
