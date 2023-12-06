@@ -21,6 +21,7 @@ import org.bookbook.domain.TopicVO;
 import org.bookbook.model.Criteria;
 import org.bookbook.model.PageMakerDTO;
 import org.bookbook.service.BookSearchService;
+import org.bookbook.util.SidebarUtil;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,65 +54,78 @@ public class BookController {
 	@Autowired
 	BookSearchService service;
 
+	@Autowired
+	SidebarUtil sidebarUtil;
+
 	@ModelAttribute("searchBook")
 	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
-		List<TopicVO> topicList = service.getTopicList(topics);
-
-		List<GenreVO> genreList = service.getGenreList(genres);
-
-		Map<String, List<String>> genreConvertedMap = convertToMap(genreList);
-
-		Map<String, Map<String, List<String>>> map = new LinkedHashMap<>();
-
-		for (TopicVO topic : topicList) {
-			Map<String, List<String>> genreMap = new LinkedHashMap<>();
-
-			String genreToString = topic.getGenres();
-
-			List<String> genreToList = new ArrayList<>(Arrays.asList(genreToString.split(", ")));
-
-			for (String genre : genreToList) {
-
-				List<String> categoriesToList = genreConvertedMap.get(genre);
-
-				if (categoriesToList == null) {
-					categoriesToList = new ArrayList<>();
-				}
-
-				genreMap.put(genre, categoriesToList);
-			}
-
-			map.put(topic.getTopic(), genreMap);
-		}
-
-		JSONObject jsonObject = new JSONObject(map);
-
-		return jsonObject;
+		JSONObject result = sidebarUtil.searchBookTypes(topics, genres);
+		return result;
 	}
+	
+//	@ModelAttribute("searchBook")
+//	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
+//		List<TopicVO> topicList = service.getTopicList(topics);
+//
+//		List<GenreVO> genreList = service.getGenreList(genres);
+//
+//		Map<String, List<String>> genreConvertedMap = convertToMap(genreList);
+//
+//		Map<String, Map<String, List<String>>> map = new LinkedHashMap<>();
+//
+//		for (TopicVO topic : topicList) {
+//			Map<String, List<String>> genreMap = new LinkedHashMap<>();
+//
+//			String genreToString = topic.getGenres();
+//
+//			List<String> genreToList = new ArrayList<>(Arrays.asList(genreToString.split(", ")));
+//
+//			for (String genre : genreToList) {
+//
+//				List<String> categoriesToList = genreConvertedMap.get(genre);
+//
+//				if (categoriesToList == null) {
+//					categoriesToList = new ArrayList<>();
+//				}
+//
+//				genreMap.put(genre, categoriesToList);
+//			}
+//
+//			map.put(topic.getTopic(), genreMap);
+//		}
+//
+//		JSONObject jsonObject = new JSONObject(map);
+//
+//		return jsonObject;
+//	}
 
-	public static Map<String, List<String>> convertToMap(List<GenreVO> genreList) {
-		Map<String, List<String>> genreMap = new HashMap<>();
-
-		for (GenreVO genreVO : genreList) {
-			String genre = genreVO.getGenre();
-			String categoriesToString = genreVO.getCategories();
-
-			List<String> categoriesList = new ArrayList<>();
-
-			if (categoriesToString != null) {
-				categoriesList = new ArrayList<String>(Arrays.asList(categoriesToString.split(", ")));
-			}
-
-			genreMap.put(genre, categoriesList);
-		}
-
-		return genreMap;
-	}
+//	public static Map<String, List<String>> convertToMap(List<GenreVO> genreList) {
+//		Map<String, List<String>> genreMap = new HashMap<>();
+//
+//		for (GenreVO genreVO : genreList) {
+//			String genre = genreVO.getGenre();
+//			String categoriesToString = genreVO.getCategories();
+//
+//			List<String> categoriesList = new ArrayList<>();
+//
+//			if (categoriesToString != null) {
+//				categoriesList = new ArrayList<String>(Arrays.asList(categoriesToString.split(", ")));
+//			}
+//
+//			genreMap.put(genre, categoriesList);
+//		}
+//
+//		return genreMap;
+//	}
 
 	@GetMapping("/list")
-	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
-		
+	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri, @RequestParam("selectedTopics") String[] topic) {
+		log.info(search);
+		log.info(topic);
 
+		cri.setTopics(topic);
+		log.info(search);
+		
 		String flaskApiUrl = "http://49.50.166.252:5000/api/list";
 
 		String keywordParam = (search.getKeywords() != null) ? String.join(",", search.getKeywords()) : "";
