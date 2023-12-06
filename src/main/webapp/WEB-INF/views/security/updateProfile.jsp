@@ -67,53 +67,7 @@
 					</tr>
 
 					<!-- 이메일 필드 -->
-					<tr>
-						<th><form:label path="email">이메일
-						</form:label></th>
-						<td>
-							<div id="SuperviserEmail" class="email-group">
-								<form:input path="email" class="s-input-form" id="viserEmail"
-								 />
-								<span id="displayEmail"></span> <input class="s-input-form box"
-									id="domain-txt" type="text" /> <select
-									class="s-input-form box" id="domain-list">
-									<option value="naver.com">naver.com</option>
-									<option value="google.com">google.com</option>
-									<option value="kakao.com">kakao.com</option>
-									<option value="type">직접 입력</option>
-								</select>
-							</div> <form:errors path="email" cssClass="error" />
-						</td>
-					</tr>
-
-					<script>
-    const domainListEl = document.querySelector('#domain-list');
-    const domainInputEl = document.querySelector('#domain-txt');
-    const emailDisplay = document.querySelector('#displayEmail');
-    const viserEmail = document.querySelector('#viserEmail');
-
-    domainListEl.addEventListener('change', (event) => {
-    	
-        if (event.target.value !== "type") {
-            domainInputEl.value = event.target.value;
-            domainInputEl.disabled = true;
-            
-         // domainInputEl이 직접 입력일 때는 emailDisplay에 표시하지 않도록
-            emailDisplay.textContent = `${viserEmail.value}@${event.target.value}`;
-        } else {
-            domainInputEl.value = "";
-            domainInputEl.disabled = false;
-       //     emailDisplay.textContent = viserEmail.value; // 직접 입력시 emailDisplay에 @type을 포함시키지 않음
-        }
-
-        // Email 생성 및 표시 로직
-        const domain = domainInputEl.value;
-       emailDisplay.textContent = `${viserEmail.value}@${domain}`;
-    });
-
-    // 초기화
-    domainInputEl.disabled = true;
-</script>
+					
 					<!-- 생일 필드 -->
 					
 					<!-- 성별 필드 -->

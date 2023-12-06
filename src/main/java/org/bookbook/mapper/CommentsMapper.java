@@ -13,4 +13,6 @@ public interface CommentsMapper {
 	void update(CommentsVO vo);
 	void delete(int ratingid);
 
+	public List<CommentsVO> readCommentsByUserId(String userId);
+
 }
