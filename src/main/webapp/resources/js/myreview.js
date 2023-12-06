@@ -65,11 +65,11 @@ async function editComment(commentId) {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    [csrfHeader]: csrfToken // CSRF 토큰 추가
+                    [csrfHeader]: csrfToken 
                 },
               body: JSON.stringify({ 
                     rating_review: newCommentContent,
-                    userid: loggedInUserId, // 현재 로그인한 사용자 ID 추가
+                    userid: loggedInUserId, 
                     bookid: bookId,
                     ratingid: commentId
                 })
