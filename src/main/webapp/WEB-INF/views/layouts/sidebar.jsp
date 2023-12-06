@@ -20,7 +20,8 @@
 			<div>
 				<%-- <form action="/book/list" id="searchForm" method="get" class="d-flex"> --%>
 				<div class="input-group">
-					<!-- 					<div class="mx-auto mt-5 input-group mb-3 search-bar">
+					<!--
+					<div class="mx-auto mt-5 input-group mb-3 search-bar">
 						<input id="searching" name="keywords" type="text"
 							class="form-control text" placeholder="추천 키워드를 입력하세요"
 							aria-label="Recipient's username"
@@ -32,8 +33,6 @@
 							<i class="fa-solid fa-magnifying-glass"></i> 검색
 						</button>
 					</div> -->
-
-					<!-- <script src="../../resources/SearchBook.js"></script> -->
 
 					<div id="browse-category">
 						<script>

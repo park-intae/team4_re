@@ -10,7 +10,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bookbook</title>
-<head>
 <!-- bootstrap css -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
@@ -63,16 +62,6 @@ header {
 	border: 1px solid #cccccc;
 }
 
-#search-btn {
-	width: 27px;
-	height: 27px;
-	padding: 1px;
-}
-
-#searching {
-	border: none;
-}
-
 .center-container {
 	display: flex;
 	justify-content: center;
@@ -82,69 +71,69 @@ header {
 </head>
 
 <body>
+	<header>
+		<ul class="navbar-nav sign">
+			<sec:authorize access="isAuthenticated()">
+				<!-- 로그인 된 상태 -->
+
+				<c:choose>
+					<c:when test="${not empty sessionScope.naverUser}">
+						<!-- 네이버 로그인 사용자 -->
+						<li class="nav-item">
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-secondary dropdown-toggle sub"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<img class="avatar"
+										src="https://api.dicebear.com/7.x/identicon/svg?seed=${sessionScope.naverUser.id}" />
+									${sessionScope.naverUser.name}
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="/security/logout">로그아웃</a></li>
+									<li><a class="dropdown-item" href="/security/profile">프로필</a></li>
+								</ul>
+							</div>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<!-- 일반 로그인 사용자 -->
+						<li class="nav-item">
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-secondary dropdown-toggle sub"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<img class="avatar"
+										src="https://api.dicebear.com/7.x/identicon/svg?seed=${user.userid}" />
+									${user.username}
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="/security/logout">로그아웃</a></li>
+									<li><a class="dropdown-item" href="/security/profile">프로필</a></li>
+								</ul>
+							</div>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</sec:authorize>
+			<sec:authorize access="isAnonymous()">
+				<!-- 로그아웃 된 상태 -->
+
+				<li class="nav-item sign">
+					<button type="button" class="btn btn-secondary sub"
+						onclick="location.href='/security/login'">
+						<!-- 코드보기 편하게용 주석 -->
+						로그인
+					</button>
+				</li>
+				<li class="nav-item sign">
+					<button type="button" class="btn btn-secondary sub"
+						onclick="location.href='/security/signup'">
+						<!-- 코드보기 편하게용 주석 -->
+						회원가입
+					</button>
+				</li>
+
+			</sec:authorize>
+		</ul>
+	</header>
 	<div class=background>
-		<header>
-			<ul class="navbar-nav sign">
-				<sec:authorize access="isAuthenticated()">
-					<!-- 로그인 된 상태 -->
-
-					<c:choose>
-						<c:when test="${not empty sessionScope.naverUser}">
-							<!-- 네이버 로그인 사용자 -->
-							<li class="nav-item">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-secondary dropdown-toggle sub"
-										data-bs-toggle="dropdown" aria-expanded="false">
-										<img class="avatar"
-											src="https://api.dicebear.com/7.x/identicon/svg?seed=${sessionScope.naverUser.id}" />
-										${sessionScope.naverUser.name}
-									</button>
-									<ul class="dropdown-menu">
-										<li><a class="dropdown-item" href="/security/logout">로그아웃</a></li>
-										<li><a class="dropdown-item" href="/security/profile">프로필</a></li>
-									</ul>
-								</div>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<!-- 일반 로그인 사용자 -->
-							<li class="nav-item">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-secondary dropdown-toggle sub"
-										data-bs-toggle="dropdown" aria-expanded="false">
-										<img class="avatar"
-											src="https://api.dicebear.com/7.x/identicon/svg?seed=${user.userid}" />
-										${user.username}
-									</button>
-									<ul class="dropdown-menu">
-										<li><a class="dropdown-item" href="/security/logout">로그아웃</a></li>
-										<li><a class="dropdown-item" href="/security/profile">프로필</a></li>
-									</ul>
-								</div>
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</sec:authorize>
-				<sec:authorize access="isAnonymous()">
-					<!-- 로그아웃 된 상태 -->
-
-					<li class="nav-item sign">
-						<button type="button" class="btn btn-secondary sub"
-							onclick="location.href='/security/login'">
-							<!-- 코드보기 편하게용 주석 -->
-							로그인
-						</button>
-					</li>
-					<li class="nav-item sign">
-						<button type="button" class="btn btn-secondary sub"
-							onclick="location.href='/security/signup'">
-							<!-- 코드보기 편하게용 주석 -->
-							회원가입
-						</button>
-					</li>
-
-				</sec:authorize>
-			</ul>
-		</header>

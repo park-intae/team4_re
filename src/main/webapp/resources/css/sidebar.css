@@ -108,3 +108,13 @@ summary{
 nav summary.m_cat{
 	margin-left: 30px;
 }
+
+#search-btn {
+	width: 3vw;
+	height: auto;
+	padding: 1px;
+}
+
+#searching {
+	border: none;
+}

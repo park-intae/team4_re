@@ -11,7 +11,7 @@
 	<!-- 검색창 -->
 
 	<form action="book/list" method="GET">
-		<div class="mx-auto mt-5 search-bar input-group mb-3 search-bar">
+		<div class="mx-auto mt-5 input-group mb-3 search-bar">
 			<div class="dropdown text">
 				<button class="btn btn-secondary dropdown-toggle cate" type="button"
 					id="dropdownMenuButton1" data-bs-toggle="dropdown"
