@@ -1,10 +1,13 @@
 package org.bookbook.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.bookbook.domain.CommentsVO;
 import org.bookbook.mapper.CommentsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,21 +50,35 @@ public class CommentsController {
 	}
 
 
-
+	
 	@PutMapping("/{ratingid}")
-	public CommentsVO update(
-			@PathVariable int ratingid,
-			@RequestBody CommentsVO vo) {
-		System.out.println("==> " + vo);
-		mapper.update(vo);
-		return mapper.get(vo.getRatingid());
+	public ResponseEntity<?> update(@PathVariable int ratingid, @RequestBody CommentsVO vo) {
+	  try {
+	    CommentsVO existingComment = mapper.get(ratingid);
+	    if (existingComment == null || !existingComment.getUserid().equals(vo.getUserid())) {
+	      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized access");
+	    }
+	    mapper.update(vo);
+	    return ResponseEntity.ok(mapper.get(vo.getRatingid()));
+	  } catch (Exception e) {
+	    log.error("Error updating comment", e);
+	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	  }
 	}
 
 	@DeleteMapping("/{ratingid}")
-	public String delete(@PathVariable int ratingid) {
-		System.out.println("delete ==>" + ratingid);
-		mapper.delete(ratingid);
-		return "OK";
+	public ResponseEntity<?> delete(@PathVariable int ratingid, Principal principal) {
+	  try {
+	    CommentsVO existingComment = mapper.get(ratingid);
+	    if (existingComment == null || !existingComment.getUserid().equals(principal.getName())) {
+	      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized access");
+	    }
+	    mapper.delete(ratingid);
+	    return ResponseEntity.ok().build();
+	  } catch (Exception e) {
+	    log.error("Error deleting comment", e);
+	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	  }
 	}
 
 }

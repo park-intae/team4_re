@@ -8,6 +8,7 @@
 <link 
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
 		rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <%@ include file="../layouts/header.jsp"%>
 
@@ -19,8 +20,11 @@
 	<!-- 현재 로그인한 사용자의 정보를 불러옵니다. -->
 	<c:set var="user"
 		value="${not empty sessionScope.naverUser ? sessionScope.naverUser : user}" />
-</sec:authorize>
-
+	</sec:authorize>
+	<script>
+    // 전역 변수로 선언합니다.
+    var loggedInUserId = '${userid}';
+	</script>
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 
@@ -127,16 +131,16 @@
 						</c:otherwise>
 					</c:choose>
 					<div class="button-container">
-					<button id="updateButton" class="btn btn-secondary">정보수정</button>
+					<button id="updateButton" class="btn btn-secondary"><i class="fa-solid fa-user-pen"></i> 정보수정 </button>
 <script>
     document.getElementById('updateButton').addEventListener('click', function() {
     	  window.location.href = '/security/updateProfile';
 
     });
 </script>
-						<button id="showFollowModal" class="btn btn-primary"> 팔로우 </button>
+						<button id="showFollowModal" class="btn btn-primary"><i class="fa-brands fa-twitter"></i> 팔로우 </button>
 						
-						<button id="likeButton" class="btn btn-secondary">좋아요 </button>
+						<button id="likeButton" class="btn btn-secondary"> <i class="far fa-thumbs-up"></i> 좋아요 </button>
 						<script>
 
 							document.getElementById('likeButton')
@@ -160,10 +164,10 @@
 
 	<div class="line-separator"></div>
 
-	<div class="review-title">나의 리뷰</div>
-
-	<div class="review-content"></div>
-	<div class="review-content"></div>
+	<div class="review-title">
+	<div class="review-title-text">나의 리뷰</div>
+	
+	</div>
 	<div class="review-content"></div>
 
 	<div class="line-separator"></div>
@@ -182,7 +186,6 @@
 
 
 	<div class="line-separator"></div>
-
 
 
 <!-- 사용자 프로필 및 정보 -->
@@ -328,6 +331,5 @@
 	};
 </script>
 
-<script src="/path/to/overlay-scrollbars-init.js"></script>
-
+<script src="/resources/js/myreview.js"></script>
 <%@ include file="../layouts/footer.jsp"%>

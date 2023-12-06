@@ -52,4 +52,8 @@
 	where rating_id = #{ratingid}
 	</select>
 
+
+	<select id="readCommentsByUserId" resultMap="CommentsResultMap" parameterType="String">
+  	  SELECT * FROM book_rating WHERE user_id = #{userId}
+	</select>
 </mapper>

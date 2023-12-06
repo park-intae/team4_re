@@ -3,8 +3,10 @@ package org.bookbook.controller;
 import java.security.Principal;
 import java.util.List;
 
+import org.bookbook.domain.CommentsVO;
 import org.bookbook.domain.UserVO;
 import org.bookbook.domain.notification.Notification;
+import org.bookbook.mapper.CommentsMapper;
 import org.bookbook.service.FollowerService;
 import org.bookbook.service.NotificationService;
 import org.bookbook.service.UserService;
@@ -35,6 +37,9 @@ public class UserController {
 	@Autowired
 	private NotificationService notificationService;
 
+	@Autowired
+	CommentsMapper commentsMapper;
+
 	@GetMapping("/usersWithFollowStatus")
 	@ResponseBody
 	public ResponseEntity<List<UserVO>> getAllUsersWithFollowStatus(Principal principal) {
@@ -60,24 +65,35 @@ public class UserController {
 	}
 
 	// 사용자에게 알람 데이터 조회 메소드 추가
-	 @GetMapping("/notifications")
-	    @ResponseBody
-	    public ResponseEntity<List<Notification>> getUserNotifications(Principal principal) {
-	        String userId = principal.getName();
-	        List<Notification> notifications = notificationService.getNotificationsByUserId(userId);
-	        return ResponseEntity.ok(notifications);
-	    }
-	 
-	 
+	@GetMapping("/notifications")
+	@ResponseBody
+	public ResponseEntity<List<Notification>> getUserNotifications(Principal principal) {
+		String userId = principal.getName();
+		List<Notification> notifications = notificationService.getNotificationsByUserId(userId);
+		return ResponseEntity.ok(notifications);
+	}
+
 	// 알림 삭제 API
-	 @PostMapping("/deleteNotification/{notificationId}")
-	 public ResponseEntity<?> deleteNotification(@PathVariable Long notificationId) {
-	     try {
-	         notificationService.deleteNotification(notificationId);
-	         return ResponseEntity.ok().build();
-	     } catch (Exception e) {
-	         log.error("알림 삭제 실패", e);
-	         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	     }
-	 }
+	@PostMapping("/deleteNotification/{notificationId}")
+	public ResponseEntity<?> deleteNotification(@PathVariable Long notificationId) {
+		try {
+			notificationService.deleteNotification(notificationId);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			log.error("알림 삭제 실패", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	@GetMapping("/user/comments")
+	public ResponseEntity<List<CommentsVO>> getUserComments(@RequestParam String userId) {
+		try {
+			List<CommentsVO> comments = commentsMapper.readCommentsByUserId(userId);
+			return ResponseEntity.ok(comments);
+		} catch (Exception e) {
+			log.error("사용자 댓글 불러오기 실패 " + userId, e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+
+	}
 }
