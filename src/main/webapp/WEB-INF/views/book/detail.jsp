@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@ include file="../layouts/header.jsp"%>
+<link rel="stylesheet" href="/resources/css/detail.css" />
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
@@ -53,21 +54,17 @@
 	<h1>${book.title}</h1>
 </div>
 
-
-<style>
-.fixed-content {
-	margin-left: 335px;
-	margin-top: 60px;
-}
-</style>
+ <style> 
+.fixed-content { 
+ margin-left: 335px; 
+  margin-top: 60px; 
+ } 
+</style> 
 
 <hr>
 
 <div class="clearfix">
-	<div class="fixed-content">
-		${book.author} <br> ${book.publisher} <br>
-		${book.publicationdate}
-	</div>
+
 
 	<div class="image-panel float-left mr-3">
 
@@ -91,45 +88,49 @@
 </style>
 
 
+		<div class="image-lay">
+			<div id="book-carousel" class="carousel slide" data-ride="carousel">
 
-		<div id="book-carousel" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ul class="carousel-indicators">
+					<c:forEach items="${book.imageUrl.split(',')}" varStatus="status">
+						<li data-target="#book-carousel" data-slide-to="${status.index}"
+							class="<c:if test="${status.first}">active</c:if>"></li>
 
-			<!-- Indicators -->
-			<ul class="carousel-indicators">
-				<c:forEach items="${book.imageUrl.split(',')}" varStatus="status">
-					<li data-target="#book-carousel" data-slide-to="${status.index}"
-						class="<c:if test="${status.first}">active</c:if>"></li>
+					</c:forEach>
 
-				</c:forEach>
+				</ul>
 
-			</ul>
+				<!-- The slideshow -->
+				<div class="carousel-inner">
+					<c:forEach var="image" items="${book.imageUrl.split(',')}"
+						varStatus="status">
+						<div
+							class="carousel-item <c:if test="${status.first}">active</c:if>">
+							<img src="${image}" alt="${book.title}">
+						</div>
+					</c:forEach>
+				</div>
 
-			<!-- The slideshow -->
-			<div class="carousel-inner">
-				<c:forEach var="image" items="${book.imageUrl.split(',')}"
-					varStatus="status">
-					<div
-						class="carousel-item <c:if test="${status.first}">active</c:if>">
-						<img src="${image}" alt="${book.title}">
-					</div>
-				</c:forEach>
+				<!-- Left and right controls -->
+				<a class="carousel-control-prev" href="#book-carousel"
+					data-slide="prev"> <span class="carousel-control-prev-icon"></span>
+				</a> <a class="carousel-control-next" href="#book-carousel"
+					data-slide="next"> <span class="carousel-control-next-icon"></span>
+				</a>
+
 			</div>
-
-			<!-- Left and right controls -->
-			<a class="carousel-control-prev" href="#book-carousel"
-				data-slide="prev"> <span class="carousel-control-prev-icon"></span>
-			</a> <a class="carousel-control-next" href="#book-carousel"
-				data-slide="next"> <span class="carousel-control-next-icon"></span>
-			</a>
 
 		</div>
 
-
-
 	</div>
-
-	<div>${book.bookintro}</div>
-
+	<div class="intro">
+		<div class="fixed-content">
+			${book.author} <br> ${book.publisher} <br>
+			${book.publicationdate}
+		</div>
+		<div class="bookIntro">${book.bookintro}</div>
+	</div>
 
 	<br>
 </div>
@@ -271,17 +272,17 @@ function copyUrl(){
 		<div class="starRate">
 
 			<fieldset class="rate">
-					<input type="radio" id="rating4" name="rating"
-					value="4" onclick="handleRatingChange(4)"> <label
-					for="rating4" title="4점"></label> <input type="radio" id="rating3"
-					name="rating" value="3" onclick="handleRatingChange(3)"> <label
+				<input type="radio" id="rating4" name="rating" value="4"
+					onclick="handleRatingChange(4)"> <label for="rating4"
+					title="4점"></label> <input type="radio" id="rating3" name="rating"
+					value="3" onclick="handleRatingChange(3)"> <label
 					for="rating3" title="3점"></label> <input type="radio" id="rating2"
 					name="rating" value="2" onclick="handleRatingChange(2)"> <label
 					for="rating2" title="2점"></label> <input type="radio" id="rating1"
 					name="rating" value="1" onclick="handleRatingChange(1)"> <label
 					for="rating1" title="1점"></label>
 			</fieldset>
-			
+
 			<script>
 		    // 등급 변경 함수
 		    function handleRatingChange(rating) {
