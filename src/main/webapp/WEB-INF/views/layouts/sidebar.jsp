@@ -173,8 +173,6 @@
             function prepareAndSubmitForm() {
               // 장르 정보 가져오기
               
-              
-              
               var selectedGenre =
                 document.getElementById("selectedGenre").value;
 
