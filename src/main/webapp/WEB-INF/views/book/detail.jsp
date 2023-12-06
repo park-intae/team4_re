@@ -54,21 +54,19 @@
 	<h1>${book.title}</h1>
 </div>
 
-
-<style>
-.fixed-content {
-	margin-left: 215px;
-	margin-top: 60px;
-	margin-bottom: 13px;
-}
-</style>
+ <style> 
+.fixed-content { 
+ margin-left: 335px; 
+  margin-top: 60px; 
+ } 
+</style> 
 
 <hr>
 
 <div class="clearfix">
 
 
-	<div class="image-panel float-left mr-3 ">
+	<div class="image-panel float-left mr-3">
 
 		<style>
 #book-carousel {
@@ -126,7 +124,6 @@
 		</div>
 
 	</div>
-
 	<div class="intro">
 		<div class="fixed-content">
 			${book.author} <br> ${book.publisher} <br>
@@ -134,7 +131,6 @@
 		</div>
 		<div class="bookIntro">${book.bookintro}</div>
 	</div>
-
 
 	<br>
 </div>
@@ -242,71 +238,6 @@ a:hover {
 
 <link href="../../../resources/css/star.css" rel="stylesheet" />
 
-<<<<<<< HEAD
-<form class="ratings" name="myform" id="myform" method="post"
-	action="/api/bookbook/rating/add">
-	<fieldset>
-		<span class="text-bold">${ratings.average_rating}</span> <input
-			type="radio" name="rating" value="5" id="rate1"> <label
-			for="rate1">★</label> <input type="radio" name="rating" value="4"
-			id="rate2"> <label for="rate2">★</label> <input type="radio"
-			name="rating" value="3" id="rate3"> <label for="rate3">★</label>
-		<input type="radio" name="rating" value="2" id="rate4"> <label
-			for="rate4">★</label> <input type="radio" name="rating" value="1"
-			id="rate5"> <label for="rate5">★</label> <input type="submit"
-			value="별점 제출">
-	</fieldset>
-</form>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-	  document.getElementById("myform").addEventListener("submit", function(event) {
-	    event.preventDefault(); // 기본 제출 동작 방지
-
-	    var selectedRating = document.querySelector('input[name="rating"]:checked');
-	    if (!selectedRating) {
-	      alert("별점을 선택해주세요.");
-	      return;
-	    }
-
-	    var ratingValue = selectedRating.value;
-
-	    // 선택한 별점 값을 가져왔으므로, 서버로 전송하거나 다른 작업을 수행할 수 있습니다.
-	    sendDataToServer(ratingValue); // 서버로 데이터를 전송하는 함수 호출
-	  });
-	});
-
-	function sendDataToServer(rating) {
-	  // Fetch API를 사용하여 서버로 데이터 전송
-	  fetch("/api/bookbook/rating/add", {
-	    method: "POST",
-	    headers: {
-	      "Content-Type": "application/json"
-	    },
-	    body: JSON.stringify({ "rating": rating, "bookId": bookId })
-	  })
-	  .then(response => {
-	    if (!response.ok) {
-	      throw new Error("Network response was not ok.");
-	    }
-	    return response.json();
-	  })
-	  .then(data => {
-	    // 서버로부터 받은 응답에 대한 처리
-	    console.log("서버 응답:", data);
-	    // 별도의 처리가 필요한 경우 여기에 작성
-	  })
-	  .catch(error => {
-	    console.error("There has been a problem with your fetch operation:", error);
-	    // 오류 처리가 필요한 경우 여기에 작성
-	  });
-	}
-
-</script>
-
-
-=======
->>>>>>> main
 <div class="bottom">
 
 	<script>
@@ -331,32 +262,27 @@ function copyUrl(){
 		<button type="button" class="copy-btn" onclick="copyUrl()">링크
 			복사</button>
 	</div>
-<<<<<<< HEAD
-=======
 
->>>>>>> main
 
 
 	<!-- 새 댓글 작성 -->
 	<div class="bg-light p-2 rounded my-5">
 		<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
-<<<<<<< HEAD
-=======
 
 		<div class="starRate">
 
 			<fieldset class="rate">
-					<input type="radio" id="rating4" name="rating"
-					value="4" onclick="handleRatingChange(4)"> <label
-					for="rating4" title="4점"></label> <input type="radio" id="rating3"
-					name="rating" value="3" onclick="handleRatingChange(3)"> <label
+				<input type="radio" id="rating4" name="rating" value="4"
+					onclick="handleRatingChange(4)"> <label for="rating4"
+					title="4점"></label> <input type="radio" id="rating3" name="rating"
+					value="3" onclick="handleRatingChange(3)"> <label
 					for="rating3" title="3점"></label> <input type="radio" id="rating2"
 					name="rating" value="2" onclick="handleRatingChange(2)"> <label
 					for="rating2" title="2점"></label> <input type="radio" id="rating1"
 					name="rating" value="1" onclick="handleRatingChange(1)"> <label
 					for="rating1" title="1점"></label>
 			</fieldset>
-			
+
 			<script>
 		    // 등급 변경 함수
 		    function handleRatingChange(rating) {
@@ -367,7 +293,6 @@ function copyUrl(){
 		</div>
 
 
->>>>>>> main
 		<div>
 			<textarea class="form-control new-comment-content" rows="3"
 				${username == null ? 'disabled' : '' }></textarea>

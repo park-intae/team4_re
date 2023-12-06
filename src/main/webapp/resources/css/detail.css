@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 .intro{
+/* 	margin-right: 54px; */
 	margin-right: 243px;
 }
 
@@ -33,6 +34,6 @@ h1{
 	margin-left: 40px;
 }
 
-.ratings{
+.starRate{
 	margin-left: 40px;
 }
