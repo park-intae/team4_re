@@ -67,10 +67,19 @@ async function editComment(commentId) {
                     'Content-Type': 'application/json',
                     [csrfHeader]: csrfToken // CSRF 토큰 추가
                 },
-                body: JSON.stringify({rating_review: newCommentContent})
+              body: JSON.stringify({ 
+                    rating_review: newCommentContent,
+                    userid: loggedInUserId, // 현재 로그인한 사용자 ID 추가
+                    bookid: bookId,
+                    ratingid: commentId
+                })
             });
 
             if (response.ok) {
+            
+            	const commentElement = document.querySelector(`.user-comment[data-no="${commentId}"] p`);
+                commentElement.textContent = newCommentContent;
+                
                 alert("댓글이 수정되었습니다.");
                 loadUserComments();
             } else {
@@ -85,7 +94,7 @@ async function editComment(commentId) {
 // 댓글 삭제 함수
 async function deleteComment(commentId) {
     const commentElement = document.querySelector(`.user-comment[data-no="${commentId}"]`);
-    const bookId = commentElement.getAttribute('data-bookid'); // bookId 추출
+    const bookId = commentElement.getAttribute('data-bookid'); 
 
     if (confirm("댓글을 삭제하시겠습니까?")) {
         try {
@@ -93,6 +102,7 @@ async function deleteComment(commentId) {
                 method: 'DELETE'
             });
             if (response.ok) {
+            	commentElement.remove();
                 alert("댓글이 삭제되었습니다.");
                 loadUserComments(); // 댓글 목록 새로고침
             } else {

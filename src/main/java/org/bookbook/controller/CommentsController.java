@@ -52,18 +52,26 @@ public class CommentsController {
 
 	
 	@PutMapping("/{ratingid}")
-	public ResponseEntity<?> update(@PathVariable int ratingid, @RequestBody CommentsVO vo) {
-	  try {
-	    CommentsVO existingComment = mapper.get(ratingid);
-	    if (existingComment == null || !existingComment.getUserid().equals(vo.getUserid())) {
-	      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized access");
+	public ResponseEntity<?> update(@PathVariable int ratingid, @RequestBody CommentsVO vo, Principal principal) {
+	    try {
+	        log.info("Updating comment with ID: " + ratingid);
+	        log.info("Received comment data: " + vo);
+
+	        // 현재 로그인한 사용자의 userid를 가져와서 CommentsVO 객체에 설정
+	        String loggedInUserId = principal.getName();
+	        vo.setUserid(loggedInUserId);
+
+	        CommentsVO existingComment = mapper.get(ratingid);
+	        if (existingComment == null || !existingComment.getUserid().equals(vo.getUserid())) {
+	            log.warn("Unauthorized access attempt to comment with ID: " + ratingid);
+	            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized access");
+	        }
+	        mapper.update(vo);
+	        return ResponseEntity.ok(mapper.get(vo.getRatingid()));
+	    } catch (Exception e) {
+	        log.error("Error updating comment with ID: " + ratingid, e);
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	    }
-	    mapper.update(vo);
-	    return ResponseEntity.ok(mapper.get(vo.getRatingid()));
-	  } catch (Exception e) {
-	    log.error("Error updating comment", e);
-	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	  }
 	}
 
 	@DeleteMapping("/{ratingid}")

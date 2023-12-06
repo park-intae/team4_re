@@ -39,7 +39,7 @@
 			rating_date = NOW(),
 			rating = #{rating}
 			
-		where rating_id = #{ratingid}
+		where rating_id = #{ratingid} and user_id = #{userid}
 	</update>
 	
 	<delete id="delete">
