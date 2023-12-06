@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
+import org.bookbook.domain.CommentsVO;
 import org.bookbook.domain.GenreVO;
 import org.bookbook.domain.LikeVO;
 import org.bookbook.domain.TopicVO;
@@ -22,12 +23,18 @@ import org.bookbook.model.PageMakerDTO;
 import org.bookbook.service.BookSearchService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
@@ -235,4 +242,17 @@ public class BookController {
 		return "book/likes";
 	}
 
+	@GetMapping(value = "/detail/{bookId}/title", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String getBookTitle(@PathVariable("bookId") int bookId) {
+	    try {
+	        BookVO book = service.getBookById(bookId);
+	        return book.getTitle(); // 책 제목을 반환
+	    } catch (Exception e) {
+	        log.error("Book title fetching error", e);
+	        return "Unknown Title";
+	    }
+	}
+	
+	
 }
