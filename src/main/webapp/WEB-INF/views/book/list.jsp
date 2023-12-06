@@ -57,11 +57,26 @@
 	overflow: hidden;
 }
 
+.card-text {
+	font-size: 14px; /* 폰트 크기를 14px로 조정 */
+	max-width: 100px; /* 최대 너비를 100px로 제한 */
+/* 	overflow: hidden; /* 내용이 너무 길 경우 숨김 처리 */ */
+/* 	text-overflow: ellipsis; /* 내용이 너무 길 경우 말줄임표로 표시 */ */
+	white-space: nowrap; /* 줄 바꿈 방지 */
+	 margin: 0 auto; /* 수평 가운데 정렬을 위해 추가 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
 .card-img-top {
 	width: 140px;
 	height: 170px;
 	object-fit: cover;
-	margin: 20px 35px 6px 34px; /* 위 20px, 오른쪽 35px, 아래 80px, 왼쪽 34px 여백 설정 */
+	margin: 20px 35px 6px 34px;
+	/* 위 20px, 오른쪽 35px, 아래 80px, 왼쪽 34px 여백 설정 */
 }
 
 .card-body {
@@ -105,9 +120,10 @@ a:hover {
 .active {
 	background-color: #cdd5ec;
 }
+
 h1 {
-    text-align: left; /* 텍스트를 오른쪽으로 정렬합니다. */
-    margin-left: 160px; /* 텍스트와 오른쪽 여백을 설정합니다. 필요한 만큼 조절하세요. */
+	text-align: left; /* 텍스트를 오른쪽으로 정렬합니다. */
+	margin-left: 160px; /* 텍스트와 오른쪽 여백을 설정합니다. 필요한 만큼 조절하세요. */
 }
 </style>
 
@@ -129,10 +145,10 @@ h1 {
 						<a href="/book/detail?bookid=${book.bookid}">
 							<h5 class="card-title">${book.title}</h5>
 						</a>
-						<p class="card-text">저자: ${book.author}</p>
-						<p class="card-text">출판사: ${book.publisher}</p>
-						<p class="card-text">장르: ${book.genre}</p>
-						<p class="card-text">카테고리: ${book.category}</p>
+						<p class="card-text"><span class="bold-text">저자:</span>${book.author}</p>
+						<p class="card-text"><span class="bold-text">출판사:</span>${book.publisher}</p>
+						<p class="card-text"><span class="bold-text">장르:</span>${book.genre}</p>
+						<p class="card-text"><span class="bold-text">카테고리:</span>${book.category}</p>
 						<i class="bi bi-heart text-danger" style="cursor: pointer;"
 							onclick="likeBook('${book.bookid}', '${book.title}', this)"></i>
 
@@ -147,9 +163,10 @@ h1 {
 		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 		<input type="hidden" name="keywords" value="${param.keywords}">
-		<input type="hidden" name="selectedCategories" value="${param.selectedCategories}"> 
-		<input type="hidden" name="selectedTopics" value="${param.selectedTopics}">
-		<input type="hidden" name="bookType" value="${param.bookType}">
+		<input type="hidden" name="selectedCategories"
+			value="${param.selectedCategories}"> <input type="hidden"
+			name="selectedTopics" value="${param.selectedTopics}"> <input
+			type="hidden" name="bookType" value="${param.bookType}">
 
 		<!-- 필요한 경우 다른 검색 매개변수를 추가로 숨은 필드로 포함합니다 -->
 	</form>
@@ -216,10 +233,10 @@ h1 {
 						<a href="/book/detail?bookid=${bookAI.bookid}">
 							<h5 class="card-title">${bookAI.title}</h5>
 						</a>
-						<p class="card-text">저자: ${bookAI.author}</p>
-						<p class="card-text">출판사: ${bookAI.publisher}</p>
-						<p class="card-text">장르: ${bookAI.genre}</p>
-						<p class="card-text">카테고리: ${bookAI.category}</p>
+						<p class="card-text"><span class="bold-text">저자:</span>${bookAI.author}</p>
+						<p class="card-text"><span class="bold-text">출판사:</span>${bookAI.publisher}</p>
+						<p class="card-text"><span class="bold-text">장르:</span>${bookAI.genre}</p>
+						<p class="card-text"><span class="bold-text">카테고리:</span>${bookAI.category}</p>
 						<p class="card-text"></p>
 						<i class="bi bi-heart text-danger" style="cursor: pointer;"
 							onclick="likeBook('${bookAI.bookid}', '${bookAI.title}', this)"></i>
@@ -244,8 +261,8 @@ h1 {
 							<h5 class="card-title">${best.title}</h5>
 						</a>
 
-						<p class="card-text">저자: ${best.author}</p>
-						<p class="card-text">출판사: ${best.publisher}</p>
+						<p class="card-text"><span class="bold-text">저자:</span>${best.author}</p>
+						<p class="card-text"><span class="bold-text">출판사:</span>${best.publisher}</p>
 						<p class="card-text"></p>
 						<i class="bi bi-heart text-danger" style="cursor: pointer;"
 							onclick="likeBook('${best.column1}', '${best.title}', this)"></i>
