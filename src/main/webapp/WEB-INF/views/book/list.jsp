@@ -233,29 +233,4 @@ h1 {
 
 </c:if>
 
-<c:if test="${empty bookByCBF}">
-	<ul>
-		<div class="card-container">
-			<c:forEach var="best" items="${best}">
-				<div class="card">
-					<a href="/best/get?column1=${best.column1}"> <img
-						src="${best.images}" alt="${best.title}" class="card-img-top">
-					</a>
-					<div class="card-body">
-						<a href="/best/get?column1=${best.column1}">
-							<h5 class="card-title">${best.title}</h5>
-						</a>
-
-						<p class="card-text">저자: ${best.author}</p>
-						<p class="card-text">출판사: ${best.publisher}</p>
-						<p class="card-text"></p>
-						<i class="bi bi-heart text-danger" style="cursor: pointer;"
-							onclick="likeBook('${best.column1}', '${best.title}', this)"></i>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
-	</ul>
-</c:if>
-
 <%@include file="../layouts/footer.jsp"%>
