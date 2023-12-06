@@ -28,7 +28,7 @@ public class BestController {
 		int total4 = service.getTotal4(cri);
 		int total5 = service.getTotal5(cri);
 		int total6 = service.getTotal6(cri);
-		
+
 		model.addAttribute("list", service.getList(cri));
 		if (cri.getClassi() == 2) {
 			model.addAttribute("list", service.getList2(cri));
