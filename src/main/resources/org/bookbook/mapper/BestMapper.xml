@@ -38,42 +38,42 @@
 		select column1, title, author,
 		images
 		from best
-		limit #{offset} , #{amount}
+		limit 11
 	</select>
 	<select id="getList2" resultType="BestVO">
 		select column1, title, author,
 		images
 		from best
 		where classi=2
-		limit #{offset} , #{amount}
+		limit 11
 	</select>
 	<select id="getList3" resultType="BestVO">
 		select column1, title, author,
 		images
 		from best
 		where classi=3
-		limit #{offset} , #{amount}
+		limit 11
 	</select>
 	<select id="getList4" resultType="BestVO">
 		select column1, title, author,
 		images, genre
 		from best
 		where classi=4
-		limit #{offset} , #{amount}
+		limit 11
 	</select>
 	<select id="getList5" resultType="BestVO">
 		select column1, title, author,
 		images
 		from best
 		where dateNum=1
-		limit #{offset} , #{amount}
+		limit 11
 	</select>
 	<select id="getList6" resultType="BestVO">
 		select column1, title, author,
 		images
 		from best
 		where dateNum2=1
-		limit #{offset} , #{amount}
+		limit 11
 	</select>
 
 
@@ -89,7 +89,7 @@
 <![CDATA[
 select column1, title, author, images
 from best
-limit #{offset} , #{amount}
+limit 11
 ]]>
 	</select>
 	<select id="getListWithPaging2"
@@ -98,7 +98,7 @@ limit #{offset} , #{amount}
 select column1, title, author, images
 from best
 where classi=2
-limit #{offset} , #{amount}
+limit 11
 ]]>
 	</select>
 	<select id="getListWithPaging3"
@@ -107,7 +107,7 @@ limit #{offset} , #{amount}
 select column1, title, author, images
 from best
 where classi=3
-limit #{offset} , #{amount}
+limit 11
 ]]>
 	</select>
 	<select id="getListWithPaging4"
@@ -116,7 +116,7 @@ limit #{offset} , #{amount}
 select column1, title, author, images, genre
 from best
 where classi=4
-limit #{offset} , #{amount}
+limit 11
 ]]>
 	</select>
 	<select id="getListWithPaging5"
@@ -125,7 +125,7 @@ limit #{offset} , #{amount}
 select column1, title, author, images
 from best 
 where dateNum=1
-limit #{offset} , #{amount}
+limit 11
 ]]>
 	</select>
 	<select id="getListWithPaging6"
@@ -134,7 +134,7 @@ limit #{offset} , #{amount}
 select column1, title, author, images
 from best
 where dateNum2=1
-limit #{offset} , #{amount}
+limit 11
 ]]>
 	</select>
 
