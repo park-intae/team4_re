@@ -115,8 +115,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!-- 게시물 총 개숫 -->
-	<select id="getTotal" resultType="int">
+	<select id="getTotal-old" resultType="int">
 		select count(*) from book
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		select count(*) from book_keyword WHERE keywords LIKE CONCAT('%', #{keywordParam}, '%') 
 	</select>
 	
 	<select id="selectBooksByIds" resultType="BookVO">

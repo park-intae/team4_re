@@ -28,7 +28,7 @@ public interface BookSearchService {
 	public void insertBookId(String userId, int bookId);
 		
 	 /* 게시판 총 갯수 */
-    public int getTotal();
+    public int getTotal(String keywordParam);
     
     // 좋아요 추가 부분
     void addLike(LikeVO like);

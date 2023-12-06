@@ -31,7 +31,7 @@ public interface BookSearchMapper {
     public void insertHistory(String user_id, int book_id);
 
 	/* 게시판 총 갯수 */
-	public int getTotal();
+	public int getTotal(String keywordparam);
 	
 	// 수정부분
 	void addLike(LikeVO like);

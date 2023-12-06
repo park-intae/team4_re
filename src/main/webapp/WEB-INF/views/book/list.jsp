@@ -72,10 +72,10 @@
 }
 
 .card-img-top {
-	width: 140px;
-	height: 170px;
+	width: 100%;
+	height: 150px;
 	object-fit: cover;
-	margin: 20px 35px 6px 34px;
+	/* 	margin: 20px 35px 6px 34px; */
 	/* 위 20px, 오른쪽 35px, 아래 80px, 왼쪽 34px 여백 설정 */
 }
 
