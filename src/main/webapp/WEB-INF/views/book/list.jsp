@@ -45,7 +45,7 @@
 <style>
 .card-container {
 	display: flex;
-	flex-wrap: wrap;
+	/* flex-wrap: wrap; */
 	gap: 50px;
 	justify-content: center; /* 수평 가운데 정렬 */
 	align-items: center; /* 수직 가운데 정렬 */
@@ -63,7 +63,8 @@
 	width: 140px;
 	height: 170px;
 	object-fit: cover;
-	margin: 20px 35px 6px 34px; /* 위 20px, 오른쪽 35px, 아래 80px, 왼쪽 34px 여백 설정 */
+	margin: 20px 35px 6px 34px;
+	/* 위 20px, 오른쪽 35px, 아래 80px, 왼쪽 34px 여백 설정 */
 }
 
 .card-body {
@@ -107,84 +108,98 @@ a:hover {
 .active {
 	background-color: #cdd5ec;
 }
+
 h1 {
-    text-align: left; /* 텍스트를 오른쪽으로 정렬합니다. */
-    margin-left: 160px; /* 텍스트와 오른쪽 여백을 설정합니다. 필요한 만큼 조절하세요. */
+	text-align: center; /* 텍스트를 오른쪽으로 정렬합니다. */
+	border-bottom: 2px solid gray;
+}
+
+.result-container *{
+	 list-style: none;
+}
+
+.card-container{
+	 padding: 0px 2%;
+	 }
+
+ul{
+	padding: 0px;
 }
 </style>
 
 <h1>Book List</h1>
 
+<div class="result-container">
+	<c:if test="${not empty list}">
+		<ul>
 
-<c:if test="${not empty list}">
-	<ul>
-
-		<li>${book}</li>
-		<div class="card-container">
-			<c:forEach var="book" items="${list}">
-				<div class="card">
-					<a href="/book/detail?bookid=${book.bookid}"> <img
-						src="${book.imageUrl.split(',')[0]}" alt="${book.title}"
-						class="card-img-top">
-					</a>
-					<div class="card-body">
-						<a href="/book/detail?bookid=${book.bookid}">
-							<h5 class="card-title">${book.title}</h5>
+			<li>${book}</li>
+			<div class="card-container">
+				<c:forEach var="book" items="${list}">
+					<div class="card">
+						<a href="/book/detail?bookid=${book.bookid}"> <img
+							src="${book.imageUrl.split(',')[0]}" alt="${book.title}"
+							class="card-img-top">
 						</a>
-						<p class="card-text">저자: ${book.author}</p>
-						<p class="card-text">출판사: ${book.publisher}</p>
-						<p class="card-text">장르: ${book.genre}</p>
-						<p class="card-text">카테고리: ${book.category}</p>
-						<i class="bi bi-heart text-danger" style="cursor: pointer;"
-							onclick="likeBook('${book.bookid}', '${book.title}', this)"></i>
+						<div class="card-body">
+							<a href="/book/detail?bookid=${book.bookid}">
+								<h5 class="card-title">${book.title}</h5>
+							</a>
+							<p class="card-text">저자: ${book.author}</p>
+							<p class="card-text">출판사: ${book.publisher}</p>
+							<p class="card-text">장르: ${book.genre}</p>
+							<p class="card-text">카테고리: ${book.category}</p>
+							<i class="bi bi-heart text-danger" style="cursor: pointer;"
+								onclick="likeBook('${book.bookid}', '${book.title}', this)"></i>
 
+						</div>
 					</div>
-				</div>
-			</c:forEach>
-		</div>
-
-	</ul>
-
-	<form id="paginationForm" action="/book/list" method="get">
-		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-		<input type="hidden" name="keywords" value="${param.keywords}">
-		<input type="hidden" name="selectedCategories" value="${param.selectedCategories}"> 
-		<input type="hidden" name="selectedTopics" value="${param.selectedTopics}">
-		<input type="hidden" name="bookType" value="${param.bookType}">
-
-		<!-- 필요한 경우 다른 검색 매개변수를 추가로 숨은 필드로 포함합니다 -->
-	</form>
-
-	<div class="pageInfo_wrap">
-		<div class="pageInfo_area">
-			<ul id="pageInfo" class="pageInfo">
-				<!-- 이전페이지 버튼 -->
-				<c:if test="${pageMaker.prev}">
-					<li class="pageInfo_btn previous"><a
-						href="javascript:void(0);"
-						onclick="submitPage(${pageMaker.startPage-1})">이전</a></li>
-				</c:if>
-
-				<!-- 각 번호 페이지 버튼 -->
-				<c:forEach var="num" begin="${pageMaker.startPage}"
-					end="${pageMaker.endPage}">
-					<li
-						class="pageInfo_btn ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-						<a href="javascript:void(0);" onclick="submitPage(${num})">${num}</a>
-					</li>
 				</c:forEach>
+			</div>
 
-				<!-- 다음페이지 버튼 -->
-				<c:if test="${pageMaker.next}">
-					<li class="pageInfo_btn next"><a href="javascript:void(0);"
-						onclick="submitPage(${pageMaker.endPage + 1})">다음</a></li>
-				</c:if>
-			</ul>
+		</ul>
+
+		<form id="paginationForm" action="/book/list" method="get">
+			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+			<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+			<input type="hidden" name="keywords" value="${param.keywords}">
+			<input type="hidden" name="selectedCategories"
+				value="${param.selectedCategories}"> <input type="hidden"
+				name="selectedTopics" value="${param.selectedTopics}"> <input
+				type="hidden" name="bookType" value="${param.bookType}">
+
+			<!-- 필요한 경우 다른 검색 매개변수를 추가로 숨은 필드로 포함합니다 -->
+		</form>
+
+		<div class="pageInfo_wrap">
+			<div class="pageInfo_area">
+				<ul id="pageInfo" class="pageInfo">
+					<!-- 이전페이지 버튼 -->
+					<c:if test="${pageMaker.prev}">
+						<li class="pageInfo_btn previous"><a
+							href="javascript:void(0);"
+							onclick="submitPage(${pageMaker.startPage-1})">이전</a></li>
+					</c:if>
+
+					<!-- 각 번호 페이지 버튼 -->
+					<c:forEach var="num" begin="${pageMaker.startPage}"
+						end="${pageMaker.endPage}">
+						<li
+							class="pageInfo_btn ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+							<a href="javascript:void(0);" onclick="submitPage(${num})">${num}</a>
+						</li>
+					</c:forEach>
+
+					<!-- 다음페이지 버튼 -->
+					<c:if test="${pageMaker.next}">
+						<li class="pageInfo_btn next"><a href="javascript:void(0);"
+							onclick="submitPage(${pageMaker.endPage + 1})">다음</a></li>
+					</c:if>
+				</ul>
+			</div>
 		</div>
-	</div>
 
-	<script>
+		<script>
     function submitPage(pageNum) {
         document.getElementById('paginationForm').elements['pageNum'].value = pageNum;
         document.getElementById('paginationForm').submit();
@@ -192,7 +207,8 @@ h1 {
 </script>
 
 
-</c:if>
+	</c:if>
+</div>
 <c:if test="${empty list}">
 	<p>No books found.</p>
 </c:if>

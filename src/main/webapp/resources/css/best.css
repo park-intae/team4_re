@@ -4,6 +4,10 @@
 	text-align: center;
 }
 
+.card-header{
+	text-align: center;	
+}
+
 .card-img-top {
 	height: 150;
 }
@@ -26,11 +30,17 @@ button.active {
 	height: 300px;
 	
 }
-		 
+.card-body {
+	text-align:center;
+}
 .card-text {
 	font-size: 11px;
 }
-
+.bold{
+	font-weight: bold;
+	display: inline-block;
+	margin: 0px;
+}
 .row{
 	margin-left: 30px;
 }

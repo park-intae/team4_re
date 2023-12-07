@@ -19,18 +19,18 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <div class="center active">
-	<button
+	<button class="btn btn-outline-primary"
 		onclick="window.location.href='${cri.getLinkWithColumn('list')}'">종합</button>
-	<button
+	<button class="btn btn-outline-primary"
 		onclick="window.location.href='${cri.getLinkWithColumn2('list', classi)}'">소설</button>
-	<button
+	<button class="btn btn-outline-primary"
 		onclick="window.location.href='${cri.getLinkWithColumn3('list', classi)}'">만화/동화</button>
-	<button
+	<button class="btn btn-outline-primary"
 		onclick="window.location.href='${cri.getLinkWithColumn4('list', classi)}'">비소설</button>
-	<button
+	<button class="btn btn-outline-primary"
 		onclick="window.location.href='${cri.getLinkWithColumn5('list', dateNum)}'">월간</button>
-	<button
-		onclick="window.location.href='${cri.getLinkWithColumn6('list', dateNum2)}'">3달</button>
+	<button class="btn btn-outline-primary"
+		onclick="window.location.href='${cri.getLinkWithColumn6('list', dateNum2)}'">세달</button>
 
 
 </div>
