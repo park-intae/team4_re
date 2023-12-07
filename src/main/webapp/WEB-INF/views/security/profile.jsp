@@ -202,7 +202,12 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/css/OverlayScrollbars.css">
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/js/OverlayScrollbars.js"></script>
-
+<!-- 모달창 overlayscrollbars script-->
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		OverlayScrollbars(document.querySelectorAll('.modal-content'), {});
+	});
+</script>
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -322,7 +327,7 @@
 
 							users
 									.forEach(function(user) {
-										if (user.userid !== currentUserId) { // 현재 로그인한 사용자 제외
+										if (user.userid !== loggedInUserId) { // 현재 로그인한 사용자 제외
 											var tr = $('<tr>').append(
 													'<td>' + user.nickname
 															+ '</td>').append(
