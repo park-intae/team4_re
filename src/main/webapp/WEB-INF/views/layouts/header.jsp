@@ -9,7 +9,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bookbook</title>
-<head>
+
 <!-- bootstrap css -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
@@ -43,15 +43,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
+header{
+	width: 100%;
+	justify-content: space-between;
+}
 .blank {
 	/* 	border: 3px solid red; */ /* 레이아웃 표시용 빈 상자 테두리 */
 	width: 140px;
 	height: 39px;
 }
 
-.sign .btn {
-	margin-bottom: 5px;
-}
 </style>
  <script>
         var loggedInUserId;
@@ -64,7 +65,6 @@
     </sec:authorize>
 </head>
 <body>
-	<div class=background>
 		<header>
 			<div class="blank"></div>
 			<!-- 이미지 누르면 화면 이동 기능 -->
@@ -125,21 +125,22 @@
 				<sec:authorize access="isAnonymous()">
 					<!-- 로그아웃 된 상태 -->
 
-					<li class="nav-item sign">
-						<button type="button" class="btn btn-secondary"
-							onclick="location.href='/security/login'">
-							<!-- 코드보기 편하게용 주석 -->
-							로그인
-						</button>
-					</li>
-					<li class="nav-item sign">
-						<button type="button" class="btn btn-secondary"
-							onclick="location.href='/security/signup'">
-							<!-- 코드보기 편하게용 주석 -->
-							회원가입
-						</button>
-					</li>
+				<li class="nav-item sign">
+					<button type="button" class="btn btn-secondary sub"
+						onclick="location.href='/security/login'">
+						<!-- 코드보기 편하게용 주석 -->
+						로그인
+					</button>
+				</li>
+				<li class="nav-item sign">
+					<button type="button" class="btn btn-secondary sub"
+						onclick="location.href='/security/signup'">
+						<!-- 코드보기 편하게용 주석 -->
+						회원가입
+					</button>
+				</li>
 
-				</sec:authorize>
-			</ul>
-		</header>
+			</sec:authorize>
+		</ul>
+</header>
+<div class=background>
