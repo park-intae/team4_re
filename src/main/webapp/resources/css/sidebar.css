@@ -35,14 +35,14 @@ nav .menu-btn {
 	cursor: pointer;
 }
 
-nav .search-bar {
+/* nav .search-bar {
 	margin-right: auto;
 	margin-left: auto;
 	height: 31px;
-}
+} */
 
 nav.nav-open .search-bar {
-	width: 253px;
+	width: 60%;
 	margin-right: auto;
 	margin-left: auto;
 }

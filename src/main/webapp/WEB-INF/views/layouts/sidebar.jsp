@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <nav>
 	<div class="menu-btn">
 		<i class="fa-solid fa-chevron-right icon1"></i>
 	</div>
 	<form action="/book/list" id="searchForm" method="get" class="d-flex flex-column">
-		<div class="mt-5 input-group search-bar">
+		<div class="mt-5 input-group search-bar-nav search-bar ">
 			<input id="searching" name="keywords" type="text"
 				class="form-control text" placeholder="추천 키워드를 입력하세요"
 				aria-label="Recipient's username" aria-describedby="button-addon2" />

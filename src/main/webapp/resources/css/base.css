@@ -21,17 +21,10 @@ body {
 	height: 90%;
 	padding: 15px;
 	background-color: #F2FFED;
-	/* display: flex;
-	justify-content: center;
-	align-items: center; */
 }
 
 .background::-webkit-scrollbar {
 	display: none;
-}
-
-.background .search-bar{
-	width: 700px;
 }
 
 header {
@@ -118,10 +111,16 @@ img.logo {
 }
 
 div.search-bar {
-	width: 70%;
+	width: 40%;
 	border: 2px solid black;
 	border-radius: 5px;
 	background-color: white;
+}
+
+nav .search-bar {
+	margin-right: auto;
+	margin-left: 0px;
+	height: 31px;
 }
 
 .center {
