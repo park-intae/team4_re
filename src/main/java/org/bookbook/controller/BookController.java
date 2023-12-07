@@ -1,7 +1,11 @@
 package org.bookbook.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -16,7 +20,6 @@ import org.bookbook.domain.TopicVO;
 import org.bookbook.model.Criteria;
 import org.bookbook.model.PageMakerDTO;
 import org.bookbook.service.BookSearchService;
-import org.bookbook.util.SidebarUtil;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextImpl;
@@ -44,20 +47,64 @@ public class BookController {
 	@Autowired
 	BookSearchService service;
 
-	@Autowired
-	SidebarUtil sidebarUtil;
-
 	@ModelAttribute("searchBook")
 	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
-		JSONObject result = sidebarUtil.searchBookTypes(topics, genres);
-		return result;
+		List<TopicVO> topicList = service.getTopicList(topics);
+
+		List<GenreVO> genreList = service.getGenreList(genres);
+
+		Map<String, List<String>> genreConvertedMap = convertToMap(genreList);
+
+		Map<String, Map<String, List<String>>> map = new LinkedHashMap<>();
+
+		for (TopicVO topic : topicList) {
+			Map<String, List<String>> genreMap = new LinkedHashMap<>();
+
+			String genreToString = topic.getGenres();
+
+			List<String> genreToList = new ArrayList<>(Arrays.asList(genreToString.split(", ")));
+
+			for (String genre : genreToList) {
+
+				List<String> categoriesToList = genreConvertedMap.get(genre);
+
+				if (categoriesToList == null) {
+					categoriesToList = new ArrayList<>();
+				}
+
+				genreMap.put(genre, categoriesToList);
+			}
+
+			map.put(topic.getTopic(), genreMap);
+		}
+
+		JSONObject jsonObject = new JSONObject(map);
+
+		return jsonObject;
 	}
-	
-	
+
+	public static Map<String, List<String>> convertToMap(List<GenreVO> genreList) {
+		Map<String, List<String>> genreMap = new HashMap<>();
+
+		for (GenreVO genreVO : genreList) {
+			String genre = genreVO.getGenre();
+			String categoriesToString = genreVO.getCategories();
+
+			List<String> categoriesList = new ArrayList<>();
+
+			if (categoriesToString != null) {
+				categoriesList = new ArrayList<String>(Arrays.asList(categoriesToString.split(", ")));
+			}
+
+			genreMap.put(genre, categoriesList);
+		}
+
+		return genreMap;
+	}
+
 	@GetMapping("/list")
-	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri, @RequestParam("selectedTopics") String[] topic) {
+	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
 		
-		cri.setTopics(topic);
 
 		String flaskApiUrl = "http://49.50.166.252:5000/api/list";
 
@@ -68,41 +115,37 @@ public class BookController {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
 				.queryParam("keyword", keywordParam);
 		String response = restTemplate.getForObject(builder.toUriString(), String.class);
-		
-		log.info("response : " + response);
 
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode jsonNode = objectMapper.readTree(response);
 
 			JsonNode resultNode = jsonNode.get("result");
-			
-			log.info("resultNode : " + resultNode);
-			
-			List<Long> bookIds = new ArrayList<Long>();
-			
-			Random random = new Random();
-			
-			for (int i = 0; i < 5; i++) {
-		        Long  randomNumber = (long) (random.nextInt(11242) + 1);
-		        bookIds.add(randomNumber);
-			}
-			
+
 			if (resultNode != null && resultNode.isArray()) {
 
-				List<Long> bookIdsGetServer = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
+				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
 						.collect(Collectors.toList());
 				
-				if (!bookIdsGetServer.isEmpty()) {
-					log.info("bookIdsGetServer : " + bookIdsGetServer);
-					bookIds = bookIdsGetServer;
+				if (bookIds.isEmpty()) {
+					log.info("Empth --------->>>>>" + bookIds);
+					Random random = new Random();
+					
+					for (int i = 0; i < 5; i++) {
+				        Long  randomNumber = (long) (random.nextInt(11242) + 1);
+				        bookIds.add(randomNumber);
+					}
+					log.info("add --------->>>"+bookIds);
+					
+					
 				}
+				
+				List<BookVO> books = service.getBookListById(bookIds);
+
+				model.addAttribute("bookByCBF", books);				
+
+
 			}
-			
-			List<BookVO> books = service.getBookListById(bookIds);
-
-			model.addAttribute("bookByCBF", books);		
-
 		} catch (Exception e) {
 			System.out.println("------------>Error");
 		}
