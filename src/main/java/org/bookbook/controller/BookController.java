@@ -107,8 +107,10 @@ public class BookController {
 
 		model.addAttribute("list", dataResult);
 
-		int total = service.getTotal();
-
+		int total = service.getTotal(keywordParam);
+		System.out.println("keywordParam1:"+keywordParam);
+		System.out.println("total:"+total);
+		
 		PageMakerDTO pagemake = new PageMakerDTO(cri, total);
 
 		model.addAttribute("pageMaker", pagemake); // 키 : 밸류

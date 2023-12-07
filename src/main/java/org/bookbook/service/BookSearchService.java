@@ -28,8 +28,10 @@ public interface BookSearchService {
 	
 	public void insertBookId(String userId, int bookId);
 		
-	 /* ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
-    public int getTotal();
+
+	 /* °Ô½ÃÆÇ ÃÑ °¹¼ö */
+    public int getTotal(String keywordParam);
+
     
     // ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ß°ï¿½ ï¿½Îºï¿½
     void addLike(LikeVO like);

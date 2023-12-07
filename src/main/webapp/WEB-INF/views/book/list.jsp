@@ -59,12 +59,25 @@
 	overflow: hidden;
 }
 
+.card-text {
+	font-size: 14px; /* 폰트 크기를 14px로 조정 */
+	max-width: 100px; /* 최대 너비를 100px로 제한 */
+/* 	overflow: hidden; /* 내용이 너무 길 경우 숨김 처리 */ */
+/* 	text-overflow: ellipsis; /* 내용이 너무 길 경우 말줄임표로 표시 */ */
+	white-space: nowrap; /* 줄 바꿈 방지 */
+	 margin: 0 auto; /* 수평 가운데 정렬을 위해 추가 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
 .card-img-top {
-	width: 140px;
-	height: 170px;
+	width: 100%;
+	height: 150px;
 	object-fit: cover;
-	margin: 20px 35px 6px 34px;
-	/* 위 20px, 오른쪽 35px, 아래 80px, 왼쪽 34px 여백 설정 */
+
 }
 
 .card-body {
@@ -118,14 +131,12 @@ h1 {
 	 list-style: none;
 	 padding: 0px 2%;
 }
-.recommend-container{
-
-}
 
 ul{
 	padding: 0px;
 }
 </style>
+
 
 <h1>Book List</h1>
 
@@ -145,10 +156,10 @@ ul{
 							<a href="/book/detail?bookid=${book.bookid}">
 								<h5 class="card-title">${book.title}</h5>
 							</a>
-							<p class="card-text">저자: ${book.author}</p>
-							<p class="card-text">출판사: ${book.publisher}</p>
-							<p class="card-text">장르: ${book.genre}</p>
-							<p class="card-text">카테고리: ${book.category}</p>
+							<p class="card-text"><span class="bold-text">저자:</span>${book.author}</p>
+						<p class="card-text"><span class="bold-text">출판사:</span>${book.publisher}</p>
+						<p class="card-text"><span class="bold-text">장르:</span>${book.genre}</p>
+						<p class="card-text"><span class="bold-text">카테고리:</span>${book.category}</p>
 							<i class="bi bi-heart text-danger" style="cursor: pointer;"
 								onclick="likeBook('${book.bookid}', '${book.title}', this)"></i>
 
@@ -220,7 +231,7 @@ ul{
 
 <h1>recommend book</h1>
 
-<div class="recommend-container">
+< class="recommend-container">
 <c:if test="${not empty bookByCBF}">
 	<ul>
 		<div class="card-container">
@@ -235,10 +246,10 @@ ul{
 						<a href="/book/detail?bookid=${bookAI.bookid}">
 							<h5 class="card-title">${bookAI.title}</h5>
 						</a>
-						<p class="card-text">저자: ${bookAI.author}</p>
-						<p class="card-text">출판사: ${bookAI.publisher}</p>
-						<p class="card-text">장르: ${bookAI.genre}</p>
-						<p class="card-text">카테고리: ${bookAI.category}</p>
+						<p class="card-text"><span class="bold-text">저자:</span>${bookAI.author}</p>
+						<p class="card-text"><span class="bold-text">출판사:</span>${bookAI.publisher}</p>
+						<p class="card-text"><span class="bold-text">장르:</span>${bookAI.genre}</p>
+						<p class="card-text"><span class="bold-text">카테고리:</span>${bookAI.category}</p>
 						<p class="card-text"></p>
 						<i class="bi bi-heart text-danger" style="cursor: pointer;"
 							onclick="likeBook('${bookAI.bookid}', '${bookAI.title}', this)"></i>
@@ -249,5 +260,31 @@ ul{
 	</ul>
 
 </c:if>
-</div>
+
+
+<c:if test="${empty bookByCBF}">
+	<ul>
+		<div class="card-container">
+			<c:forEach var="best" items="${best}">
+				<div class="card">
+					<a href="/best/get?column1=${best.column1}"> <img
+						src="${best.images}" alt="${best.title}" class="card-img-top">
+					</a>
+					<div class="card-body">
+						<a href="/best/get?column1=${best.column1}">
+							<h5 class="card-title">${best.title}</h5>
+						</a>
+
+						<p class="card-text"><span class="bold-text">저자:</span>${best.author}</p>
+						<p class="card-text"><span class="bold-text">출판사:</span>${best.publisher}</p>
+						<p class="card-text"></p>
+						<i class="bi bi-heart text-danger" style="cursor: pointer;"
+							onclick="likeBook('${best.column1}', '${best.title}', this)"></i>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	</ul>
+</c:if>
+
 <%@include file="../layouts/footer.jsp"%>

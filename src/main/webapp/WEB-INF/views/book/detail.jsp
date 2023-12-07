@@ -154,10 +154,26 @@
 	overflow: hidden;
 }
 
+.card-text {
+	font-size: 14px; /* 폰트 크기를 14px로 조정 */
+	max-width: 100px; /* 최대 너비를 100px로 제한 */
+	/* 	overflow: hidden; /* 내용이 너무 길 경우 숨김 처리 */ */
+	/* 	text-overflow: ellipsis; /* 내용이 너무 길 경우 말줄임표로 표시 */ */
+	white-space: nowrap; /* 줄 바꿈 방지 */
+	margin: 0 auto; /* 수평 가운데 정렬을 위해 추가 */
+	text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
 .card-img-top {
 	width: 100%;
 	height: 150px;
 	object-fit: cover;
+	/* 	margin: 20px 35px 6px 34px; */
+	/* 위 20px, 오른쪽 35px, 아래 80px, 왼쪽 34px 여백 설정 */
 }
 
 .card-body {
@@ -219,10 +235,10 @@ a:hover {
 						<a href="/book/detail?bookid=${bookAI.bookid}">
 							<h5 class="card-title">${bookAI.title}</h5>
 						</a>
-						<p class="card-text">저자: ${bookAI.author}</p>
-						<p class="card-text">출판사: ${bookAI.publisher}</p>
-						<p class="card-text">장르: ${bookAI.genre}</p>
-						<p class="card-text">카테고리: ${bookAI.category}</p>
+						<p class="card-text"><span class="bold-text">저자:</span>${bookAI.author}</p>
+						<p class="card-text"><span class="bold-text">출판사:</span>${bookAI.publisher}</p>
+						<p class="card-text"><span class="bold-text">장르:</span>${bookAI.genre}</p>
+						<p class="card-text"><span class="bold-text">카테고리:</span>${bookAI.category}</p>
 						<p class="card-text"></p>
 						<i class="bi bi-heart text-danger" style="cursor: pointer;"
 							onclick="likeBook('${bookAI.bookid}', '${bookAI.title}', this)"></i>
@@ -271,6 +287,7 @@ function copyUrl(){
 	<div class="bg-light p-2 rounded my-5">
 		<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
 
+
 		<div class="starRate">
 
 			<fieldset class="rate">
@@ -293,6 +310,7 @@ function copyUrl(){
 			</script>
 
 		</div>
+
 
 
 		<div>
