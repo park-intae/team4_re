@@ -12,7 +12,6 @@ const commentUpdatable = `
 `;
 
 // 댓글 바디
-
 function createCommentTemplate(comment, username) {
   // 별점 생성 함수
   function createStarRatingShow(rating) {
@@ -22,8 +21,8 @@ function createCommentTemplate(comment, username) {
       const additionalStyle =
         isChecked === "checked" ? 'style="color: #f73c32 !important;"' : ""; // 예시로 gold 색을 추가 스타일로 지정
       starRating += `
-        <label for="rate${i}" title="${i}점" ${isChecked} ${additionalStyle}></label>
-      `;
+          <label for="rate${i}" title="${i}점" ${isChecked} ${additionalStyle}></label>
+        `;
     }
     starRating += "</fieldset>";
     return starRating;
@@ -39,8 +38,8 @@ function createCommentTemplate(comment, username) {
                   <span class="text-muted ms-3 comment-date">
                       ${moment(comment.rating_date).format("YYYY-MM-DD hh:mm")}
                   </span>
-                  <span>${createStarRatingShow(comment.rating)}
-                  </span>
+                  ${createStarRatingShow(comment.rating)}
+
               </div>
               <div  class="btn-group">
               ${
@@ -99,7 +98,6 @@ async function createComment(bookid, userid, rating) {
 //코멘트 수정 화면 만들기
 function createCommentEditTemplate(comment) {
   return `
-  <div class="starRate-Edit">
   <fieldset class="star-edit">
     <input type="radio" id="star4" name="star" value="4"
       onclick="handlestarEdit(4)"> <label for="star4"
@@ -111,7 +109,6 @@ function createCommentEditTemplate(comment) {
       name="star" value="1" onclick="handlestarEdit(1)"> <label
       for="star1" title="1점"></label>
   </fieldset>
-  </div>
 		<div class="bg-light p-2 rounded comment-edit-block">
 			<textarea class="form-control mb-1 comment-editor"
 				>${comment.content}</textarea>
