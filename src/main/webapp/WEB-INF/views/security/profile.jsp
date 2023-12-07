@@ -13,26 +13,14 @@
 <%@ include file="../layouts/header.jsp"%>
 
 
-<sec:authorize access="isAuthenticated()">
-
-	<sec:authentication property="principal.user.userid" var="userid" />
-
-	<!-- 현재 로그인한 사용자의 정보를 불러옵니다. -->
+ <sec:authorize access="isAuthenticated()"> 
 	<c:set var="user"
 		value="${not empty sessionScope.naverUser ? sessionScope.naverUser : user}" />
-</sec:authorize>
-<script>
-	// 전역 변수로 선언합니다.
-	var loggedInUserId = '${userid}';
-</script>
+	</sec:authorize>  
+	
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 
-<script>
-	var currentUserId = "${loggedInUserId}";
-</script>
-
-<!-- 프로필 정보 섹션 -->
 
 <div class="page-container">
 	<div class="line-separator"></div>
@@ -215,10 +203,86 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/js/OverlayScrollbars.js"></script>
 
-	<!-- 모달창 overlayscrollbars script-->
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			OverlayScrollbars(document.querySelectorAll('.modal-content'), {});
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	//팔로우 모달창 표시
+	$('#showFollowModal').click(function() {
+		$('#followModal').show();
+		loadUsers();
+	});
+
+	// 모달창 닫기 함수
+	function closeFollowModal() {
+		$('#followModal').hide();
+	}
+
+	// 사용자 목록 로드
+	function loadUsers() {
+		console.log("Sending AJAX request");
+		$
+				.ajax({
+					url : '/api/usersWithFollowStatus',
+					method : 'GET',
+					success : function(users) {
+						var userList = $('#userList');
+						userList.empty();
+						var table = $('<table>').addClass('table');
+
+						var tbody = $('<tbody>');
+
+						users
+								.forEach(function(user) {
+									if (user.userid !== loggedInUserId) { // 현재 로그인한 사용자 제외
+										var tr = $('<tr>').append(
+												'<td>' + user.nickname
+														+ '</td>').append(
+												'<td>' + "" + '</td>');
+										var followText = user.followStatus ? '언팔로우'
+												: '팔로우';
+										tr
+												.append('<td><button data-userid="' + user.userid + '" class="btn btn-outline-primary">'
+														+ followText
+														+ '</button></td>');
+										tbody.append(tr);
+									}
+								});
+
+						table.append(tbody);
+						userList.append(table);
+					},
+					error : function(error) {
+						// 오류 처리
+					}
+				});
+	}
+
+	// 팔로우 상태 토글
+	function toggleFollow(userId) {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+		$.ajax({
+			url : '/security/toggleFollow',
+			method : 'POST',
+			data : {
+				userId : userId
+			},
+			beforeSend : function(xhr) {
+				if (header) {
+					xhr.setRequestHeader(header, token);
+				}
+			},
+			success : function(isFollowing) {
+				console.log("Toggle follow response for user " + userId + ": "
+						+ isFollowing);
+				var button = $('button[data-userid="' + userId + '"]');
+				updateButtonState(button, isFollowing);
+			},
+			error : function(error) {
+				console.error('Error toggling follow:', error);
+			}
 		});
 	</script>
 
