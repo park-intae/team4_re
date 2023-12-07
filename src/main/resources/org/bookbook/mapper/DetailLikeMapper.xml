@@ -18,14 +18,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where li.user_id = #{userid};
     </select>
     
-    <select id="getUsers" resultType="UserVO">
+    <select id="getUsers" resultType="LikeUserVO">
     select u.user_id, u.username, u.nickname
     from user u
-    where u.user_id
+    where u.user_id IN 
  	    <foreach collection="list" item="id" open="(" separator="," close=")">
  	    #{id}
  	    </foreach>
     
+    </select>
+    
+    <select id="getBooks" resultType="BookVO">
+    select * from book b
+    where b.book_id IN  
+  	    <foreach collection="list" item="id" open="(" separator="," close=")">
+ 	    #{id}
+ 	    </foreach>
     </select>
     
 </mapper>
