@@ -114,13 +114,13 @@ h1 {
 	border-bottom: 2px solid gray;
 }
 
-.result-container *{
+.result-container,.recommend-container *{
 	 list-style: none;
-}
-
-.card-container{
 	 padding: 0px 2%;
-	 }
+}
+.recommend-container{
+
+}
 
 ul{
 	padding: 0px;
@@ -133,7 +133,7 @@ ul{
 	<c:if test="${not empty list}">
 		<ul>
 
-			<li>${book}</li>
+			<%-- <li>${book}</li> 이 코드 용도가 뭡니까?--%>
 			<div class="card-container">
 				<c:forEach var="book" items="${list}">
 					<div class="card">
@@ -178,7 +178,7 @@ ul{
 					<c:if test="${pageMaker.prev}">
 						<li class="pageInfo_btn previous"><a
 							href="javascript:void(0);"
-							onclick="submitPage(${pageMaker.startPage-1})">이전</a></li>
+							onclick="submitPage(${pageMaker.startPage-1})"><i class="fa-solid fa-chevron-left"></i></a></li>
 					</c:if>
 
 					<!-- 각 번호 페이지 버튼 -->
@@ -193,7 +193,7 @@ ul{
 					<!-- 다음페이지 버튼 -->
 					<c:if test="${pageMaker.next}">
 						<li class="pageInfo_btn next"><a href="javascript:void(0);"
-							onclick="submitPage(${pageMaker.endPage + 1})">다음</a></li>
+							onclick="submitPage(${pageMaker.endPage + 1})"><i class="fa-solid fa-chevron-right"></i></a></li>
 					</c:if>
 				</ul>
 			</div>
@@ -220,6 +220,7 @@ ul{
 
 <h1>recommend book</h1>
 
+<div class="recommend-container">
 <c:if test="${not empty bookByCBF}">
 	<ul>
 		<div class="card-container">
@@ -248,5 +249,5 @@ ul{
 	</ul>
 
 </c:if>
-
+</div>
 <%@include file="../layouts/footer.jsp"%>
