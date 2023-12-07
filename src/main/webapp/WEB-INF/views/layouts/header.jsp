@@ -65,7 +65,6 @@ header{
     </sec:authorize>
 </head>
 <body>
-	<div class=background>
 		<header>
 			<div class="blank"></div>
 			<!-- 이미지 누르면 화면 이동 기능 -->
