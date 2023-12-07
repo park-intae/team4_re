@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@ include file="../layouts/header.jsp"%>
+<link rel="stylesheet" href="/resources/css/detail.css" />
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
@@ -11,44 +12,41 @@
 <script src="../../../resources/js/comment.js"></script>
 
 <script>
-const COMMENT_URL = `/api/book/detail/${book.bookid}/comment/`;
+  const COMMENT_URL = `/api/book/detail/${book.bookid}/comment/`;
 
-console.log(COMMENT_URL)
+  $(document).ready(async function() {
+    let book_id = ${book.bookid};
+    let username = '${username}'; // 작성자(로그인 유저)
 
-$(document).ready(async function() {
-	let book_id = ${book.bookid};
-	let username = '${username}';	// 작성자(로그인 유저)
+    loadComments(book_id, username); // 댓글 목록 불러오기
 
-	console.log("writer ---- >>> "+username);
+    // 댓글 추가 버튼 처리
+    $('.comment-add-btn').click(function(e) {
+      createComment(book_id, username, ratingValue);
+    });
 
-	loadComments(book_id, username);	// 댓글 목록 불러오기
-	
-	// 댓글 추가 버튼 처리
-	$('.comment-add-btn').click(function(e) {
-		createComment(book_id, username);		
-	});
-	
-	$('.comment-list').on('click', '.comment-update-show-btn', showUpdateComment );
-	
-	// 수정 확인 버튼 클릭
-	$('.comment-list').on('click', '.comment-update-btn', function (e){
-		const el = $(this).closest('.comment');
-		updateComment(el, username);
-	});
-	
+    $('.comment-list').on('click', '.comment-update-show-btn', showUpdateComment);
 
-	// 수정 취소 버튼 클릭
-	$('.comment-list').on('click', '.comment-update-cancel-btn', 
-							cancelCommentUpdate);
-	
-	// 삭제 버튼 클릭
-	$('.comment-list').on('click', '.comment-delete-btn', 
-							deleteComment);	
+    // 수정 확인 버튼 클릭
+    $('.comment-list').on('click', '.comment-update-btn', function(e){
+      const el = $(this).closest('.comment');
+      updateComment(el, username);
+    });
 
-})
+    // 수정 취소 버튼 클릭
+    $('.comment-list').on('click', '.comment-update-cancel-btn', cancelCommentUpdate);
 
+    // 삭제 버튼 클릭
+    $('.comment-list').on('click', '.comment-delete-btn', deleteComment);
+
+
+
+    // 별점 선택 시 이벤트 추가
+    $('input[name="rating"]').on('change', function() {
+      handleRatingChange(parseInt($(this).val()));
+    });
+  });
 </script>
-
 
 
 <%-- 개별 페이지 --%>
@@ -56,21 +54,17 @@ $(document).ready(async function() {
 	<h1>${book.title}</h1>
 </div>
 
-
-<style>
-.fixed-content {
-	margin-left: 335px;
-	margin-top: 60px;
-}
-</style>
+ <style> 
+.fixed-content { 
+ margin-left: 335px; 
+  margin-top: 60px; 
+ } 
+</style> 
 
 <hr>
 
 <div class="clearfix">
-	<div class="fixed-content">
-		${book.author} <br> ${book.publisher} <br>
-		${book.publicationdate}
-	</div>
+
 
 	<div class="image-panel float-left mr-3">
 
@@ -94,45 +88,49 @@ $(document).ready(async function() {
 </style>
 
 
+		<div class="image-lay">
+			<div id="book-carousel" class="carousel slide" data-ride="carousel">
 
-		<div id="book-carousel" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ul class="carousel-indicators">
+					<c:forEach items="${book.imageUrl.split(',')}" varStatus="status">
+						<li data-target="#book-carousel" data-slide-to="${status.index}"
+							class="<c:if test="${status.first}">active</c:if>"></li>
 
-			<!-- Indicators -->
-			<ul class="carousel-indicators">
-				<c:forEach items="${book.imageUrl.split(',')}" varStatus="status">
-					<li data-target="#book-carousel" data-slide-to="${status.index}"
-						class="<c:if test="${status.first}">active</c:if>"></li>
+					</c:forEach>
 
-				</c:forEach>
+				</ul>
 
-			</ul>
+				<!-- The slideshow -->
+				<div class="carousel-inner">
+					<c:forEach var="image" items="${book.imageUrl.split(',')}"
+						varStatus="status">
+						<div
+							class="carousel-item <c:if test="${status.first}">active</c:if>">
+							<img src="${image}" alt="${book.title}">
+						</div>
+					</c:forEach>
+				</div>
 
-			<!-- The slideshow -->
-			<div class="carousel-inner">
-				<c:forEach var="image" items="${book.imageUrl.split(',')}"
-					varStatus="status">
-					<div
-						class="carousel-item <c:if test="${status.first}">active</c:if>">
-						<img src="${image}" alt="${book.title}">
-					</div>
-				</c:forEach>
+				<!-- Left and right controls -->
+				<a class="carousel-control-prev" href="#book-carousel"
+					data-slide="prev"> <span class="carousel-control-prev-icon"></span>
+				</a> <a class="carousel-control-next" href="#book-carousel"
+					data-slide="next"> <span class="carousel-control-next-icon"></span>
+				</a>
+
 			</div>
-
-			<!-- Left and right controls -->
-			<a class="carousel-control-prev" href="#book-carousel"
-				data-slide="prev"> <span class="carousel-control-prev-icon"></span>
-			</a> <a class="carousel-control-next" href="#book-carousel"
-				data-slide="next"> <span class="carousel-control-next-icon"></span>
-			</a>
 
 		</div>
 
-
-
 	</div>
-
-	<div>${book.bookintro}</div>
-
+	<div class="intro">
+		<div class="fixed-content">
+			${book.author} <br> ${book.publisher} <br>
+			${book.publicationdate}
+		</div>
+		<div class="bookIntro">${book.bookintro}</div>
+	</div>
 
 	<br>
 </div>
@@ -249,98 +247,12 @@ a:hover {
 	</ul>
 
 </c:if>
-<c:if test="${empty bookByCBF}">
-	<ul>
-		<div class="card-container">
-			<c:forEach var="best" items="${best}">
-				<div class="card">
-					<a href="/best/get?column1=${best.column1}"> <img
-						src="${best.images}" alt="${best.title}" class="card-img-top">
-					</a>
-					<div class="card-body">
-						<a href="/best/get?column1=${best.column1}">
-							<h5 class="card-title">${best.title}</h5>
-						</a>
-
-						<p class="card-text">저자: ${best.author}</p>
-						<p class="card-text">출판사: ${best.publisher}</p>
-						<p class="card-text"></p>
-						<i class="bi bi-heart text-danger" style="cursor: pointer;"
-							onclick="likeBook('${best.column1}', '${best.title}', this)"></i>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
-	</ul>
-</c:if>
 
 
 <hr>
 
 
 <link href="../../../resources/css/star.css" rel="stylesheet" />
-
-<form class="mb-3" name="myform" id="myform" method="post"
-	action="/api/bookbook/rating/add">
-	<fieldset>
-		<span class="text-bold">${ratings.average_rating}</span> <input
-			type="radio" name="rating" value="5" id="rate1"> <label
-			for="rate1">★</label> <input type="radio" name="rating" value="4"
-			id="rate2"> <label for="rate2">★</label> <input type="radio"
-			name="rating" value="3" id="rate3"> <label for="rate3">★</label>
-		<input type="radio" name="rating" value="2" id="rate4"> <label
-			for="rate4">★</label> <input type="radio" name="rating" value="1"
-			id="rate5"> <label for="rate5">★</label> <input type="submit"
-			value="별점 제출">
-	</fieldset>
-</form>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-	  document.getElementById("myform").addEventListener("submit", function(event) {
-	    event.preventDefault(); // 기본 제출 동작 방지
-
-	    var selectedRating = document.querySelector('input[name="rating"]:checked');
-	    if (!selectedRating) {
-	      alert("별점을 선택해주세요.");
-	      return;
-	    }
-
-	    var ratingValue = selectedRating.value;
-
-	    // 선택한 별점 값을 가져왔으므로, 서버로 전송하거나 다른 작업을 수행할 수 있습니다.
-	    sendDataToServer(ratingValue); // 서버로 데이터를 전송하는 함수 호출
-	  });
-	});
-
-	function sendDataToServer(rating) {
-	  // Fetch API를 사용하여 서버로 데이터 전송
-	  fetch("/api/bookbook/rating/add", {
-	    method: "POST",
-	    headers: {
-	      "Content-Type": "application/json"
-	    },
-	    body: JSON.stringify({ "rating": rating, "bookId": bookId })
-	  })
-	  .then(response => {
-	    if (!response.ok) {
-	      throw new Error("Network response was not ok.");
-	    }
-	    return response.json();
-	  })
-	  .then(data => {
-	    // 서버로부터 받은 응답에 대한 처리
-	    console.log("서버 응답:", data);
-	    // 별도의 처리가 필요한 경우 여기에 작성
-	  })
-	  .catch(error => {
-	    console.error("There has been a problem with your fetch operation:", error);
-	    // 오류 처리가 필요한 경우 여기에 작성
-	  });
-	}
-
-</script>
-
 
 <div class="bottom">
 
@@ -368,9 +280,37 @@ function copyUrl(){
 	</div>
 
 
+
 	<!-- 새 댓글 작성 -->
 	<div class="bg-light p-2 rounded my-5">
 		<div>${username == null ? '댓글을 작성하려면 먼저 로그인하세요' : '댓글 작성' }</div>
+
+
+		<div class="starRate">
+
+			<fieldset class="rate">
+				<input type="radio" id="rating4" name="rating" value="4"
+					onclick="handleRatingChange(4)"> <label for="rating4"
+					title="4점"></label> <input type="radio" id="rating3" name="rating"
+					value="3" onclick="handleRatingChange(3)"> <label
+					for="rating3" title="3점"></label> <input type="radio" id="rating2"
+					name="rating" value="2" onclick="handleRatingChange(2)"> <label
+					for="rating2" title="2점"></label> <input type="radio" id="rating1"
+					name="rating" value="1" onclick="handleRatingChange(1)"> <label
+					for="rating1" title="1점"></label>
+			</fieldset>
+
+			<script>
+		    // 등급 변경 함수
+		    function handleRatingChange(rating) {
+		      ratingValue = rating;
+		    }
+			</script>
+
+		</div>
+
+
+
 		<div>
 			<textarea class="form-control new-comment-content" rows="3"
 				${username == null ? 'disabled' : '' }></textarea>

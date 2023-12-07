@@ -14,7 +14,21 @@ const commentUpdatable = `
 // 댓글 바디
 
 function createCommentTemplate(comment, username) {
-  console.log(comment);
+  // 별점 생성 함수
+  function createStarRating(rating) {
+    let starRating = '<fieldset class="rated">';
+    for (let i = 4; i >= 1; i--) {
+      const isChecked = i <= rating ? "checked" : ""; // i가 rating 이하인 경우 checked
+      const additionalStyle =
+        isChecked === "checked" ? 'style="color: #f73c32 !important;"' : ""; // 예시로 gold 색을 추가 스타일로 지정
+      starRating += `
+        <label for="rate${i}" title="${i}점" ${isChecked} ${additionalStyle}></label>
+      `;
+    }
+    starRating += "</fieldset>";
+    return starRating;
+  }
+
   return `
       <div class="comment my-3" data-no="${comment.ratingid}">
           <div class="comment-title my-2 d-flex justify-content-between">
@@ -24,6 +38,9 @@ function createCommentTemplate(comment, username) {
                   </strong>
                   <span class="text-muted ms-3 comment-date">
                       ${moment(comment.rating_date).format("YYYY-MM-DD hh:mm")}
+                  </span>
+                  <span class="rating-data">${comment.rating}</span>
+                  <span>${createStarRating(comment.rating)}
                   </span>
               </div>
               <div  class="btn-group">
@@ -54,9 +71,8 @@ async function loadComments(bno, writer) {
 }
 
 // 코멘트 생성
-async function createComment(bookid, userid) {
+async function createComment(bookid, userid, rating) {
   const rating_review = $(".new-comment-content").val();
-  console.log(rating_review);
 
   if (!rating_review) {
     alert("내용을 입력하세요.");
@@ -70,6 +86,7 @@ async function createComment(bookid, userid) {
     bookid,
     userid,
     rating_review,
+    rating,
   };
 
   comment = await rest_create(COMMENT_URL, comment);
@@ -105,8 +122,6 @@ function showUpdateComment(e) {
   const contentEl = commentEl.find(".comment-content");
   const comment = { no, content: contentEl.html().trim() };
 
-  console.log(comment);
-
   contentEl.hide();
   commentEl.find(".btn-group").hide();
 
@@ -122,14 +137,13 @@ async function updateComment(commentEl, userid) {
   const editContentEl = commentEl.find(".comment-edit-block"); // 수정 창
   const rating_review = editContentEl.find(".comment-editor").val(); // 수정 내용
   const ratingid = parseInt(commentEl.data("no"));
-  console.log("---------->>> " + ratingid);
-  let comment = { ratingid, userid, rating_review };
+  const rating = parseInt(commentEl.find(".rating-data").text());
 
-  console.log("----->>  Data : " + comment.userid);
-  console.log("----->>  Data : " + comment.rating_review);
+  console.log(rating);
+
+  let comment = { ratingid, userid, rating_review, rating };
 
   comment = await rest_modify(COMMENT_URL + comment.ratingid, comment);
-  console.log("수정", comment);
 
   const contentEl = commentEl.find(".comment-content");
   editContentEl.remove();

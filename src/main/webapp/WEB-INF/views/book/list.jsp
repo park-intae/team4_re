@@ -4,6 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@include file="../layouts/header.jsp"%>
 
+<%@include file="../layouts/sidebar.jsp"%>
+
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
@@ -248,6 +250,7 @@ h1 {
 
 </c:if>
 
+
 <c:if test="${empty bookByCBF}">
 	<ul>
 		<div class="card-container">
@@ -272,5 +275,6 @@ h1 {
 		</div>
 	</ul>
 </c:if>
+
 
 <%@include file="../layouts/footer.jsp"%>

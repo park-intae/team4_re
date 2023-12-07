@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import javax.servlet.http.HttpSession;
 
-import org.bookbook.domain.BestVO;
 import org.bookbook.domain.BookSearchVO;
 import org.bookbook.domain.BookVO;
 import org.bookbook.domain.GenreVO;
@@ -22,14 +22,13 @@ import org.bookbook.model.PageMakerDTO;
 import org.bookbook.service.BookSearchService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -104,20 +103,8 @@ public class BookController {
 	}
 
 	@GetMapping("/list")
-	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri, HttpSession session) {		
-
-		SecurityContextImpl securityContext = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
-
-		String username = "";
-
-		if (securityContext != null && securityContext.getAuthentication() != null) {
-			Object principal = securityContext.getAuthentication().getPrincipal();
-
-			if (principal instanceof UserDetails) {
-				username = ((UserDetails) principal).getUsername();
-//				log.info("Username: " + username);
-			}
-		}
+	public void list(@ModelAttribute("search") BookSearchVO search, Model model, Criteria cri) {
+		
 
 		String flaskApiUrl = "http://49.50.166.252:5000/api/list";
 
@@ -126,7 +113,7 @@ public class BookController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(flaskApiUrl)
-				.queryParam("keyword", keywordParam).queryParam("username", username);
+				.queryParam("keyword", keywordParam);
 		String response = restTemplate.getForObject(builder.toUriString(), String.class);
 
 		try {
@@ -139,23 +126,29 @@ public class BookController {
 
 				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
 						.collect(Collectors.toList());
-
-//				log.info("bookIds : " + bookIds);
-
-				if (!bookIds.isEmpty()) {
-					List<BookVO> books = service.getBookListById(bookIds);
-
-					model.addAttribute("bookByCBF", books);
+				
+				if (bookIds.isEmpty()) {
+					log.info("Empth --------->>>>>" + bookIds);
+					Random random = new Random();
+					
+					for (int i = 0; i < 5; i++) {
+				        Long  randomNumber = (long) (random.nextInt(11242) + 1);
+				        bookIds.add(randomNumber);
+					}
+					log.info("add --------->>>"+bookIds);
+					
+					
 				}
+				
+				List<BookVO> books = service.getBookListById(bookIds);
+
+				model.addAttribute("bookByCBF", books);				
+
 
 			}
 		} catch (Exception e) {
 			System.out.println("------------>Error");
 		}
-
-		List<BestVO> bestBooks = service.getBestBookList();
-
-		model.addAttribute("best", bestBooks);
 
 		List<BookVO> dataResult = service.getListPaging(cri);
 
@@ -183,9 +176,7 @@ public class BookController {
 
 			if (principal instanceof UserDetails) {
 				username = ((UserDetails) principal).getUsername();
-//				log.info("Username: " + username);
-//				log.info("Book_Id: " + bookid);
-//				service.insertBookId(username, bookid);
+
 				model.addAttribute("username", username);
 				
 			}
@@ -210,23 +201,29 @@ public class BookController {
 
 				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
 						.collect(Collectors.toList());
-
-//				log.info("IBCF bookIds : " + bookIds);
-
-				if (!bookIds.isEmpty()) {
-					List<BookVO> books = service.getBookListById(bookIds);
-
-					model.addAttribute("bookByCBF", books);
+				
+				if (bookIds.isEmpty()) {
+					log.info("Empth --------->>>>>" + bookIds);
+					Random random = new Random();
+					
+					for (int i = 0; i < 5; i++) {
+				        Long  randomNumber = (long) (random.nextInt(11242) + 1);
+				        bookIds.add(randomNumber);
+					}
+					log.info("add --------->>>"+bookIds);
+					
+					
 				}
+				
+				List<BookVO> books = service.getBookListById(bookIds);
+
+				model.addAttribute("bookByCBF", books);				
+
 
 			}
 		} catch (Exception e) {
 			System.out.println("------------>Error");
 		}
-
-		List<BestVO> bestBooks = service.getBestBookList();
-
-		model.addAttribute("best", bestBooks);
 
 		model.addAttribute("book", book);
 	}
@@ -242,4 +239,17 @@ public class BookController {
 		return "book/likes";
 	}
 
+	@GetMapping(value = "/detail/{bookId}/title", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String getBookTitle(@PathVariable("bookId") int bookId) {
+	    try {
+	        BookVO book = service.getBookById(bookId);
+	        return book.getTitle(); // 책 제목을 반환
+	    } catch (Exception e) {
+	        log.error("Book title fetching error", e);
+	        return "Unknown Title";
+	    }
+	}
+	
+	
 }

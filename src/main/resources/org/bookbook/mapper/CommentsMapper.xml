@@ -21,8 +21,8 @@
     
     
 	<insert id="create">
-	    insert into book_rating (book_id, user_id, rating_review, rating_date)
-	    values (#{bookid}, #{userid}, #{rating_review}, NOW())
+	    insert into book_rating (book_id, user_id, rating_review, rating_date, rating)
+	    values (#{bookid}, #{userid}, #{rating_review}, NOW(), #{rating})
 	    <selectKey resultType="int" keyProperty="ratingid"
 	        keyColumn="rating_id" order="AFTER">
 	        SELECT LAST_INSERT_ID() as rating_id
@@ -36,9 +36,10 @@
 		update book_rating
 		set 
 			rating_review = #{rating_review},
-			rating_date = NOW()
+			rating_date = NOW(),
+			rating = #{rating}
 			
-		where rating_id = #{ratingid}
+		where rating_id = #{ratingid} and user_id = #{userid}
 	</update>
 	
 	<delete id="delete">
@@ -51,4 +52,8 @@
 	where rating_id = #{ratingid}
 	</select>
 
+
+	<select id="readCommentsByUserId" resultMap="CommentsResultMap" parameterType="String">
+  	  SELECT * FROM book_rating WHERE user_id = #{userId}
+	</select>
 </mapper>
