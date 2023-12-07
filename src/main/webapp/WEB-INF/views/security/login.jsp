@@ -76,10 +76,10 @@
 				<button type="button" onclick="location.href='signup'"
 					class="s-btn s-bc2">회원가입</button>
 
-				<!-- 네이버 로그인 버튼 -->
+				<!-- 네이버 로그인 버튼 & 추가 기능 구현 필요 
 				<div id="naver_id_login"
 					style="text-align: center; margin-top: 20px;"></div>
-		</div>
+		</div> -->
 
 <form id="logoutForm" action="/security/logout" method="post">
 
