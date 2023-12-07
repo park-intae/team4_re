@@ -55,7 +55,8 @@ public class HomeController {
 //	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
 //		JSONObject result = sidebarUtil.searchBookTypes(topics, genres);
 //		return result;
-
+//	}
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */

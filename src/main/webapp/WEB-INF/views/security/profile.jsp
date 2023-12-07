@@ -197,16 +197,6 @@
 
 
 
-	<div class="line-separator"></div>
-
-
-	<!-- 사용자 프로필 및 정보 -->
-	<div class="user-profile">
-		<!-- 프로필 정보 -->
-
-	</div>
-
-
 	<!-- 팔로우 모달창 -->
 	<link rel="stylesheet" href="/resources/css/modal.css" />
 	<div id="followModal" class="modal_wrapper" style="display: none;">

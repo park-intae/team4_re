@@ -1,8 +1,12 @@
 package org.bookbook.controller;
 
 import org.bookbook.domain.Criteria;
+import org.bookbook.domain.GenreVO;
 import org.bookbook.domain.PageDTO;
+import org.bookbook.domain.TopicVO;
 import org.bookbook.service.BestService;
+import org.bookbook.util.SidebarUtil;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +24,15 @@ public class BestController {
 	@Autowired
 	private BestService service;
 
+	@Autowired
+	SidebarUtil sidebarUtil;
+
+	@ModelAttribute("searchBook")
+	public JSONObject searchBookTypes(TopicVO topics, GenreVO genres) {
+		JSONObject result = sidebarUtil.searchBookTypes(topics, genres);
+		return result;
+	}
+	
 	@GetMapping("/list")
 	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
 		int total = service.getTotal(cri);

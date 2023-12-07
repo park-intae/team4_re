@@ -31,15 +31,12 @@ nav .menu-btn {
 	top: 3%;
 	right: 3%;
 	padding: 0;
-	width: 30px;
+	display: inline-block;
 	cursor: pointer;
 }
-
-/* nav .search-bar {
-	margin-right: auto;
-	margin-left: auto;
-	height: 31px;
-} */
+.menu-btn p{
+	display: inline;
+}
 
 nav.nav-open .search-bar {
 	width: 60%;

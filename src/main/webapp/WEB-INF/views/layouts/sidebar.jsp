@@ -4,6 +4,7 @@
 
 <nav>
 	<div class="menu-btn">
+		<p>검색창 열기</p>
 		<i class="fa-solid fa-chevron-right icon1"></i>
 	</div>
 	<form action="/book/list" id="searchForm" method="get" class="d-flex flex-column">

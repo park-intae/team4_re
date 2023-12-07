@@ -6,7 +6,6 @@
 	justify-content: center; /* 수평 중앙 정렬 */
 	align-items: center; /* 수직 중앙 정렬 */
 	min-height: 50vh; /* 뷰포트 높이에 맞춤 */
-	padding-bottom: 600px; /* 상단 패딩 조정 */
 }
 
 .main-border {
@@ -117,7 +116,7 @@
 	right: 40px; /* 오른쪽에서 10px 떨어지도록 */
 }
 
-.btn-secondary {
+.page-container .btn-secondary {
 	background: #0080ff;
 	font-size: 18px;
 	border-radius: 5px;
