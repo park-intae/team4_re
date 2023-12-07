@@ -39,7 +39,6 @@ function createCommentTemplate(comment, username) {
                   <span class="text-muted ms-3 comment-date">
                       ${moment(comment.rating_date).format("YYYY-MM-DD hh:mm")}
                   </span>
-                  <span class="rating-data">${comment.rating}</span>
                   <span>${createStarRating(comment.rating)}
                   </span>
               </div>
@@ -137,11 +136,11 @@ async function updateComment(commentEl, userid) {
   const editContentEl = commentEl.find(".comment-edit-block"); // 수정 창
   const rating_review = editContentEl.find(".comment-editor").val(); // 수정 내용
   const ratingid = parseInt(commentEl.data("no"));
-  const rating = parseInt(commentEl.find(".rating-data").text());
+ 
 
-  console.log(rating);
+ 
 
-  let comment = { ratingid, userid, rating_review, rating };
+  let comment = { ratingid, userid, rating_review};
 
   comment = await rest_modify(COMMENT_URL + comment.ratingid, comment);
 
