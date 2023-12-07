@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (userComments.length > 0) {
         await displayUserComments(userComments);
     } else {
-        document.querySelector('.review-content').innerText = 'No Comment Found.';
+        document.querySelector('.review-content').innerText = '';
     }
 });
 

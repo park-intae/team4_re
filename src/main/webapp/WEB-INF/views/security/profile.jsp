@@ -13,26 +13,14 @@
 <%@ include file="../layouts/header.jsp"%>
 
 
-<sec:authorize access="isAuthenticated()">
-
-    <sec:authentication property="principal.user.userid" var="userid" />
-
-	<!-- 현재 로그인한 사용자의 정보를 불러옵니다. -->
+ <sec:authorize access="isAuthenticated()"> 
 	<c:set var="user"
 		value="${not empty sessionScope.naverUser ? sessionScope.naverUser : user}" />
-	</sec:authorize>
-	<script>
-    // 전역 변수로 선언합니다.
-    var loggedInUserId = '${userid}';
-	</script>
+	</sec:authorize>  
+	
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 
-<script>
-	var currentUserId = "${loggedInUserId}";
-</script>
-
-<!-- 프로필 정보 섹션 -->
 
 <div class="page-container">
 	<div class="line-separator"></div>
@@ -256,7 +244,7 @@
 
 						users
 								.forEach(function(user) {
-									if (user.userid !== currentUserId) { // 현재 로그인한 사용자 제외
+									if (user.userid !== loggedInUserId) { // 현재 로그인한 사용자 제외
 										var tr = $('<tr>').append(
 												'<td>' + user.nickname
 														+ '</td>').append(

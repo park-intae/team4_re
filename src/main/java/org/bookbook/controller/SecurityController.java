@@ -109,6 +109,7 @@ public class SecurityController {
 		// 가져온 사용자 정보를 모델에 추가합니다.
 		if (user != null) {
 			model.addAttribute("user", user);
+			model.addAttribute("userId", user.getUserid()); // 사용자 ID를 모델에 추가
 		}
 
 		return "/security/profile";
@@ -129,7 +130,7 @@ public class SecurityController {
 			userUpdateVO.setUserid(user.getUserid());
 			userUpdateVO.setUsername(user.getUsername());
 			userUpdateVO.setNickname(user.getNickname());
-			userUpdateVO.setEmail(user.getEmail());
+			userUpdateVO.setEmail("");
 			userUpdateVO.setPassword(user.getPassword());
 			userUpdateVO.setGender(user.getGender());
 			// 나머지 필드 설정

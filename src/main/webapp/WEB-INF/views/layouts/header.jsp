@@ -36,7 +36,10 @@
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 	integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
 	crossorigin="anonymous"></script>
-	
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+	integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+	crossorigin="anonymous"></script>	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
@@ -50,6 +53,15 @@
 	margin-bottom: 5px;
 }
 </style>
+ <script>
+        var loggedInUserId;
+    </script>
+
+    <sec:authorize access="isAuthenticated()">
+        <script>
+            loggedInUserId = '${not empty sessionScope.naverUser ? sessionScope.naverUser.id : principal.user.userid}';
+        </script>
+    </sec:authorize>
 </head>
 <body>
 	<div class=background>
@@ -63,23 +75,52 @@
 			<ul class="navbar-nav sign">
 				<sec:authorize access="isAuthenticated()">
 					<!-- 로그인 된 상태 -->
-					<c:if test="${not empty username}">
-						<li class="nav-item">
-							<div class="btn-group">
-								<button type="button" class="btn btn-secondary dropdown-toggle"
-									data-bs-toggle="dropdown" aria-expanded="false">
-									<img class="avatar"
-										src="https://api.dicebear.com/7.x/identicon/svg?seed=대충 아이디" />
-								</button>
 
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-									<li><a class="dropdown-item" href="/security/logout">로그아웃</a></li>
-									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="/security/profile">프로필</a></li>
-								</ul>
-							</div>
-						</li>
-					</c:if>
+					<c:choose>
+						<c:when test="${not empty sessionScope.naverUser}">
+							<!-- 네이버 로그인 사용자 -->
+							 <script>
+                            var loggedInUserId = '${sessionScope.naverUser.id}';
+                        </script>
+							<li class="nav-item">
+								<div class="btn-group">
+									<button type="button"
+										class="btn btn-secondary dropdown-toggle sub"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										<img class="avatar"
+											src="https://api.dicebear.com/7.x/identicon/svg?seed=${sessionScope.naverUser.id}" />
+										${sessionScope.naverUser.name}
+									</button>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="/security/logout">로그아웃</a></li>
+										<li><a class="dropdown-item" href="/security/profile">프로필</a></li>
+									</ul>
+								</div>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<!-- 일반 로그인 사용자 -->
+							 <sec:authentication property="principal.user.userid" var="userid" />
+							  <script>
+                            var loggedInUserId = '${userid}';
+                        </script>
+							<li class="nav-item">
+								<div class="btn-group">
+									<button type="button"
+										class="btn btn-secondary dropdown-toggle sub"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										<img class="avatar"
+											src="https://api.dicebear.com/7.x/identicon/svg?seed=${user.userid}" />
+										${user.username}
+									</button>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="/security/logout">로그아웃</a></li>
+										<li><a class="dropdown-item" href="/security/profile">프로필</a></li>
+									</ul>
+								</div>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<!-- 로그아웃 된 상태 -->

@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/security/toggleFollow").authenticated()
 				.antMatchers("/security/profile", "/security/updateProfile").authenticated()
 				.antMatchers("/connect", "/sse/*").permitAll()
-				.antMatchers("/api/book/detail/**/comment/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+				.antMatchers("/api/book/detail/**/comment/**").permitAll()
 				.and();
 
 		http.formLogin().usernameParameter("userid") // 사용자 이름 필드를 'userid'로 설정
