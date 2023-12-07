@@ -3,18 +3,18 @@
 nav {
 	overflow: hidden;
 	position: fixed;
-	transform: translateX(-85%);
-	height: 85%;
+	transform: translateX(-85%) translateY(-15px);
+	height: 100%;
 	width: 300px;
 	transition: all 800ms cubic-bezier(.8, 0, .33, 1);
-	border-radius: 0% 0% 0% 0%;
+	border-radius: 5%;
 	background: rgba(255, 255, 255, 0.5);
 	z-index: 100;
 }
 
 nav.nav-open {
 	overflow: scroll;
-	transform: translateX(0px);
+	transform: translateX(-30%) translateY(-15px);
 	border-radius: 0% 0% 0% 0%;
 	background: rgba(255, 255, 255, 0.8);
 }
@@ -31,18 +31,15 @@ nav .menu-btn {
 	top: 3%;
 	right: 3%;
 	padding: 0;
-	width: 30px;
+	display: inline-block;
 	cursor: pointer;
 }
-
-nav .search-bar {
-	margin-right: auto;
-	margin-left: auto;
-	height: 31px;
+.menu-btn p{
+	display: inline;
 }
 
 nav.nav-open .search-bar {
-	width: 253px;
+	width: 60%;
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -107,4 +104,14 @@ summary{
 
 nav summary.m_cat{
 	margin-left: 30px;
+}
+
+#search-btn {
+	width: 3vw;
+	height: auto;
+	padding: 1px;
+}
+
+#searching {
+	border: none;
 }

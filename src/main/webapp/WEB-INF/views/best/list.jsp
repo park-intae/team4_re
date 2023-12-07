@@ -32,7 +32,7 @@
 								alt="${best.title}">
 							<!-- 						</a> -->
 							<div class="card-body">
-								<h6 class="card-title">
+								<h6 class="card-title bold">
 									<%-- 							<a href="/best/get?column1=${best.column1}">  --%>
 									${best.title}
 									<!-- 							</a> -->

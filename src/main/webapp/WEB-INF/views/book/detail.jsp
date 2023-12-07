@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@ include file="../layouts/header.jsp"%>
+<%@ include file="../layouts/sidebar.jsp"%>
+
 <link rel="stylesheet" href="/resources/css/detail.css" />
 
 <script
@@ -51,7 +53,7 @@
 
 <%-- 개별 페이지 --%>
 <div class="center">
-	<h1>${book.title}</h1>
+	<h1 class="book-title">${book.title}</h1>
 </div>
 
  <style> 
