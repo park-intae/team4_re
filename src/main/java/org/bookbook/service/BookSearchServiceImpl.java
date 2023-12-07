@@ -24,12 +24,11 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 	@Override
 	public void insertBookId(String userId, int bookId) {
-		
+
 		log.info(userId);
 		log.info(bookId);
-	    bookSearchMapper.insertHistory(userId, bookId);
+		bookSearchMapper.insertHistory(userId, bookId);
 	}
-
 
 	@Override
 	public BookVO getBookById(int bookIds) {
@@ -38,13 +37,13 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 	@Override
 	public List<BestVO> getBestBookList() {
-		
+
 		return bookSearchMapper.selectBestBook();
 	}
 
 	@Override
 	public List<BookVO> getBookListById(List<Long> bookIds) {
-		
+
 		return bookSearchMapper.selectBooksByIds(bookIds);
 	}
 
@@ -68,25 +67,27 @@ public class BookSearchServiceImpl implements BookSearchService {
 		return bookSearchMapper.getListPaging(cri);
 	}
 
-	@Override
-	public int getTotal() {
-		return bookSearchMapper.getTotal();
-	}
-	
 	// 좋아요 추가 부분
-	 @Override
-	    public void addLike(LikeVO like) {
-	        bookSearchMapper.addLike(like);
-	    }
+	@Override
+	public void addLike(LikeVO like) {
+		bookSearchMapper.addLike(like);
+	}
 
-	    @Override
-	    public List<LikeVO> getLikes(String userId) {
-	        return bookSearchMapper.getLikes(userId);
-	    }
-	    
-	 // 도서 삭제 부분
-	    @Override
-	    public void deleteLike(LikeVO like) {
-	    	bookSearchMapper.deleteLike(like);
-	    }
+	@Override
+	public List<LikeVO> getLikes(String userId) {
+		return bookSearchMapper.getLikes(userId);
+	}
+
+	// 도서 삭제 부분
+	@Override
+	public void deleteLike(LikeVO like) {
+		bookSearchMapper.deleteLike(like);
+	}
+
+	@Override
+	public int getTotal(String keywordParam) {
+		System.out.println("keywordParam2:"+keywordParam);
+		return bookSearchMapper.getTotal(keywordParam);
+	}
+
 }
