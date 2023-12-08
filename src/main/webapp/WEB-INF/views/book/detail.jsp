@@ -21,7 +21,6 @@
   
   const LIKE_URL = `/api/book/detail/${book.bookid}/like/`;
 
-
   $(document).ready(async function() {
     let book_id = ${book.bookid};
     let username = '${username}'; // 작성자(로그인 유저)
@@ -29,12 +28,11 @@
     loadComments(book_id, username); // 댓글 목록 불러오기
     loadLikes();
 
+    $(document).on('click', '.like-user', function(e) {
+    	  const clickedUser = $(this).find('.userid').text().trim();
+    	  loadLikesBooks(clickedUser);
+    	});
 
-	$(document).on('click', '.like-user', function(e) {
-    console.log("Click User");
-    const user = $(this).find('.userid').text().trim();
-	loadLikesBooks(user);
-	});
 
 
 
@@ -288,10 +286,24 @@ function copyUrl(){
 
 </script>
 
-	<div class="like-list">
+<style>
+#check-btn { display: none; }
+#check-btn:checked ~ .like-list { display: block; } 
+.like-list { display: none; }
 
+</style>
 
-	</div>
+<input id="check-btn" type="checkbox" />
+<label for="check-btn">
+	이 책을 좋아하는 사람들 (버튼입니다)
+</label> 
+<div class="likeCount">
+	여기가 좋아요 총 숫자 입니다 : 
+</div>
+
+<div class="like-list">
+</div>
+
 
 
 	<div>

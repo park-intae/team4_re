@@ -4,8 +4,8 @@ async function loadLikes() {
 
     console.log("users : ", users);
     console.log("usersLength : ", users.length);
+    $(".likeCount").append(users.length);
 
-    // users가 배열이라고 가정하고 forEach를 사용하여 각 user에 대한 템플릿 생성
     users.forEach((user) => {
       const userEl = $(createLikeTemplate(user));
       $(".like-list").append(userEl);
@@ -19,12 +19,15 @@ async function loadLikesBooks(user) {
   try {
     const books = await rest_get(`${LIKE_URL}${user}`);
 
-    console.log(user);
+    let userBooksLength = $(`[data-no="${user}"] .book`).length;
 
-    books.forEach((book) => {
-      const bookEl = $(createLikeBookTemplate(book));
-      $(`[data-no="${user}"]`).append(bookEl);
-    });
+    if (userBooksLength < books.length) {
+      books.forEach((book) => {
+        const bookEl = $(createLikeBookTemplate(book));
+        $(`[data-no="${user}"]`).append(bookEl);
+      });
+    }
+    $(`[data-no="${user}"]`).toggle();
   } catch (error) {
     console.log(error);
   }
@@ -47,9 +50,11 @@ function createLikeTemplate(user) {
 
 function createLikeBookTemplate(book) {
   return `
-    <a href="/book/detail?bookid=${book.bookid}">
-    ${book.title}
-    </a>
-    <br>
-    `;
+  <div class="book ${book.bookid}">
+  <a href="/book/detail?bookid=${book.bookid}">
+  ${book.title}
+  </a>
+  <br>
+  </div>
+  `;
 }
