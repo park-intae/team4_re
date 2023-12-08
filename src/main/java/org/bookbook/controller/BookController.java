@@ -148,33 +148,36 @@ public class BookController {
 			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode jsonNode = objectMapper.readTree(response);
 
-			JsonNode resultNode = jsonNode.get("ibcf");
+			JsonNode resultNode = jsonNode.get("result");
+			
+			List<Long> bookIds = new ArrayList<Long>();
+			
+			Random random = new Random();
 
+			for (int i = 0; i < 5; i++) {
+				Long randomNumber = (long) (random.nextInt(11242) + 1);
+				bookIds.add(randomNumber);
+			}
+			
 			if (resultNode != null && resultNode.isArray()) {
 
-				List<Long> bookIds = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
+				List<Long> bookIdsGetServer = StreamSupport.stream(resultNode.spliterator(), false).map(JsonNode::asLong)
 						.collect(Collectors.toList());
 
-				if (bookIds.isEmpty()) {
-					log.info("Empth --------->>>>>" + bookIds);
-					Random random = new Random();
-
-					for (int i = 0; i < 5; i++) {
-						Long randomNumber = (long) (random.nextInt(11242) + 1);
-						bookIds.add(randomNumber);
-					}
-					log.info("add --------->>>" + bookIds);
-
+				if (!bookIdsGetServer.isEmpty()) {
+					bookIds = bookIdsGetServer;
 				}
 
-				List<BookVO> books = service.getBookListById(bookIds);
-
-				model.addAttribute("bookByCBF", books);
-
 			}
+			
+			List<BookVO> books = service.getBookListById(bookIds);
+
+			model.addAttribute("bookByCBF", books);
+			
 		} catch (Exception e) {
 			System.out.println("------------>Error");
 		}
+
 
 		model.addAttribute("book", book);
 	}

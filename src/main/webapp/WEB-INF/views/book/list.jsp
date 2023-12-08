@@ -231,7 +231,6 @@ ul{
 
 <h1>recommend book</h1>
 
-< class="recommend-container">
 <c:if test="${not empty bookByCBF}">
 	<ul>
 		<div class="card-container">
