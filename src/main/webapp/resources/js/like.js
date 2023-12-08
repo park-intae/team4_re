@@ -52,9 +52,8 @@ function createLikeBookTemplate(book) {
   return `
   <div class="book ${book.bookid}">
   <a href="/book/detail?bookid=${book.bookid}">
-  ${book.title}
+  ${book.title} 
   </a>
-  <br>
-  </div>
+  </div> 
   `;
 }
