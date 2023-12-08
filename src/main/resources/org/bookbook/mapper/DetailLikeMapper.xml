@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bookbook.mapper.DetailLikeMapper">
+    
+    <select id="getLikeIds" resultType="String">
+		SELECT li.user_id 
+		FROM like_list li
+		WHERE li.book_id = #{bookId}
+		AND li.user_id IS NOT NULL
+		AND li.user_id NOT LIKE '';
+    </select>
+    
+    <select id="getLikeBookIdsByUserId" resultType="String">
+    select li.book_id 
+	from like_list li
+	where li.user_id = #{userid};
+    </select>
+    
+    <select id="getUsers" resultType="LikeUserVO">
+    select u.user_id, u.username, u.nickname
+    from user u
+    where u.user_id IN 
+ 	    <foreach collection="list" item="id" open="(" separator="," close=")">
+ 	    #{id}
+ 	    </foreach>
+    
+    </select>
+    
+    <select id="getBooks" resultType="BookVO">
+    select * from book b
+    where b.book_id IN  
+  	    <foreach collection="list" item="id" open="(" separator="," close=")">
+ 	    #{id}
+ 	    </foreach>
+    </select>
+    
+</mapper>

@@ -12,15 +12,29 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="../../../resources/js/rest.js"></script>
 <script src="../../../resources/js/comment.js"></script>
+<script src="../../../resources/js/like.js"></script>
+
+
 
 <script>
   const COMMENT_URL = `/api/book/detail/${book.bookid}/comment/`;
+  
+  const LIKE_URL = `/api/book/detail/${book.bookid}/like/`;
 
   $(document).ready(async function() {
     let book_id = ${book.bookid};
     let username = '${username}'; // 작성자(로그인 유저)
 
     loadComments(book_id, username); // 댓글 목록 불러오기
+    loadLikes();
+
+    $(document).on('click', '.like-user', function(e) {
+    	  const clickedUser = $(this).find('.userid').text().trim();
+    	  loadLikesBooks(clickedUser);
+    	});
+
+
+
 
     // 댓글 추가 버튼 처리
     $('.comment-add-btn').click(function(e) {
@@ -40,7 +54,6 @@
 
     // 삭제 버튼 클릭
     $('.comment-list').on('click', '.comment-delete-btn', deleteComment);
-
 
 
     // 별점 선택 시 이벤트 추가
@@ -273,6 +286,23 @@ function copyUrl(){
 
 </script>
 
+<style>
+#check-btn { display: none; }
+#check-btn:checked ~ .like-list { display: block; } 
+.like-list { display: none; }
+
+</style>
+
+<input id="check-btn" type="checkbox" />
+<label for="check-btn">
+	이 책을 좋아하는 사람들 (버튼입니다)
+</label> 
+<div class="likeCount">
+	여기가 좋아요 총 숫자 입니다 : 
+</div>
+
+<div class="like-list">
+</div>
 
 
 
