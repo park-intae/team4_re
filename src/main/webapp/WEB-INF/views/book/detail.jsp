@@ -288,20 +288,28 @@ function copyUrl(){
 
 <style>
 #check-btn { display: none; }
-#check-btn:checked ~ .like-list { display: block; } 
-.like-list { display: none; }
-
+/* #check-btn:checked ~ .like-list { display: block; } 
+.like-list { display: none; } */
+.dropdown p,a{
+	display: inline-block;
+}
+.likeCount {
+    display: inline-block;
+}
 </style>
 
-<input id="check-btn" type="checkbox" />
-<label for="check-btn">
-	이 책을 좋아하는 사람들 (버튼입니다)
-</label> 
-<div class="likeCount">
-	여기가 좋아요 총 숫자 입니다 : 
-</div>
-
-<div class="like-list">
+<div class="dropdown">
+  <button class="btn btn-outline-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    ❤ 이 책을 좋아하는 사람들 ( 총
+    <div class="likeCount"> 
+	</div>
+    명	)
+  </button>
+  <ul class="dropdown-menu">
+	<li>
+	<div class="like-list"></div>
+	</li>
+  </ul>
 </div>
 
 
